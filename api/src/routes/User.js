@@ -42,9 +42,9 @@ server.get('/', (req, res) => {
 		});
 });
 
-server.put('/category/:id', (req, res) => {
+server.put('/:id', (req, res) => {
     const { id } = req.params;
-    const { personId, email, password } = req.body;
+    const { email, password } = req.body;
     return User.findOne({ where:{ id } })
          .then(user => {             
             let oldUser = user;
@@ -52,7 +52,7 @@ server.put('/category/:id', (req, res) => {
 			user.password = password;
             user.save()
             return res.send({
-                message:`Se ha actualizado el usuario ${oldUser.email} a ${user.email} correctamente!`,
+                message:`Se ha actualizado el usuario correctamente!`,
                 data: user
                 })
          })
