@@ -1,17 +1,15 @@
-
 const server = require('express').Router(); //Import router from express module.
-const { Users } = require('../db.js'); // Import Categories model.
+const { User } = require('../db.js'); // Import Categories model.
 const { OK, CREATED, UPDATED, ERROR, NOT_FOUND, ERROR_SERVER } = require('../constants'); // Import Status constants.
-const User = require('../models/User.js');
 
 // Start Routes
 
 //// 'Create User' route in '/'
 
 server.post('/', function (req, res) {
-	const { email, password } = req.body;
+	const { personId, email, password, role } = req.body;
 
-	return Users.create({ email, password, role })
+	return User.create({ personId, email, password, role })
 		.then((user) => {
 			return res.status(CREATED).json({
 				message: 'Usuario creado exitosamente!',
@@ -29,7 +27,7 @@ server.post('/', function (req, res) {
 server.get('/', (req, res) => {
 	//Product.findAll().then(products => res.status(STATUS.OK).json({message: 'Success',data: products})
 	// res.send('andó');
-	Users.findAll()
+	User.findAll()
 		.then((users) => {
 			return res.status(OK).json({
 				message: 'Success',
@@ -46,12 +44,12 @@ server.get('/', (req, res) => {
 
 server.put('/category/:id', (req, res) => {
     const { id } = req.params;
-    const { email, password } = req.body;
+    const { personId, email, password } = req.body;
     return User.findOne({ where:{ id } })
          .then(user => {             
             let oldUser = user;
             user.email = email;
-            user.password = password;
+			user.password = password;
             user.save()
             return res.send({
                 message:`Se ha actualizado el usuario ${oldUser.email} a ${user.email} correctamente!`,
