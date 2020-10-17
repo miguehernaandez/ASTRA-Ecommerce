@@ -4,8 +4,7 @@ const { OK, CREATED, ERROR, ERROR_SERVER } = require('../constants/index'); // I
 
 // Start Routes
 
-//// 'Create User' route in '/'
-
+// 'Create User' route in '/'
 server.post('/', function (req, res) {
 	const { email, password, role } = req.body;
 	console.log(req.body);
@@ -26,9 +25,8 @@ server.post('/', function (req, res) {
 		});
 });
 
+// GET USERS
 server.get('/', (req, res) => {
-	//Product.findAll().then(products => res.status(STATUS.OK).json({message: 'Success',data: products})
-	// res.send('andó');
 	User.findAll()
 		.then((users) => {
 			return res.status(OK).json({
@@ -39,6 +37,30 @@ server.get('/', (req, res) => {
 		.catch((err) => {
 			return res.status(ERROR_SERVER).json({
 				message: 'Hubo un error en el servidor',
+				data: err,
+			});
+		});
+});
+
+// DELETE USER
+server.delete('/', (req, res) => {
+	console.log('**********');
+	console.log(req.query);
+	const { id } = req.query;
+	User.findOne({ where: { id } })
+		.then((deletedUser) => {
+			console.log('voy a eliminar un usuario');
+			deletedUser.destroy();
+			return res.status(OK).json({
+				message: 'Usuario eliminado',
+				data: deletedUser,
+			});
+		})
+		.catch((err) => {
+			console.log('Se me complico la eliminada');
+			console.log(err);
+			return res.status(ERROR_SERVER).json({
+				message: 'Error al eliminar usuario',
 				data: err,
 			});
 		});

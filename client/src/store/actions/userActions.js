@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { CREATE_USER, ERROR_MESSAGE, GET_USERS } from '../constants/constans';
+import { CREATE_USER, ERROR_MESSAGE, GET_USERS, DELETE_USER } from '../constants/constans';
 
 const url = 'localhost:3001';
 
+// CREAR USUARIO
 export function createUser(userData) {
 	console.log('algo me llego');
 	console.log(userData);
@@ -34,6 +35,7 @@ export function createUser(userData) {
 	};
 }
 
+// GET USUARIOS
 export function getUsers() {
 	return (dispatch) => {
 		axios
@@ -54,6 +56,40 @@ export function getUsers() {
 			})
 			.catch((err) => {
 				console.log('Catch Error');
+				console.log(err);
+			});
+	};
+}
+
+// ELIMINAR USUARIOS
+export function deleteUser(userID) {
+	console.log('algo me llego para hacer delete');
+	console.log(userID);
+	return (dispatch) => {
+		axios
+			.delete(`http://${url}/user`, {
+				params: { id: userID },
+			})
+			.then((res) => {
+				console.log(res.data);
+				console.log('delete enviado');
+				if (res.status === 200) {
+					console.log('tire estado 200');
+					console.log(res.data);
+					dispatch({
+						type: DELETE_USER,
+						id: res.data || {},
+					});
+				} else {
+					console.log('delete error en la action');
+					dispatch({
+						type: ERROR_MESSAGE,
+						id: 'Error in the Request',
+					});
+				}
+			})
+			.catch((err) => {
+				console.log('Error');
 				console.log(err);
 			});
 	};

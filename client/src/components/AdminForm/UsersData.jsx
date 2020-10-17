@@ -10,26 +10,26 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { getUsers } from '../../store/actions/userActions';
+import { getUsers, deleteUser } from '../../store/actions/userActions';
 
 const url = 'localhost:3001';
 
-const UsersData = ({ usersP, successP, getUsersP }) => {
-	console.log(usersP);
-	console.log(successP);
+const UsersData = ({ usersP, successP, getUsersP, deleteUserP }) => {
+	// console.log(usersP);
+	// console.log(successP);
 	/*********************** Local States ************************* */
-	// const [usersP, setUsers] = useState(usersP);
-	var usuariosDesdeBD = [];
+	// const [users, setUsers] = useState(usersP);
 	/*********************** Functions **************************** */
-	const getUsersFromDB = async () => {
-		getUsersP();
+
+	const handleDelete = function (userID) {
+		deleteUserP(userID);
 	};
 
-	console.log(usuariosDesdeBD);
 	/****************************** Component Life Cycle ********************************** */
 
 	useEffect(() => {
 		getUsersP();
+		// deleteUsersP();
 	}, []);
 
 	/****************************** Render ********************************** */
@@ -53,7 +53,6 @@ const UsersData = ({ usersP, successP, getUsersP }) => {
 
 						<tbody>
 							{usersP.map((usuario) => {
-								console.log('un usuario');
 								return usersP ? (
 									<tr className={s.tableDescrip} key={usuario.id}>
 										<td>{usuario.id}</td>
@@ -65,15 +64,10 @@ const UsersData = ({ usersP, successP, getUsersP }) => {
 											<FontAwesomeIcon
 												icon={faPencilAlt}
 												size={'1x'}
-												className={s.iconUpdate}
+												className={`mx-3 ${s.iconUpdate}`}
 												// onClick={() => updateProductModal(dat)}
 											/>
-											<FontAwesomeIcon
-												icon={faTrashAlt}
-												size={'1x'}
-												className={s.iconDelete}
-												// onClick={() => deleteProduct(dat.id)}
-											/>
+											<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={`mx-3 ${s.iconDelete}`} onClick={() => handleDelete(usuario.id)} />
 											{/* <Button className={s.buttonDelete} onClick={() => deleteProduct(dat.id)}>Delete</Button>{"  "}
                                         <Button className={s.buttonUp} onClick={()=> updateProductModal(dat)}>Update</Button> */}
 										</td>
@@ -117,12 +111,6 @@ const UsersData = ({ usersP, successP, getUsersP }) => {
 							})}
 						</tbody>
 					</Table>
-					<Button
-						className={s.buttonADD}
-						// onClick={openModal}
-					>
-						Add Product
-					</Button>
 				</div>
 			</div>
 		</div>
@@ -139,6 +127,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		getUsersP: () => dispatch(getUsers()),
+		deleteUserP: (id) => dispatch(deleteUser(id)),
 	};
 }
 
