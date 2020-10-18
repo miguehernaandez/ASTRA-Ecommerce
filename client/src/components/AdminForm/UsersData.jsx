@@ -15,7 +15,7 @@ import { getUsers, deleteUser, updateUser } from '../../store/actions/userAction
 const url = 'localhost:3001';
 
 const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP }) => {
-	// console.log(usersP);
+	console.log(usersP);
 	// console.log(successP);
 	/*********************** Local States ************************* */
 	// const [users, setUsers] = useState(usersP);
@@ -42,6 +42,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP }) =>
 			console.log(data);
 			updateUserP(data);
 		}
+		window.location.reload();
 	};
 
 	const handleUpdateRole = function (email, id, password, role) {
@@ -64,6 +65,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP }) =>
 			console.log(data);
 			updateUserP(data);
 		}
+		window.location.reload();
 	};
 
 	/****************************** Component Life Cycle ********************************** */
@@ -88,7 +90,8 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP }) =>
 								<th>Password</th>
 								<th>Rol</th>
 								<th>Fecha de Creacion</th>
-								<th className={s.tableActions}>Action</th>
+								<th>Ordenes</th>
+								<th className={s.tableActions}>Delete</th>
 							</tr>
 						</thead>
 
@@ -107,6 +110,9 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP }) =>
 											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdateRole(usuario.email, usuario.id, usuario.password, usuario.role)} />
 										</td>
 										<td>{usuario.createdAt}</td>
+										<td>
+											<button>Ordenes</button>
+										</td>
 										<td className={s.icons}>
 											<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={`mx-3 ${s.iconDelete}`} onClick={() => handleDelete(usuario.id, usuario.email)} />
 										</td>

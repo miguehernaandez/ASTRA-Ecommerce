@@ -96,19 +96,14 @@ const ReducerCategory = (state = inicialState, action) => {
 			const { id, password, role } = action.payload.data;
 			console.log(id, password, role);
 			var userToUpdatePosition = state.users.indexOf(state.users.filter((user) => user.id === id)[0]);
-			// var userToUpdate = state.users.filter((user)=> )
-			console.log(userToUpdatePosition);
+			// console.log(userToUpdatePosition);
 			var userToUpdate = state.users[userToUpdatePosition];
-			console.log(userToUpdate);
-			var newUsers2 = state.users;
-			newUsers2[userToUpdatePosition].id = id;
-			newUsers2[userToUpdatePosition].password = password;
-			newUsers2[userToUpdatePosition].role = role;
-			console.log(state.users);
-			console.log('aca abajo deberia estar, pero actualizado');
-			console.log(newUsers2);
-
-			return { ...state, users: newUsers2 };
+			// console.log(userToUpdate);
+			var userUpdated = { ...userToUpdate, password: password, role: role };
+			var oldUsers = state.users;
+			// console.log(oldUsers);
+			oldUsers[userToUpdatePosition] = userUpdated;
+			return { ...state, users: oldUsers };
 
 		case ERROR_MESSAGE:
 			console.log('error en algun lado: el reducer');
