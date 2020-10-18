@@ -11,10 +11,12 @@ import ProductDet from './components/ProductDet/index';
 import ProductCard from './components/ProductCard/index';
 import Catalogo from './components/Catalogo/index';
 import FormUsers from './components/FormUsers/FormUsers.jsx';
+import UsersData from './components/AdminForm/UsersData';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
+import CartShop from './components/Cart/card';
 
 const url = 'localhost:3001';
 
@@ -31,6 +33,7 @@ var enlacesAdmin = [
 	{ text: 'Inicio', to: '/admin' },
 	{ text: 'Productos', to: '/admin/product' },
 	{ text: 'Categorias', to: '/admin/category' },
+	{ text: 'Users', to: '/admin/users' },
 ];
 
 function App() {
@@ -38,15 +41,13 @@ function App() {
 
 	const onSearch = (search) => {
 		//console.log('NOmbre: ' + search)
-		axios.get(`http://${url}/products/search?query=${search}`)
-			 .then(res => {
-				 let {data} = res.data
-				 console.log(data)
-				 setProduct(data)
-				 return
-				 
-			 })
-	}
+		axios.get(`http://${url}/products/search?query=${search}`).then((res) => {
+			let { data } = res.data;
+			console.log(data);
+			setProduct(data);
+			return;
+		});
+	};
 
 	return (
 		<div>
@@ -67,6 +68,7 @@ function App() {
 					</Route>
 					<Route path='/admin/product' component={Product} />
 					<Route path='/admin/category' component={Category} />
+					<Route path='/admin/users' component={UsersData} />
 				</Route>
 				<Route path='/users' exact>
 					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
@@ -76,12 +78,24 @@ function App() {
 
 				<Route path='/admin/product' component={Product} />
 				<Route path='/admin/category' component={Category} />
+				<Route path='/admin/user' component={Category} />
 				{/* <Route path='/product/:id' component={ProductDet} /> */}
 				<Route path='/products/product/:id'>
 					<Navegacion links={enlacesUser} showSearchbar={true} />
 					<ProductDet />
 				</Route>
 
+				{/* <Route
+					path='/products/catalogo'
+					render={()=>
+						<Catalogo
+							products ={products}
+							onSearch={onSearch}
+						/>
+					}
+					>
+				 </Route> */}
+				<Route path='/users/:idUser/cart' component={CartShop} />
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
 			</Switch>
 		</div>
