@@ -10,19 +10,60 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { getUsers, deleteUser } from '../../store/actions/userActions';
+import { getUsers, deleteUser, updateUser } from '../../store/actions/userActions';
 
 const url = 'localhost:3001';
 
-const UsersData = ({ usersP, successP, getUsersP, deleteUserP }) => {
+const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP }) => {
 	// console.log(usersP);
 	// console.log(successP);
 	/*********************** Local States ************************* */
 	// const [users, setUsers] = useState(usersP);
+
 	/*********************** Functions **************************** */
 
-	const handleDelete = function (userID) {
-		deleteUserP(userID);
+	const handleDelete = function (id, email) {
+		var confirmDelete = window.confirm(`Estas a punto de eliminar el usuario:\n${email}\nDeseas continuar?`);
+		if (confirmDelete) {
+			deleteUserP(id);
+		}
+	};
+
+	const handleUpdatePassword = function (email, id, password, role) {
+		console.log('Funciona el boton del lapiz PASSWORD');
+		var confirmResetPassword = window.confirm(`Estas a punto de resetear la contraseña del usuario:\n${email}\nDeseas continuar?`);
+		if (confirmResetPassword) {
+			const data = {
+				email,
+				id,
+				password: 'randomPassword',
+				role,
+			};
+			console.log(data);
+			updateUserP(data);
+		}
+	};
+
+	const handleUpdateRole = function (email, id, password, role) {
+		// Siempre le llegan los datos de la tabla, por lo que cada vez que se ejecute esta funcion deberia actualizarse la tabla
+		console.log('Funciona el boton del lapiz ROLE');
+		var newRole;
+		if (role == 'client') {
+			newRole = 'admin';
+		} else {
+			newRole = 'client';
+		}
+		var confirmRoleChange = window.confirm(`Estas a punto de cambiar los permisos del usuario:\n${email}\nDejara de ser ${role} y pasara a ser ${newRole} \nDeseas continuar?`);
+		if (confirmRoleChange) {
+			const data = {
+				email,
+				id,
+				password,
+				role: newRole,
+			};
+			console.log(data);
+			updateUserP(data);
+		}
 	};
 
 	/****************************** Component Life Cycle ********************************** */
@@ -57,19 +98,17 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP }) => {
 									<tr className={s.tableDescrip} key={usuario.id}>
 										<td>{usuario.id}</td>
 										<td>{usuario.email}</td>
-										<td>{usuario.password}</td>
-										<td>{usuario.role}</td>
+										<td>
+											{usuario.password}
+											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdatePassword(usuario.email, usuario.id, usuario.password, usuario.role)} />
+										</td>
+										<td>
+											{usuario.role}
+											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdateRole(usuario.email, usuario.id, usuario.password, usuario.role)} />
+										</td>
 										<td>{usuario.createdAt}</td>
 										<td className={s.icons}>
-											<FontAwesomeIcon
-												icon={faPencilAlt}
-												size={'1x'}
-												className={`mx-3 ${s.iconUpdate}`}
-												// onClick={() => updateProductModal(dat)}
-											/>
-											<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={`mx-3 ${s.iconDelete}`} onClick={() => handleDelete(usuario.id)} />
-											{/* <Button className={s.buttonDelete} onClick={() => deleteProduct(dat.id)}>Delete</Button>{"  "}
-                                        <Button className={s.buttonUp} onClick={()=> updateProductModal(dat)}>Update</Button> */}
+											<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={`mx-3 ${s.iconDelete}`} onClick={() => handleDelete(usuario.id, usuario.email)} />
 										</td>
 									</tr>
 								) : (
@@ -80,31 +119,11 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP }) => {
 										<td>No hay datos</td>
 										<td>No hay datos</td>
 										<td>
-											<FontAwesomeIcon
-												icon={faPlusCircle}
-												size={'1x'}
-												className={s.iconAdd}
-												// onClick={() => {
-												// 	setEditCategories(true);
-												// 	setDataObject(dat);
-												// }}
-											/>
+											<FontAwesomeIcon icon={faPlusCircle} size={'1x'} className={s.iconAdd} />
 										</td>
 										<td className={s.icons}>
-											<FontAwesomeIcon
-												icon={faPencilAlt}
-												size={'1x'}
-												className={s.iconUpdate}
-												// onClick={() => updateProductModal(dat)}
-											/>
-											<FontAwesomeIcon
-												icon={faTrashAlt}
-												size={'1x'}
-												className={s.iconDelete}
-												// onClick={() => deleteProduct(dat.id)}
-											/>
-											{/* <Button className={s.buttonDelete} onClick={() => deleteProduct(dat.id)}>Delete</Button>{"  "}
-                                        <Button className={s.buttonUp} onClick={()=> updateProductModal(dat)}>Update</Button> */}
+											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={s.iconUpdate} />
+											<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} />
 										</td>
 									</tr>
 								);
@@ -128,6 +147,7 @@ function mapDispatchToProps(dispatch) {
 	return {
 		getUsersP: () => dispatch(getUsers()),
 		deleteUserP: (id) => dispatch(deleteUser(id)),
+		updateUserP: (data) => dispatch(updateUser(data)),
 	};
 }
 

@@ -1,4 +1,4 @@
-import { ADD_CATEGORY, GET_CATEGORIES, DELETE_CATEGORY, MODIFY_CATEGORY, ERROR_MESSAGE, ADD_PRODUCT, DELETE_PRODUCT, ADD_CATEGORY_PRODUCT, REMOVE_CATEGORY_PRODUCT, GET_PRODUCTS, MODIFY_PRODUCT, GET_PRODUCTS_BY_CATEGORY, ADD_TO_CARD, REMOVE_FROM_CART, CREATE_USER, GET_USERS, DELETE_USER } from '../constants/constans';
+import { ADD_CATEGORY, GET_CATEGORIES, DELETE_CATEGORY, MODIFY_CATEGORY, ERROR_MESSAGE, ADD_PRODUCT, DELETE_PRODUCT, ADD_CATEGORY_PRODUCT, REMOVE_CATEGORY_PRODUCT, GET_PRODUCTS, MODIFY_PRODUCT, GET_PRODUCTS_BY_CATEGORY, ADD_TO_CARD, REMOVE_FROM_CART, CREATE_USER, GET_USERS, DELETE_USER, UPDATE_USER } from '../constants/constans';
 
 const inicialState = {
 	categories: [],
@@ -90,6 +90,25 @@ const ReducerCategory = (state = inicialState, action) => {
 			console.log(action.id.data.id);
 			let newUsers = state.users.filter((user) => user.id !== action.id.data.id);
 			return { ...state, users: newUsers };
+
+		case UPDATE_USER:
+			console.log(action.payload.data);
+			const { id, password, role } = action.payload.data;
+			console.log(id, password, role);
+			var userToUpdatePosition = state.users.indexOf(state.users.filter((user) => user.id === id)[0]);
+			// var userToUpdate = state.users.filter((user)=> )
+			console.log(userToUpdatePosition);
+			var userToUpdate = state.users[userToUpdatePosition];
+			console.log(userToUpdate);
+			var newUsers2 = state.users;
+			newUsers2[userToUpdatePosition].id = id;
+			newUsers2[userToUpdatePosition].password = password;
+			newUsers2[userToUpdatePosition].role = role;
+			console.log(state.users);
+			console.log('aca abajo deberia estar, pero actualizado');
+			console.log(newUsers2);
+
+			return { ...state, users: newUsers2 };
 
 		case ERROR_MESSAGE:
 			console.log('error en algun lado: el reducer');

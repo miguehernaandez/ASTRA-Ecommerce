@@ -29,6 +29,9 @@ server.post('/', function (req, res) {
 server.get('/', (req, res) => {
 	User.findAll()
 		.then((users) => {
+			users.sort(function (a, b) {
+				return a.id - b.id;
+			});
 			return res.status(OK).json({
 				message: 'Success',
 				data: users,
@@ -61,6 +64,30 @@ server.delete('/', (req, res) => {
 			console.log(err);
 			return res.status(ERROR_SERVER).json({
 				message: 'Error al eliminar usuario',
+				data: err,
+			});
+		});
+});
+
+// MODIFICAR DATOS DEL USER
+server.put('/', (req, res) => {
+	console.log(req.body);
+	console.log('*************');
+	const { email, id, password, role } = req.body;
+
+	User.findOne({ where: { email } })
+		.then((user) => {
+			user.password = password;
+			user.role = role;
+			user.save();
+			return res.status(OK).json({
+				message: `El usuario se ha actualizado correctamente!`,
+				data: user,
+			});
+		})
+		.catch((err) => {
+			return res.status(ERROR).json({
+				message: 'Error al modificar en la ruta del usuario',
 				data: err,
 			});
 		});
