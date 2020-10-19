@@ -68,7 +68,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP }) =>
 		window.location.reload();
 	};
 
-	console.log(usuariosDesdeBD);
+	//console.log(usuariosDesdeBD);
 	/****************************** Component Life Cycle ********************************** */
 
 	useEffect(() => {
