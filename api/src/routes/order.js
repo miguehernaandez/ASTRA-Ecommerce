@@ -77,6 +77,4 @@ server.delete('/:userId/cart/:idProduct', function (req, res) {
 	 }) 	
 })
 
-
-
 module.exports =  server
