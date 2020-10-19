@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-    ADD_CATEGORY,
+    GET_ORDERS,
     GET_CATEGORIES,
     DELETE_CATEGORY,
     MODIFY_CATEGORY,
@@ -10,14 +10,14 @@ import {
 
 const url = "localhost:3001";
 
-export function getCategories()  {
+export function getOrders()  {
     return  (dispatch) => {
-        axios.get(`http://${url}/products/category`)
+        axios.get(`http://${url}/orders`)
         .then(res => {
             if(res.status === 200){
                 dispatch({
-                    type: GET_CATEGORIES,
-                    categories: res.data.result || []
+                    type: GET_ORDERS,
+                    categories: res.data.data || []
                 })
             }else{
                 dispatch({
@@ -25,7 +25,6 @@ export function getCategories()  {
                     categories: 'Error in the Request'
                 })                   
             }
-
         })
         .catch(err => {
             console.log('Error')
@@ -120,13 +119,3 @@ export function getProductByCategory(catName){
             })
     }
 }
-
-
-
-
-
-
-
-
-
-

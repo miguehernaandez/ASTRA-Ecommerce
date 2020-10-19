@@ -67,7 +67,7 @@ export function deleteUser(userID) {
 	console.log(userID);
 	return (dispatch) => {
 		axios
-			.delete(`http://${url}/user`, {
+			.delete(`http://${url}/users`, {
 				params: { id: userID },
 			})
 			.then((res) => {
@@ -102,7 +102,7 @@ export function updateUser(data) {
 	console.log(data);
 	return (dispatch) => {
 		axios
-			.put(`http://${url}/user`, data)
+			.put(`http://${url}/users`, data)
 			.then((res) => {
 				console.log(res.data);
 				console.log('peticion PUT enviada');
