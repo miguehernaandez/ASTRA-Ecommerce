@@ -1,50 +1,80 @@
 const server = require('express').Router(); //Import router from express module.
-const { OK, CREATED, UPDATED, ERROR, NOT_FOUND, ERROR_SERVER } = require('../constants'); // Import Status constants.
-const { Order } = require('../db.js'); // Import Products model.
-// const {status} = require('sequelize'); // Import operator from sequelize module.
+const { Order, Order_line, Product, User } = require('../db.js'); // Import Categories model.
+const { OK, CREATED, ERROR, ERROR_SERVER } = require('../constants/index'); // Import Status constants.
 
+// Start Routes
 
-
-// Start routes
-//// 'Get order' route in '/?query={value}'
-
-server.post ('/',( req, res ) => {
-	const { key, price, quantity, total, date, status } = req.body;
-
-	return Order.create({ key, price, quantity, total, date, status })
-		.then((order) => {
-			return res.status(OK).json({
-				message: 'Orden creada exitosamente!',
-				data: order,
-			});
-		})
-		.catch((err) => {
-			return res.status(ERROR).json({
-				message: 'Error al crear la orden',
-				data: err,
-			});
-		});
+//// 'Create Order' route in '/'
+server.post('/:userId/cart', function (req, res) {
+    console.log(req.body)
+    // return res.send(req.body)
+     const { userId } = req.params;
+     const { id, qty } = req.body
+	 const newOrder = Order.findOrCreate({ where: { userId } });
+	 const newProduct = Product.findOne({ where: {id: id} });
+	 Promise.all([ newOrder,  newProduct])
+	 .then((data) => {
+	 	data[0][0].addProducts(data[1], { through: { price: data[1].price, quantity: qty } })
+	 	.then(()=>{ Order.findOne({ where: { userId }, 	include: [{ model: Product }, { model: User } ] }).then(order => { 			return res.status(OK).json({ 				message: "ítem añadido al carrito", 				data: order 			})
+	 		})
+ 	    })
+	 })
+	 .catch((err) => {
+	 	res.send({errro: 'Error POST'})
+	 });
 });
 
-server.get ('/',( req, res ) => {
-	Order.findAll({
-		where: {
-			status: req.query.status
-		}
-	}) 
-		.then(orders => {
-			return res.status(OK).json({
-				message: 'Success',
-				data: orders
+//// 'Edit quantity in order_line' route in '/users/:userId/cart'
+server.put('/:userId/cart', function (req, res) {
+
+	const { userId } = req.params;
+	const { id, qty } = req.body;
+	Promise.all([Product.findOne({ where: { id }}), Order.findOne({where: { userId }})])
+	.then(data => {
+		data[0].setOrders(data[1], { through: { quantity: qty }})
+		.then(()=>{
+			Order.findOne({
+				where: { userId },
+				include: [{ model: Product }, { model: User } ]
+			})
+			.then(order => {
+				return res.status(OK).json({
+					message: "Cantidad del ítem modificada correctamente",
+					data: order
+				})
 			})
 		})
-		.catch(err => {
-            return res.status(ERROR_SERVER).json({
-                message: 'Hubo un error en el servidor',
-                data: err
-            })
-        })
-});
+	})
+	.catch(err => {
+		console.log(err);
+	}) 	
+})
 
-//End routes
-module.exports = server;
+//// 'remove items from cart' route in '/users/:userId/cart'
+server.delete('/:userId/cart/:idProduct', function (req, res) {
+	console.log(req.params)
+	const { userId, idProduct } = req.params;
+	 console.log(req.query)
+	 const {id}  = req.body;
+	 Promise.all([Order.findOne({where: { userId }}),  Product.findOne({ where: { id: idProduct }})])
+	 .then(data => {
+	 	data[0].removeProducts(data[1])
+	 	.then(()=>{
+	 		Order.findOne({
+	 			where: { userId },
+	 			include: [{ model: Product }, { model: User } ]
+	 		})
+	 		.then(order => {
+	 			return res.status(OK).json({
+	 				message: "Ítem eliminado correctamente del carrito",
+	 				data: order
+	 			})
+	 		})
+	 	})
+	 })
+	 .catch(err => {
+	 	console.log(err);
+	 }) 	
+})
+
+module.exports =  server

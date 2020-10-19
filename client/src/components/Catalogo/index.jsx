@@ -13,7 +13,6 @@ import {
 import {
     getProducts
 }from '../../store/actions/product_actions';
-
 import {Container, Row, Col, Form, Pagination} from 'react-bootstrap';
 import s from '../../styles/catalogo.module.css';
 const url = 'localhost:3001';
@@ -27,11 +26,13 @@ var enlacesUser = [
 ];
 
 
+
+
 const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, onSearch, getProductByCategoryP})=> {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(8);
-
+    console.log(productsP)
     console.log(products)
     const handlerSelect= (e)=> {
         const catName = e.target.value;
@@ -46,7 +47,8 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
         console.log(catName);
         getProductByCategoryP(catName)
         }
-	};
+    };
+
 
     useEffect(()=> {
         getProductP();
@@ -57,7 +59,7 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = productsP.slice(indexOfFirstPost, indexOfLastPost);
-
+  
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (

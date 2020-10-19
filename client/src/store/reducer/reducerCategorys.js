@@ -1,4 +1,14 @@
-import { ADD_CATEGORY, GET_CATEGORIES, DELETE_CATEGORY, MODIFY_CATEGORY, ERROR_MESSAGE, ADD_PRODUCT, DELETE_PRODUCT, ADD_CATEGORY_PRODUCT, REMOVE_CATEGORY_PRODUCT, GET_PRODUCTS, MODIFY_PRODUCT, GET_PRODUCTS_BY_CATEGORY, ADD_TO_CARD, REMOVE_FROM_CART, CREATE_USER, GET_USERS } from '../constants/constans';
+import { 
+  ADD_CATEGORY, GET_CATEGORIES, 
+  DELETE_CATEGORY, MODIFY_CATEGORY, 
+  ERROR_MESSAGE, ADD_PRODUCT, 
+  DELETE_PRODUCT, ADD_CATEGORY_PRODUCT, 
+  REMOVE_CATEGORY_PRODUCT, GET_PRODUCTS, 
+  MODIFY_PRODUCT, GET_PRODUCTS_BY_CATEGORY, 
+  ADD_TO_CARD, REMOVE_FROM_CART, 
+  UPDATE_FROM_CART, CREATE_USER, 
+  GET_USERS, DELETE_USER, UPDATE_USER} from '../constants/constans';
+
 
 const inicialState = {
 	categories: [],
@@ -86,6 +96,25 @@ const ReducerCategory = (state = inicialState, action) => {
 			console.log('reducer GET_USERS');
 			return { ...state, users: action.users };
 
+		case DELETE_USER:
+			console.log(action.id.data.id);
+			let newUsers = state.users.filter((user) => user.id !== action.id.data.id);
+			return { ...state, users: newUsers };
+
+		case UPDATE_USER:
+			console.log(action.payload.data);
+			const { id, password, role } = action.payload.data;
+			console.log(id, password, role);
+			var userToUpdatePosition = state.users.indexOf(state.users.filter((user) => user.id === id)[0]);
+			// console.log(userToUpdatePosition);
+			var userToUpdate = state.users[userToUpdatePosition];
+			// console.log(userToUpdate);
+			var userUpdated = { ...userToUpdate, password: password, role: role };
+			var oldUsers = state.users;
+			// console.log(oldUsers);
+			oldUsers[userToUpdatePosition] = userUpdated;
+			return { ...state, users: oldUsers };
+
 		case ERROR_MESSAGE:
 			console.log('error en algun lado: el reducer');
 			return inicialState;
@@ -105,9 +134,14 @@ const ReducerCategory = (state = inicialState, action) => {
 				};
 			}
 			return { ...state, cart: [...state.cart, item] };
-		case REMOVE_FROM_CART:
-			return { ...state, cart: state.cart.filter((x) => x.id !== action.payload) };
 
+		case REMOVE_FROM_CART:
+			// let productsNew = state.cart.products.filter(x => x.id !== productsP.id)
+			// let order = state.cart.filter(x => x.id === action.payload.id)
+			// order.products = productsNew
+			return { ...state, cart: [action.payload] };
+		case UPDATE_FROM_CART:
+			return { ...state, cart: [action.payload] };
 		default:
 			return inicialState;
 	}
