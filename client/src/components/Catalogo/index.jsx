@@ -26,14 +26,21 @@ var enlacesUser = [
 ];
 
 
-
-
 const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, onSearch, getProductByCategoryP})=> {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(8);
+   
     console.log(productsP)
     console.log(products)
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPostsCat = productsP.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPostsSearch = products.slice(indexOfFirstPost, indexOfLastPost);
+  
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     const handlerSelect= (e)=> {
         const catName = e.target.value;
         let obj = {
@@ -49,18 +56,12 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
         }
     };
 
-
     useEffect(()=> {
         getProductP();
         getCategoryP();
     }, []);
 
-
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = productsP.slice(indexOfFirstPost, indexOfLastPost);
   
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
 
@@ -74,7 +75,7 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
             <h1 className={s.title1}>Registros encontrados: {productsP.length}</h1>
             < Filter categories={categories} handlerSelect={handlerSelect}/>
             <Row >
-            {currentPosts.map((p)=> {
+            {currentPostsCat.map((p)=> {
                 return (
                     <Col lg="3">
                     <ProductCard 
@@ -96,7 +97,7 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
         <h1 className={s.title1}>Registros encontrados: {products.length}</h1>
         < Filter categories={categories} handlerSelect={handlerSelect}/>
         <Row>
-        {currentPosts.map((p)=> {
+        {currentPostsSearch.map((p)=> {
             return (
                 <Col lg="3">
                 <ProductCard 
@@ -111,7 +112,7 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
             )
         })}
         </Row>
-        <Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate}/>
+        <Page postsPerPage={postsPerPage} totalPosts={products.length} paginate={paginate}/>
         </Container>
     }
         
