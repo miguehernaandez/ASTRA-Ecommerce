@@ -133,8 +133,17 @@
     color:#F19953 ;
 }
 
+.cont_cant2{
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
 .agotadoProct{
-    color: red !important;
+    font-family: 'Open Sans', sans-serif !important;
+    /* font-size: 30px !important; */
+    color: black !important;
+    -webkit-text-stroke: 1px red;
     text-shadow: 0 0 10px rgba(0,0,0,0.51);
     font-weight: bold;
 }
@@ -142,6 +151,8 @@
 .productCardOutStock{
     background-color: rgb(247, 7, 7) !important;
 }
+
+
 
 
 

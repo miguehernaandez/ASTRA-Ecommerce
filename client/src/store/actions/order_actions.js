@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-    ADD_CATEGORY,
+    GET_ORDERS,
     GET_CATEGORIES,
     DELETE_CATEGORY,
     MODIFY_CATEGORY,
@@ -10,22 +10,21 @@ import {
 
 const url = "localhost:3001";
 
-export function getCategories()  {
+export function getOrders()  {
     return  (dispatch) => {
-        axios.get(`http://${url}/products/category`)
+        axios.get(`http://${url}/orders`)
         .then(res => {
             if(res.status === 200){
                 dispatch({
-                    type: GET_CATEGORIES,
-                    categories: res.data.result || []
+                    type: GET_ORDERS,
+                    orders: res.data.data || []
                 })
             }else{
                 dispatch({
                     type: ERROR_MESSAGE,
-                    categories: 'Error in the Request'
+                    message: 'Error in the Request'
                 })                   
             }
-
         })
         .catch(err => {
             console.log('Error')
@@ -33,24 +32,24 @@ export function getCategories()  {
     }
 }
 
-export function AddCategorie(data){
-    return async (dispatch) => {
-        await axios.post(`http://${url}/products/category`, data)
-        .then(res => {
-            if(res.status === 201) {
-                dispatch({
-                    type: ADD_CATEGORY,
-                    category: res.data.data,
-                })
-            }else{
-                dispatch({
-                    type: ERROR_MESSAGE,
-                    message: 'Error al Crear Categoria',
-                })
-            }
-        })
-    }
-}
+// export function AddCategorie(data){
+//     return async (dispatch) => {
+//         await axios.post(`http://${url}/products/category`, data)
+//         .then(res => {
+//             if(res.status === 201) {
+//                 dispatch({
+//                     type: ADD_CATEGORY,
+//                     category: res.data.data,
+//                 })
+//             }else{
+//                 dispatch({
+//                     type: ERROR_MESSAGE,
+//                     message: 'Error al Crear Categoria',
+//                 })
+//             }
+//         })
+//     }
+// }
 
 export function updCategory(dat){
     console.log(dat.id)
@@ -120,13 +119,3 @@ export function getProductByCategory(catName){
             })
     }
 }
-
-
-
-
-
-
-
-
-
-

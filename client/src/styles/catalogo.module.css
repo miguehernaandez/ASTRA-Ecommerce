@@ -1,3 +1,27 @@
+.cont_prin_card{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    /* background-color: aqua !important; */
+    
+}
+.cont_filter{
+    /* background-color: aquamarine; */
+    width: 15%;
+}
+.cont_filter p{
+    text-align: center;
+    color:  #1F2333;
+    font-family:  'Open Sans', sans-serif !important;
+    font-weight: bolder;
+
+}
+.cont_card{
+    /* background-color: bisque; */
+    width: 85%;
+    flex-wrap: wrap;
+    
+}
 .title5{
     color: #3B8EA5;
     font-family:  'Open Sans', sans-serif !important;
