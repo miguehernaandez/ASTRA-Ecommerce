@@ -37,7 +37,7 @@ export function createUser(userData) {
 export function getUsers() {
 	return (dispatch) => {
 		axios
-			.get(`http://${url}/user`)
+			.get(`http://${url}/users`)
 			.then((res) => {
 				console.log(res);
 				if (res.status === 200) {
