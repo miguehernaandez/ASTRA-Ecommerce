@@ -1,5 +1,5 @@
 const server = require('express').Router(); //Import router from express module.
-const { User, Order } = require('../db.js'); // Import Categories model.
+const { User, Order, Product } = require('../db.js'); // Import Categories model.
 const { OK, CREATED, UPDATED, ERROR, NOT_FOUND, ERROR_SERVER } = require('../constants'); // Import Status constants.
 
 // Start Routes
@@ -90,6 +90,25 @@ server.put('/', (req, res) => {
 			});
 		});
 });
+
+
+server.get('/:id', (req, res, next) => {
+	const { id } = req.params
+	User.findAll({ where: { id }, include: {model: Order, include: Product }})
+	.then(user => {
+		console.log(user)
+		res.json({
+			user:user
+		})
+	.catch((err) => {
+		return res.status(ERROR).json({
+			message: 'Error al buscar User',
+			data: err,
+		});
+	});
+})
+})
+
 
 // End Routes
 
