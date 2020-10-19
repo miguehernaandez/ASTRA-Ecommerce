@@ -5,7 +5,7 @@ import {
   DELETE_PRODUCT, ADD_CATEGORY_PRODUCT, 
   REMOVE_CATEGORY_PRODUCT, GET_PRODUCTS, 
   MODIFY_PRODUCT, GET_PRODUCTS_BY_CATEGORY, 
-  ADD_TO_CARD, REMOVE_FROM_CART, 
+  ADD_TO_CARD, REMOVE_FROM_CART, GET_ORDERS, 
   UPDATE_FROM_CART, CREATE_USER, 
   GET_USERS, DELETE_USER, UPDATE_USER} from '../constants/constans';
 
@@ -15,11 +15,14 @@ const inicialState = {
 	products: [],
 	cart: [],
 	users: [],
+	orders: []
 };
 
 const ReducerCategory = (state = inicialState, action) => {
 	console.log(action);
 	switch (action.type) {
+
+		/****************************** CATEGORIES ********************************/
 		case GET_CATEGORIES:
 			return { ...state, categories: action.categories };
 
@@ -47,7 +50,7 @@ const ReducerCategory = (state = inicialState, action) => {
 				}),
 			};
 
-		/****************************** PRODUCTS *********************************** */
+		/****************************** PRODUCTS **********************************/
 		case GET_PRODUCTS:
 			return { ...state, products: action.products };
 
@@ -119,11 +122,11 @@ const ReducerCategory = (state = inicialState, action) => {
 			console.log('error en algun lado: el reducer');
 			return inicialState;
 
-		/****************************** CATALOGO *********************************** */
+		/****************************** CATALOGO **********************************/
 		case GET_PRODUCTS_BY_CATEGORY:
 			return { ...state, products: action.products };
 
-		/****************************** CART *********************************** */
+		/****************************** CART **************************************/
 		case ADD_TO_CARD:
 			const item = action.products;
 			const product = state.cart.find((x) => x.id === item.id);
@@ -142,8 +145,14 @@ const ReducerCategory = (state = inicialState, action) => {
 			return { ...state, cart: [action.payload] };
 		case UPDATE_FROM_CART:
 			return { ...state, cart: [action.payload] };
-		default:
-			return inicialState;
+
+		/****************************** ORDERS ************************************/
+		case GET_ORDERS:
+			return {...state, orders: action.orders };
+		
+		
+		
+		default: return inicialState;
 	}
 };
 

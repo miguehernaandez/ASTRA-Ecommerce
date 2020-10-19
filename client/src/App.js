@@ -3,6 +3,7 @@ import './App.css';
 import PrinciapalAdmin from './components/AdminForm/pageP';
 import Product from './components/AdminForm/product';
 import Category from './components/AdminForm/Categorys';
+import Orders from './components/AdminForm/Orders';
 import Navegacion from './components/Navegacion/Navegacion';
 import WellcomeAdmin from './components/AdminForm/WellcomAdmin';
 import Slider from './components/Slider/Slider';
@@ -22,6 +23,7 @@ import CartShop from './components/Cart/card';// Redux
 
 
 
+
 const url = 'localhost:3001';
 
 var enlacesUser = [
@@ -35,9 +37,10 @@ var enlacesUser = [
 
 var enlacesAdmin = [
 	{ text: 'Inicio', to: '/admin' },
+	{ text: 'Usuarios', to: '/admin/users' },
+	{ text: 'Categorías', to: '/admin/category' },
 	{ text: 'Productos', to: '/admin/product' },
-	{ text: 'Categorias', to: '/admin/category' },
-	{ text: 'Users', to: '/admin/users' },
+	{ text: 'Ordenes', to: '/admin/orders' }
 ];
 
 
@@ -75,17 +78,13 @@ function App() {
 					<Route path='/admin/product' component={Product} />
 					<Route path='/admin/category' component={Category} />
 					<Route path='/admin/users' component={UsersData} />
+					<Route path='/admin/orders' component={Orders} />
 				</Route>
 				<Route path='/users' exact>
 					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
 					<FormUsers></FormUsers>
 					<Footer></Footer>
 				</Route>
-
-				<Route path='/admin/product' component={Product} />
-				<Route path='/admin/category' component={Category} />
-				<Route path='/admin/user' component={Category} />
-				{/* <Route path='/product/:id' component={ProductDet} /> */}
 				<Route path='/products/product/:id'>
 					<Navegacion links={enlacesUser} showSearchbar={true} />
 					<ProductDet />
