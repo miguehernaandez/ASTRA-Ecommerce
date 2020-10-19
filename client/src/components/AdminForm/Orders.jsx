@@ -17,7 +17,7 @@ import {
 
 const url = 'localhost:3001';
 
-const Orders = ({orders, getOrdersP, addCategoryP, updCategoryP, deleteCategoryP}) => {
+const Orders = ({ orders, getOrdersP }) => {
     console.log('OBJETO ORDENES')
     console.log(orders)
     //console.log(props)
@@ -51,11 +51,6 @@ const Orders = ({orders, getOrdersP, addCategoryP, updCategoryP, deleteCategoryP
     //     return;
     // }
 
-    const deleteCategory = (id)=>{
-        if(window.confirm('Are you sure remove this product?')){
-            deleteCategoryP(id)
-        }
-    }
     /*********************** Component Life Cycle *************************** */
     useEffect(()=> {
         getOrdersP();
@@ -97,19 +92,6 @@ const Orders = ({orders, getOrdersP, addCategoryP, updCategoryP, deleteCategoryP
                 </Table>
                 </div>
             </div>
-            {/**************************** ADD CATEGORY MODAL ******************************** */}
-            <AddCategory 
-                data={form} 
-                show={show} 
-                closeModal={closeModal} 
-                handlerChange={handlerChange} 
-            />
-
-            {/*************************** UPDATE CATEGORY MODAL ****************************** */}
-            <UpdateCategory 
-                form={form} 
-                handlerChange={handlerChange} 
-            />
         </div>
     )
 }

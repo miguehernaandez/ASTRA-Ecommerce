@@ -17,12 +17,12 @@ export function getOrders()  {
             if(res.status === 200){
                 dispatch({
                     type: GET_ORDERS,
-                    categories: res.data.data || []
+                    orders: res.data.data || []
                 })
             }else{
                 dispatch({
                     type: ERROR_MESSAGE,
-                    categories: 'Error in the Request'
+                    message: 'Error in the Request'
                 })                   
             }
         })
@@ -32,24 +32,24 @@ export function getOrders()  {
     }
 }
 
-export function AddCategorie(data){
-    return async (dispatch) => {
-        await axios.post(`http://${url}/products/category`, data)
-        .then(res => {
-            if(res.status === 201) {
-                dispatch({
-                    type: ADD_CATEGORY,
-                    category: res.data.data,
-                })
-            }else{
-                dispatch({
-                    type: ERROR_MESSAGE,
-                    message: 'Error al Crear Categoria',
-                })
-            }
-        })
-    }
-}
+// export function AddCategorie(data){
+//     return async (dispatch) => {
+//         await axios.post(`http://${url}/products/category`, data)
+//         .then(res => {
+//             if(res.status === 201) {
+//                 dispatch({
+//                     type: ADD_CATEGORY,
+//                     category: res.data.data,
+//                 })
+//             }else{
+//                 dispatch({
+//                     type: ERROR_MESSAGE,
+//                     message: 'Error al Crear Categoria',
+//                 })
+//             }
+//         })
+//     }
+// }
 
 export function updCategory(dat){
     console.log(dat.id)
