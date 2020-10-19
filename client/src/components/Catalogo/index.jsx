@@ -73,9 +73,14 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
         :
         <Container>
             <h1 className={s.title1}>Registros encontrados: {productsP.length}</h1>
-            < Filter categories={categories} handlerSelect={handlerSelect}/>
-            <Row >
-            {currentPostsCat.map((p)=> {
+            <div className={s.cont_prin_card}>
+                <div className={s.cont_filter}>
+                    <div><p>Categorias</p></div>
+                < Filter categories={categories} handlerSelect={handlerSelect}/>
+                </div>
+                <div className={s.cont_card}>
+                <Row >
+                {currentPostsCat.map((p)=> {
                 return (
                     <Col lg="3">
                     <ProductCard 
@@ -90,12 +95,21 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
                 )
             })}
             </Row>
+                </div>           
+            
+            </div>
+           
             <Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate}/>
         </Container>
         :
         <Container>
         <h1 className={s.title1}>Registros encontrados: {products.length}</h1>
+        <div className={s.cont_prin_card}> 
+        <div className={s.cont_filter}>
+        <div><p>Categorias</p></div>
         < Filter categories={categories} handlerSelect={handlerSelect}/>
+        </div> 
+        <div className={s.cont_card}>   
         <Row>
         {currentPostsSearch.map((p)=> {
             return (
@@ -112,6 +126,8 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
             )
         })}
         </Row>
+        </div> 
+        </div>
         <Page postsPerPage={postsPerPage} totalPosts={products.length} paginate={paginate}/>
         </Container>
     }
