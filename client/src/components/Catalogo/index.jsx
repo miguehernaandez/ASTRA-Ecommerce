@@ -26,8 +26,11 @@ var enlacesUser = [
 ];
 
 
+
+
 const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, onSearch, getProductByCategoryP})=> {
 
+    console.log(productsP)
     console.log(products)
     const handlerSelect= (e)=> {
         const catName = e.target.value;
@@ -43,10 +46,12 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
         getProductByCategoryP(catName)
         }
     };
-    
 
 
-
+    useEffect(()=> {
+        getProductP();
+        getCategoryP();
+    }, [])
 
     return (
 

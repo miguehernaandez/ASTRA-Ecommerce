@@ -28,11 +28,11 @@ export function addToCart(id, qty){
     return async (dispatch)=> {
         await axios.get(`http://${url}/users`).then(res =>{
             if(res.data.data.length == 0){
-                //axios.post(`http://${url}/users`, userData)
+                axios.post(`http://${url}/users`, userData)
                 //createUser(userData)
-                if(window.confirm('No hay nimgun usuario registrado, desea registrar uno?')){
-                    window.location.href = 'http://localhost:3000/users'
-                }
+                // if(window.confirm('No hay nimgun usuario registrado, desea registrar uno?')){
+                //     window.location.href = 'http://localhost:3000/users'
+                // }
             }
         } )  
         axios.post(`http://${url}/users/1/cart`, product)

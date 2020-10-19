@@ -29,7 +29,7 @@ var enlacesUser = [
 	{ text: 'FAQs', to: '/' },
 	{ text: 'Contacto', to: '/' },
 	{ text: 'Ayuda', to: '/' },
-	{ text: 'Registro', to: '/users' }, // Por ahora para probar nomas
+	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
 	{ text: 'ADMIN', to: '/admin' },
 ];
 
@@ -91,6 +91,7 @@ function App() {
 				</Route>
 				<Route path='/users/cart' component={CartShop} />
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
+			
 			</Switch>
 		</div>
 	);

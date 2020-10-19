@@ -51,8 +51,9 @@ function Navegacion(props) {
 				</Col>
 
 				<Col lg={1} className={'d-flex'}>
+					<Link to='/users'>
 					{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon}`} icon={userLogin} size={'1x'} />}
-					
+					</Link>
 						
 					{!!props.showSearchbar && <div className={s.contCart}><Link to='/users/cart'><FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'1x'} /></Link><span className={s.shopCartIconSpan}>{props.cartP[0] ? props.cartP[0].products.length: 0}</span></div>}
 					

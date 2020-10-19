@@ -81,11 +81,12 @@
 .contCart{
 	position: relative;
 	height: 100%;
+	margin-left: 10px;
 }
 
 
 .contCart  .shopCartIconSpan{
-	margin-left: 5px;
+	margin-left: 10px;
 	color: white;
 	background-color: red;
 	padding: 2px 5px;
