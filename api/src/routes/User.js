@@ -4,8 +4,8 @@ const { OK, CREATED, ERROR, ERROR_SERVER } = require('../constants/index'); // I
 
 // Start Routes
 
-// 'Create User' route in '/'
-server.post('/', function (req, res) {
+//// 'Create User' route in '/'
+server.post('/',   function (req, res) {
 	const { email, password, role } = req.body;
 	console.log(req.body);
 	User.create({ email, password, role })
