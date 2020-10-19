@@ -154,3 +154,13 @@ Colores personalizados */
 	overflow: hidden;
 
 }
+
+#maxCardHeigth{
+	height: 450px;
+}
+
+#maxImgHeigth{
+	width: 100%;
+	height: 250px;
+	border-radius: 5px;
+}

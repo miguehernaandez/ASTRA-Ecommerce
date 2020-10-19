@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react'
 import ProductCard from '../ProductCard/index';
 import Navegacion from '../Navegacion/Navegacion'
 import Filter from '../Filter/index';
+import Page from '../Pagination/index.jsx';
 import { connect } from 'react-redux';
 import {
     getCategories,
@@ -13,7 +14,7 @@ import {
     getProducts
 }from '../../store/actions/product_actions';
 
-import {Container, Row, Col, Form} from 'react-bootstrap';
+import {Container, Row, Col, Form, Pagination} from 'react-bootstrap';
 import s from '../../styles/catalogo.module.css';
 const url = 'localhost:3001';
 
@@ -27,6 +28,9 @@ var enlacesUser = [
 
 
 const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, onSearch, getProductByCategoryP})=> {
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(8);
 
     console.log(products)
     const handlerSelect= (e)=> {
@@ -47,8 +51,14 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
     useEffect(()=> {
         getProductP();
         getCategoryP();
-    }, [])
+    }, []);
 
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = productsP.slice(indexOfFirstPost, indexOfLastPost);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
 
@@ -62,7 +72,7 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
             <h1 className={s.title1}>Registros encontrados: {productsP.length}</h1>
             < Filter categories={categories} handlerSelect={handlerSelect}/>
             <Row >
-            {productsP.map((p)=> {
+            {currentPosts.map((p)=> {
                 return (
                     <Col lg="3">
                     <ProductCard 
@@ -77,13 +87,14 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
                 )
             })}
             </Row>
+            <Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate}/>
         </Container>
         :
         <Container>
         <h1 className={s.title1}>Registros encontrados: {products.length}</h1>
         < Filter categories={categories} handlerSelect={handlerSelect}/>
         <Row>
-        {products.map((p)=> {
+        {currentPosts.map((p)=> {
             return (
                 <Col lg="3">
                 <ProductCard 
@@ -98,6 +109,7 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
             )
         })}
         </Row>
+        <Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate}/>
         </Container>
     }
         

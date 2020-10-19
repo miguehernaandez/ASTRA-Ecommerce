@@ -1,5 +1,5 @@
 const server = require('express').Router(); //Import router from express module.
-const { User } = require('../db.js'); // Import Categories model.
+const { User, Order } = require('../db.js'); // Import Categories model.
 const { OK, CREATED, UPDATED, ERROR, NOT_FOUND, ERROR_SERVER } = require('../constants'); // Import Status constants.
 
 // Start Routes
@@ -63,6 +63,11 @@ server.put('/:id', (req, res) => {
             })
         })
  });
+
+ server.get('/:id/order', (req, res) => {
+	const { id } = req.params;
+	return Order.findAll()
+ })
 
 
 // End Routes
