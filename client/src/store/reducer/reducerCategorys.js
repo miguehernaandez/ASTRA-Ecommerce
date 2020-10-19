@@ -7,7 +7,7 @@ import {
   MODIFY_PRODUCT, GET_PRODUCTS_BY_CATEGORY, 
   ADD_TO_CARD, REMOVE_FROM_CART, 
   UPDATE_FROM_CART, CREATE_USER, 
-  GET_USERS, DELETE_USER, UPDATE_USER} from '../constants/constans';
+  GET_USERS, DELETE_USER, UPDATE_USER, DETAIL_USER} from '../constants/constans';
 
 
 const inicialState = {
@@ -15,6 +15,7 @@ const inicialState = {
 	products: [],
 	cart: [],
 	users: [],
+	userSelected: []
 };
 
 const ReducerCategory = (state = inicialState, action) => {
@@ -114,6 +115,9 @@ const ReducerCategory = (state = inicialState, action) => {
 			// console.log(oldUsers);
 			oldUsers[userToUpdatePosition] = userUpdated;
 			return { ...state, users: oldUsers };
+
+		case DETAIL_USER:
+			return {...state, userSelected: action.users}
 
 		case ERROR_MESSAGE:
 			console.log('error en algun lado: el reducer');

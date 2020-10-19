@@ -91,6 +91,26 @@ server.put('/', (req, res) => {
 		});
 });
 
+
+server.get('/:id', (req, res, next) => {
+	const { id } = req.params
+	User.findAll({ where: { id }, include: [{model: Order}, {model: Product}] })
+	.then(user => {
+		console.log(user)
+		res.json({
+			user:user
+		})
+	
+	.catch((err) => {
+		return res.status(ERROR).json({
+			message: 'Error al buscar User',
+			data: err,
+		});
+	});
+})
+})
+
+
 // End Routes
 
 module.exports = server;

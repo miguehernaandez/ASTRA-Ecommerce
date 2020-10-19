@@ -12,6 +12,7 @@ import ProductCard from './components/ProductCard/index';
 import Catalogo from './components/Catalogo/index';
 import FormUsers from './components/FormUsers/FormUsers.jsx';
 import UsersData from './components/AdminForm/UsersData';
+import UserDetaul from './components/AdminForm/DetailUser.jsx'
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
@@ -92,12 +93,11 @@ function App() {
 				</Route>
 				<Route path='/users/cart' component={CartShop} />
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
-			
+				<Route path='/users/:id' component={UserDetaul}/>
 			</Switch>
 		</div>
 	);
 }
-
 
 
 export default App;
