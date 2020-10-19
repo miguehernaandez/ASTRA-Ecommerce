@@ -83,15 +83,20 @@ const Product = ({ productsP,getProductP, addToCartP }) => {
 							<span className={s.dim}>Dimensiones:</span> {`${objP.dimentions}` || `noDisponible`}
 						</p>
 						<div className={s.cont_cant}>
-							<label for='Cantidad'>Candidad:</label>
-							<select name='Cantidad' id='Cantidad' className={s.select} value={qty} onChange={(e) => {setQty(e.target.value)}}>
-								{[...Array(objP.stock).keys()].map(x => {
-									return (
-										<option value={x+1}>{x+1}</option>
-									)
-								})}
-							</select>
-							{objP.stock > 0 ? <h6> {objP.stock} Unidades Disponibles</h6> : <h4 className={s.agotadoProct}> Producto Agotado</h4>}
+							{objP.stock > 0 ?
+							<div className={s.cont_cant2}>
+								<label for='Cantidad'>Candidad:</label>
+								<select name='Cantidad' id='Cantidad' className={s.select} value={qty} onChange={(e) => {setQty(e.target.value)}}>
+									{[...Array(objP.stock).keys()].map(x => {
+										return (
+											<option value={x+1}>{x+1}</option>
+										)
+									})}
+								</select>
+								<h6> {objP.stock} Unidades Disponibles</h6> 
+							</div>
+							: 
+							<h4 className={s.agotadoProct}> Producto Agotado</h4>}
 						</div>
 						{objP.stock > 0 && 
 							<div className={s.cont_button}>

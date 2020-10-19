@@ -47,6 +47,7 @@ function App() {
 	const onSearch = (search) => {
 		//console.log('NOmbre: ' + search)
 		axios.get(`http://${url}/products/search?query=${search}`).then((res) => {
+			setProduct([]);
 			let { data } = res.data;
 			console.log(data);
 			setProduct(data);
