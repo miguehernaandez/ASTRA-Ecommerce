@@ -29,9 +29,9 @@ function ProductCard({ name, description, img, price, id, destacado, stock, addT
 
 	return (
 		  
-			<Card className={stock === 0 ? ` m-2 flex-dark  ${s.productRunOut}`: ` m-2 flex-dark ${s.productCard}` } >
+			<Card className={stock === 0 ? ` m-2 flex-dark  ${s.productRunOut}`: ` m-2 flex-dark ${s.productCard}` } id={s.maxCardHeigth} >
 				{stock === 0 && <div className={s.test}><p>AGOTADO</p> </div>}
-			<Card.Img variant='top' src={`${img}` || `https://picsum.photos/200`} />
+			<Card.Img variant='top' src={`${img}` || `https://picsum.photos/200`} id={s.maxImgHeigth}/>
 			<Card.ImgOverlay
 				className={`p-1 d-flex flex-column align-items-end justify-content-between ${s.productCardHeadingContainer}`}
 				onClick={() => {

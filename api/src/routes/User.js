@@ -1,6 +1,6 @@
 const server = require('express').Router(); //Import router from express module.
-const { User } = require('../db.js'); // Import Categories model.
-const { OK, CREATED, ERROR, ERROR_SERVER } = require('../constants/index'); // Import Status constants.
+const { User, Order } = require('../db.js'); // Import Categories model.
+const { OK, CREATED, UPDATED, ERROR, NOT_FOUND, ERROR_SERVER } = require('../constants'); // Import Status constants.
 
 // Start Routes
 
@@ -10,14 +10,12 @@ server.post('/',   function (req, res) {
 	console.log(req.body);
 	User.create({ email, password, role })
 		.then((user) => {
-			console.log(user.id);
 			return res.status(CREATED).json({
 				message: 'Usuario creado exitosamente!',
 				data: user,
 			});
 		})
 		.catch((err) => {
-			console.log('catch');
 			return res.status(ERROR).json({
 				message: 'Error al crear usuario',
 				data: err,
