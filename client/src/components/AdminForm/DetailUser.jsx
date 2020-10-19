@@ -3,14 +3,17 @@ import { connect } from 'react-redux'
 import { Table, Button } from 'react-bootstrap';
 import {  Link  } from 'react-router-dom';
 import Navegacion from '../Navegacion/Navegacion';
-var enlacesUser = [
-    { text: 'Catalogo', to: '/products/catalogo' },
-    { text: 'FAQs', to: '/' },
-    { text: 'Contacto', to: '/' },
-    { text: 'Ayuda', to: '/' },
-    { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
-    { text: 'ADMIN', to: '/admin' },
+import s from '../../styles/detailUser.module.css'
+var enlacesAdmin = [
+	{ text: 'Inicio', to: '/admin' },
+	{ text: 'Usuarios', to: '/admin/users' },
+	{ text: 'Categorías', to: '/admin/category' },
+	{ text: 'Productos', to: '/admin/product' },
+	{ text: 'Ordenes', to: '/admin/orders' }
 ];
+
+
+
 
 
 
@@ -19,7 +22,7 @@ const UserDetaul = ({userSelectedP}) => {
     return (
         
         <div>
-             < Navegacion links={enlacesUser} showSearchbar={false}/>
+             < Navegacion links={enlacesAdmin} showSearchbar={false}/>
             {userSelectedP.length === 0 || userSelectedP[0].orders.length === 0 ? 
             
             
@@ -34,12 +37,12 @@ const UserDetaul = ({userSelectedP}) => {
             
             <div className='container'>
 
-                    <h3>Ordenes de este Usuario: {userSelectedP[0].orders.length}</h3>
+                    <h3>Ordenes de este {userSelectedP[0].email}: {userSelectedP[0].orders.length}</h3>
                     <div>
                     {userSelectedP.map((x, index) => {
                         return (
-                            <div>
-                                <h1>Orden No.{index+1}</h1>
+                        <div className={s.contOrder}>
+                        <h1>Orden No.{index+1}</h1>
                         <Table striped bordered hover>
                         <thead>
                             <tr>
@@ -56,8 +59,46 @@ const UserDetaul = ({userSelectedP}) => {
                             <td>{x.orders[0].status}</td>
                             <td>{x.orders[0].createdAt}</td>
                             </tr>
+                        <tr>
+                            <th colSpan="4" className={s.thStyle}>PRODUCTOS DE LA ORDEN</th>
+                        </tr>
+                        <tr>
+                                <th>Product</th>
+                                <th>Cant</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                        </tr>
+                        {x.orders[0].products.map(p => {
+                            return (
+                                <tr>
+                                <td>{p.name}</td>
+                                <td>{p.order_line.quantity}</td>
+                                <td>$ {p.price}</td>
+                                <td>$ {p.price * p.order_line.quantity}</td>
+                        </tr>
+                            )
+                        })}
+
                         </tbody>
                         </Table>
+                        <div>
+                        <Table striped borderless size="sm">
+                            <tbody  className={s.tabletotal}>
+                                <tr>
+                                    <td className={s.subinfo1}>Subtotal</td>
+                                    <td className={s.subPrecio}>$ {x.orders[0].products.reduce((a,c) => a + c.order_line.quantity*c.price,0)}</td>
+                                </tr>
+                                <tr>
+                                    <td className={s.subinfo1}>Iva</td>
+                                    <td className={s.subPrecio}>$ { Math.trunc(x.orders[0].products.reduce((a,c) => a + c.order_line.quantity*c.price,0) * 0.19)  }</td>
+                                </tr>
+                                <tr>
+                                    <td className={s.subinfo1}>Total</td>
+                                    <td className={s.subPrecio}>$ { ( Math.trunc(x.orders[0].products.reduce((a,c) => a + c.order_line.quantity*c.price,0) * 0.19)) + x.orders[0].products.reduce((a,c) => a + c.order_line.quantity*c.price,0) }</td>
+                                </tr>
+                            </tbody>
+                            </Table>
+                        </div>
                     </div>
                 )
                 })}

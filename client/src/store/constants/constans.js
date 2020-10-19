@@ -18,3 +18,4 @@ export const DELETE_USER = 'DELETE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const UPDATE_FROM_CART = 'UPDATE_FROM_CART';
 export const DETAIL_USER = 'DETAIL_USER'
+export const GET_ORDERS = 'GET_ORDERS';
