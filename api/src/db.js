@@ -39,10 +39,12 @@ Order.belongsToMany(Product, { through: Order_line });
 
 //Review to product
 Product.hasMany(Review);
+Review.belongsTo(Product);
 
 //Review user
 
 User.hasMany(Review);
+Review.belongsTo(User);
 
 //productos y categorias
 

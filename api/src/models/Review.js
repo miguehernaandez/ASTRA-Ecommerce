@@ -4,8 +4,13 @@ module.exports = (sequelize) => {
 
   sequelize.define( 'review' , {
 
+    title:{
+      type: DataTypes.STRING,
+      alloNull:false,
+    },
+
     rate: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         isNumeric: true,
