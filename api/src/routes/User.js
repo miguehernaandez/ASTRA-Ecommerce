@@ -5,8 +5,9 @@ const { OK, CREATED, UPDATED, ERROR, NOT_FOUND, ERROR_SERVER } = require('../con
 // Start Routes
 
 //// 'Create User' route in '/'
-server.post('/',   function (req, res) {
+server.post('/', function (req, res) {
 	const { email, password, role } = req.body;
+	console.log(email, password, role);
 	console.log(req.body);
 	User.create({ email, password, role })
 		.then((user) => {
@@ -16,6 +17,8 @@ server.post('/',   function (req, res) {
 			});
 		})
 		.catch((err) => {
+			console.log('error de ruta');
+			console.log(err);
 			return res.status(ERROR).json({
 				message: 'Error al crear usuario',
 				data: err,
@@ -70,14 +73,17 @@ server.delete('/', (req, res) => {
 // MODIFICAR DATOS DEL USER
 server.put('/', (req, res) => {
 	console.log(req.body);
-	console.log('*************');
 	const { email, id, password, role } = req.body;
-
+	console.log('*************');
+	// console.log(email, id, password, role);
 	User.findOne({ where: { email } })
 		.then((user) => {
-			user.password = password;
-			user.role = role;
-			user.save();
+			// user.password = password;
+			user.update({ role: role }, { password: password });
+			// user.role = role;
+			// user.save();
+
+			console.log(user.datavalues);
 			return res.status(OK).json({
 				message: `El usuario se ha actualizado correctamente!`,
 				data: user,
@@ -91,24 +97,22 @@ server.put('/', (req, res) => {
 		});
 });
 
-
 server.get('/:id', (req, res, next) => {
-	const { id } = req.params
-	User.findAll({ where: { id }, include: {model: Order, include: Product }})
-	.then(user => {
-		console.log(user)
-		res.json({
-			user:user
-		})
-	.catch((err) => {
-		return res.status(ERROR).json({
-			message: 'Error al buscar User',
-			data: err,
-		});
+	const { id } = req.params;
+	User.findAll({ where: { id }, include: { model: Order, include: Product } }).then((user) => {
+		console.log(user);
+		res
+			.json({
+				user: user,
+			})
+			.catch((err) => {
+				return res.status(ERROR).json({
+					message: 'Error al buscar User',
+					data: err,
+				});
+			});
 	});
-})
-})
-
+});
 
 // End Routes
 

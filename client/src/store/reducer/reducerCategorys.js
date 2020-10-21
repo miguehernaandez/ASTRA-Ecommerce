@@ -1,14 +1,4 @@
-import { 
-  ADD_CATEGORY, GET_CATEGORIES, 
-  DELETE_CATEGORY, MODIFY_CATEGORY, 
-  ERROR_MESSAGE, ADD_PRODUCT, 
-  DELETE_PRODUCT, ADD_CATEGORY_PRODUCT, 
-  REMOVE_CATEGORY_PRODUCT, GET_PRODUCTS, 
-  MODIFY_PRODUCT, GET_PRODUCTS_BY_CATEGORY, 
-  ADD_TO_CARD, REMOVE_FROM_CART, GET_ORDERS, 
-  UPDATE_FROM_CART, CREATE_USER, 
-  GET_USERS, DELETE_USER, UPDATE_USER, DETAIL_USER} from '../constants/constans';
-
+import { ADD_CATEGORY, GET_CATEGORIES, DELETE_CATEGORY, MODIFY_CATEGORY, ERROR_MESSAGE, ADD_PRODUCT, DELETE_PRODUCT, ADD_CATEGORY_PRODUCT, REMOVE_CATEGORY_PRODUCT, GET_PRODUCTS, MODIFY_PRODUCT, GET_PRODUCTS_BY_CATEGORY, ADD_TO_CARD, REMOVE_FROM_CART, GET_ORDERS, UPDATE_FROM_CART, CREATE_USER, GET_USERS, DELETE_USER, UPDATE_USER, DETAIL_USER } from '../constants/constans';
 
 const inicialState = {
 	categories: [],
@@ -16,13 +6,12 @@ const inicialState = {
 	cart: [],
 	users: [],
 	userSelected: [],
-	orders: []
+	orders: [],
 };
 
 const ReducerCategory = (state = inicialState, action) => {
 	console.log(action);
 	switch (action.type) {
-
 		/****************************** CATEGORIES ********************************/
 		case GET_CATEGORIES:
 			return { ...state, categories: action.categories };
@@ -120,7 +109,7 @@ const ReducerCategory = (state = inicialState, action) => {
 			return { ...state, users: oldUsers };
 
 		case DETAIL_USER:
-			return {...state, userSelected: action.users}
+			return { ...state, userSelected: action.users };
 
 		case ERROR_MESSAGE:
 			console.log('error en algun lado: el reducer');
@@ -152,11 +141,10 @@ const ReducerCategory = (state = inicialState, action) => {
 
 		/****************************** ORDERS ************************************/
 		case GET_ORDERS:
-			return {...state, orders: action.orders };
-		
-		
-		
-		default: return inicialState;
+			return { ...state, orders: action.orders };
+
+		default:
+			return inicialState;
 	}
 };
 

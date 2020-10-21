@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { getUsers, deleteUser, updateUser, getUserDetail } from '../../store/actions/userActions';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const url = 'localhost:3001';
 
@@ -43,7 +43,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 			console.log(data);
 			updateUserP(data);
 		}
-		window.location.reload();
+		// window.location.reload();
 	};
 
 	const handleUpdateRole = function (email, id, password, role) {
@@ -66,7 +66,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 			console.log(data);
 			updateUserP(data);
 		}
-		window.location.reload();
+		// window.location.reload();
 	};
 
 	/****************************** Component Life Cycle ********************************** */
@@ -88,7 +88,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 							<tr>
 								<th>ID</th>
 								<th>Email</th>
-								<th>Password</th>
+								<th>Resetear Password</th>
 								<th>Rol</th>
 								<th>Fecha de Creacion</th>
 								<th>Ordenes</th>
@@ -112,7 +112,9 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 										</td>
 										<td>{usuario.createdAt}</td>
 										<td>
-											<Button as={Link} to={`/users/${usuario.id}`} onClick={() => getUserDetailP(usuario.id)}>Ordenes</Button>
+											<Button as={Link} to={`/users/${usuario.id}`} onClick={() => getUserDetailP(usuario.id)}>
+												Ordenes
+											</Button>
 										</td>
 										<td className={s.icons}>
 											<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={`mx-3 ${s.iconDelete}`} onClick={() => handleDelete(usuario.id, usuario.email)} />
@@ -155,7 +157,7 @@ function mapDispatchToProps(dispatch) {
 		getUsersP: () => dispatch(getUsers()),
 		deleteUserP: (id) => dispatch(deleteUser(id)),
 		updateUserP: (data) => dispatch(updateUser(data)),
-		getUserDetailP : (id) => dispatch(getUserDetail(id))
+		getUserDetailP: (id) => dispatch(getUserDetail(id)),
 	};
 }
 

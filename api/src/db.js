@@ -4,6 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
+// Password Encrypting
+const crypto = require('crypto');
+
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/development`, {
 	logging: false, // set to console.log to see the raw SQL queries
 	native: false, // lets Sequelize know we can use pg-native for ~30% more speed
@@ -43,6 +46,31 @@ Product.belongsToMany(Categories, { through: 'Product_Category' });
 Categories.belongsToMany(Product, { through: 'Product_Category' });
 User.hasMany(Order);
 Order.belongsTo(User);
+
+// <----------------------------- Password Encrypting ----------------------------->
+
+User.generateSalt = function () {
+	return crypto.randomBytes(16).toString('base64');
+};
+User.encryptPassword = function (plainText, salt) {
+	return crypto.createHash('RSA-SHA256').update(plainText).update(salt).digest('hex');
+};
+
+User.prototype.correctPassword = function (enteredPassword) {
+	return User.encryptPassword(enteredPassword, this.salt()) === this.password();
+};
+
+const setSaltAndPassword = (user) => {
+	if (user.changed('password')) {
+		user.salt = User.generateSalt();
+		user.password = User.encryptPassword(user.password(), user.salt());
+	}
+};
+
+User.beforeCreate(setSaltAndPassword);
+User.beforeUpdate(setSaltAndPassword);
+
+// <----------------------------- Password Encrypting ----------------------------->
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
