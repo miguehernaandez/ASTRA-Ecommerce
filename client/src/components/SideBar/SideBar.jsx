@@ -2,10 +2,16 @@ import React,{useState} from 'react';
 import { Link } from 'react-router-dom'
 import * as faIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
-import {SideBarData} from './SideBarData.js';
+
+import { connect } from 'react-redux'
 import './SideBar.css';
-export default function SideBar() {
+import {getCategories,getProductByCategory} from '../../store/actions/category_actions'
+import { IoIcon } from 'react-icons/io';
+import * as bsIcon from "react-icons/bi";
+
+function SideBar({categories,getCategoryP,getProductByCategoryP}) {
     const [sidebar,setSideBar] = useState(false)
+    
     const showSideBar= ()=>setSideBar(!sidebar)
     return (
         <>
@@ -26,14 +32,12 @@ export default function SideBar() {
                     </Link>
                 </li>
                 {
-                    SideBarData.map((item,index)=>{
+                    categories.map((item,index)=>{
                         return(
-                            <li key={index} className={item.cName}>
-                                <Link to={item.path}>
-                                    {item.icon}
-                                    <span>{item.title}</span>
-
-                                </Link>
+                            <li key={index} className={item.cName} onClick={()=>getProductByCategoryP(item.name)}>
+                                <bsIcon.BiCart/>
+                                <span><h4>{item.name}</h4></span>
+                                                               
                                 
                             </li>
                         );
@@ -46,3 +50,17 @@ export default function SideBar() {
         </>
     )
 }
+function mapStateToProps(state){
+    return {
+        categories: state.categories,
+
+    }
+}
+function mapDispatchToProps(dispatch){
+    return {
+        getCategoryP: () =>  dispatch(getCategories()),
+        getProductByCategoryP:(name)=>dispatch(getProductByCategory(name))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
