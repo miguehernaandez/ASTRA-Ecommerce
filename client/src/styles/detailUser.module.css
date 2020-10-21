@@ -1,0 +1,16 @@
+.thStyle{
+    background-color: #3b8ea5;
+    text-align: center;
+    color: white;
+}
+
+.contOrder{
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    text-align: center;
+    margin: 50px 0;
+}
+
+.subinfo1{
+    font-weight: bold;
+}

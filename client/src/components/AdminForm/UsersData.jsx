@@ -10,11 +10,12 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { getUsers, deleteUser, updateUser } from '../../store/actions/userActions';
+import { getUsers, deleteUser, updateUser, getUserDetail } from '../../store/actions/userActions';
+import { Link } from 'react-router-dom'
 
 const url = 'localhost:3001';
 
-const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP }) => {
+const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getUserDetailP }) => {
 	console.log(usersP);
 	// console.log(successP);
 	/*********************** Local States ************************* */
@@ -68,7 +69,6 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP }) =>
 		window.location.reload();
 	};
 
-	//console.log(usuariosDesdeBD);
 	/****************************** Component Life Cycle ********************************** */
 
 	useEffect(() => {
@@ -112,7 +112,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP }) =>
 										</td>
 										<td>{usuario.createdAt}</td>
 										<td>
-											<button>Ordenes</button>
+											<Button as={Link} to={`/users/${usuario.id}`} onClick={() => getUserDetailP(usuario.id)}>Ordenes</Button>
 										</td>
 										<td className={s.icons}>
 											<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={`mx-3 ${s.iconDelete}`} onClick={() => handleDelete(usuario.id, usuario.email)} />
@@ -155,6 +155,7 @@ function mapDispatchToProps(dispatch) {
 		getUsersP: () => dispatch(getUsers()),
 		deleteUserP: (id) => dispatch(deleteUser(id)),
 		updateUserP: (data) => dispatch(updateUser(data)),
+		getUserDetailP : (id) => dispatch(getUserDetail(id))
 	};
 }
 

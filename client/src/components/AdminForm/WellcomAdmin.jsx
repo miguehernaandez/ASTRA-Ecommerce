@@ -9,7 +9,7 @@ const WelcomeAdmin = ()=> {
             <Jumbotron>
                     <h1>Hello, Wellcome ADMIN!</h1>
                     <p>
-                        This is the page for the Adminitrator.
+                        We're working to give you the best! comming soon!
                     </p>
                     <p>
                         <Button variant="primary">Learn more</Button>

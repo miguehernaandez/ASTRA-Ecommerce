@@ -14,8 +14,8 @@ import {
 
 const url = 'localhost:3001';
 const userData = {
-    email: 'visitante@gmail.com',
-    password: '123456',
+    email: 'Astra_Guest@guest.com',
+    password: 'guest',
     role: 'Guest'
 }
 

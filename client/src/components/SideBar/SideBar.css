@@ -1,10 +1,10 @@
 .navBar{
     display:flex;
-    background-color: #060b26;
+    background-color: #3B8EA5;
     height: 80px;
     justify-content: start;
     align-items: center;
-    
+
 }
 .menu-bars{
     display: flex;
@@ -33,7 +33,7 @@
     display:flex;
     justify-content: start;
     align-items: center;
-    padding:8px 0px 8px 16px;
+    padding:5px 0px 5px 3px;
     list-style:none;
     height: 60px;
 }
@@ -44,19 +44,20 @@ h4{
     width: 95%;
     height: 100%;
     display:flex;
+    color: #EDF7F6;
     align-items: center;
     padding: 0 16px;
     border-radius: 4px;
 }
-h4:hover{
-    background-color: #1a83ff;
+.nav-text a:hover{
+    background-color: #F19953;
 }
 .nav-menu-items {
     width: 100%;
     color: #ffffff;
 }
 .navbar-toogle{
-    background-color: #1f2333;
+    background-color: #1F2333;
     display:flex;
     width: 100px;
     height:80px;
