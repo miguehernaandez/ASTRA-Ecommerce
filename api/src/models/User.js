@@ -1,6 +1,4 @@
 const Sequelize = require('sequelize');
-// Password Encrypting
-const crypto = require('crypto');
 
 module.exports = (sequelize) => {
 	sequelize.define('user', {
@@ -12,6 +10,7 @@ module.exports = (sequelize) => {
 		password: {
 			type: Sequelize.STRING,
 			allowNull: false,
+			// Poner esta funcion aca hace que estos datos no aparezcan en queries como user.findAll()
 			get() {
 				return () => this.getDataValue('password');
 			},

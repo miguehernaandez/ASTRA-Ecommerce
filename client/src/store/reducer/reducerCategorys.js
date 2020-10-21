@@ -96,13 +96,13 @@ const ReducerCategory = (state = inicialState, action) => {
 
 		case UPDATE_USER:
 			console.log(action.payload.data);
-			const { id, password, role } = action.payload.data;
-			console.log(id, password, role);
+			const { id, role } = action.payload.data;
+			console.log(id, role);
 			var userToUpdatePosition = state.users.indexOf(state.users.filter((user) => user.id === id)[0]);
 			// console.log(userToUpdatePosition);
 			var userToUpdate = state.users[userToUpdatePosition];
 			// console.log(userToUpdate);
-			var userUpdated = { ...userToUpdate, password: password, role: role };
+			var userUpdated = { ...userToUpdate, role: role };
 			var oldUsers = state.users;
 			// console.log(oldUsers);
 			oldUsers[userToUpdatePosition] = userUpdated;

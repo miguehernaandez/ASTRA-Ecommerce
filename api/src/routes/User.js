@@ -1,6 +1,7 @@
 const server = require('express').Router(); //Import router from express module.
 const { User, Order, Product } = require('../db.js'); // Import Categories model.
 const { OK, CREATED, UPDATED, ERROR, NOT_FOUND, ERROR_SERVER } = require('../constants'); // Import Status constants.
+const crypto = require('crypto');
 
 // Start Routes
 
@@ -73,17 +74,27 @@ server.delete('/', (req, res) => {
 // MODIFICAR DATOS DEL USER
 server.put('/', (req, res) => {
 	console.log(req.body);
-	const { email, id, password, role } = req.body;
-	console.log('*************');
-	// console.log(email, id, password, role);
+	const { email, id, role } = req.body;
+	// Se genera un numero aleatorio con crypto.randomBytes
+	var newRandomNumber = '';
+	newRandomNumber = crypto.randomBytes(4, (err, buf) => {
+		if (err) throw err;
+		console.log(`${buf.length} bytes of random data: ${buf.toString('hex')}`);
+		// Se asigna el numero aleatorio a la variable newRandomNumber
+		newRandomNumber = buf.toString('hex');
+	});
+
 	User.findOne({ where: { email } })
 		.then((user) => {
-			// user.password = password;
-			user.update({ role: role }, { password: password });
-			// user.role = role;
-			// user.save();
-
-			console.log(user.datavalues);
+			console.log('Dentro del .then');
+			console.log(newRandomNumber);
+			// Se actualizan los datos
+			user.password = newRandomNumber;
+			user.role = role;
+			// Se guardan los datos
+			user.save();
+			// IMPORTANTE: la contraseña aleatoria numerica que se pone mas arriba (newRandomNumber) luego se encripta y por el diseño del modelo no se muestra en queries. (en la base de datos solo se puede ver una encriptacion de la contraseña).
+			console.log(user.dataValues);
 			return res.status(OK).json({
 				message: `El usuario se ha actualizado correctamente!`,
 				data: user,
