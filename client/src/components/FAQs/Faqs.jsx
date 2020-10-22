@@ -4,7 +4,7 @@ import { Route, Switch , Link } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../Footer/Footer.jsx';
 import Navegacion from '../Navegacion/Navegacion';
-import { Accordion, Navbar, Card, Button } from 'react-bootstrap';
+import { Accordion, Navbar, Card, Button, Container } from 'react-bootstrap';
 import SearchBar from '../SearchBar/SearchBar.js';
 
 
@@ -37,7 +37,7 @@ var enlacesUser = [
 export default function Faqs(){
   return(
   <div>
-  
+		<Container className={`my-3`}>
     <Accordion defaultActiveKey="0">
       {/*pregunta 1*/}
       <Card>
@@ -77,7 +77,7 @@ export default function Faqs(){
       </Card>
 
     </Accordion>
-        <Footer></Footer>
+	</Container>
   </div>
 
   )

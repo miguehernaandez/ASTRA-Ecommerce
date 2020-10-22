@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+
+
+:root {
+	--azul: #1f2333;
+	--celeste: #3b8ea5;
+	--blanco: #edf7f6;
+	--naranja: #f19953;
+  --gris: #C8C3C0;
+}
+
+p{
+  front-family: 'Open Sans' , sans-serif ;
+}
+
+.contenedorPregunta {
+
+background-color: var(--gris) !important
+
+}
