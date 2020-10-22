@@ -14,6 +14,7 @@ import Catalogo from './components/Catalogo/index';
 import FormUsers from './components/FormUsers/FormUsers.jsx';
 import UsersData from './components/AdminForm/UsersData';
 import UserDetaul from './components/AdminForm/DetailUser.jsx'
+import Faqs from './components/FAQs/Faqs.jsx';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
@@ -29,7 +30,7 @@ const url = 'localhost:3001';
 
 var enlacesUser = [
 	{ text: 'Catalogo', to: '/products/catalogo' },
-	{ text: 'FAQs', to: '/' },
+	{ text: 'FAQs', to: '/Faqs' },
 	{ text: 'Contacto', to: '/' },
 	{ text: 'Ayuda', to: '/' },
 	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
@@ -93,7 +94,13 @@ function App() {
 				<Route path='/users/cart' component={CartShop} />
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
 				<Route path='/users/:id' component={UserDetaul}/>
-			</Switch>
+				{/*ruta FAQs*/}
+				<Route path='/Faqs' component={Faqs} >
+						<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
+						<Faqs> </Faqs>
+						<Footer></Footer>
+				</Route>
+		</Switch>
 		</div>
 	);
 }
