@@ -83,10 +83,12 @@ function App() {
 					<Route path='/admin/orders' component={Orders} />
 				</Route>
 				<Route path='/users' exact>
+
 					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
 					<FormUsers></FormUsers>
 					<Footer></Footer>
 				</Route>
+					<Route path='/Faqs' component={Faqs} />
 				<Route path='/products/product/:id'>
 					<Navegacion links={enlacesUser} showSearchbar={true} />
 					<ProductDet />
@@ -95,11 +97,8 @@ function App() {
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
 				<Route path='/users/:id' component={UserDetaul}/>
 				{/*ruta FAQs*/}
-				<Route path='/Faqs' component={Faqs} >
-						<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
-						<Faqs> </Faqs>
-						<Footer></Footer>
-				</Route>
+
+
 		</Switch>
 		</div>
 	);
