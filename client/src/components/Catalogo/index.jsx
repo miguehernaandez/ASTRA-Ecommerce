@@ -72,17 +72,18 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
     <div>
         
         < Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch}/>
-        <SideBar> </SideBar>
-        <h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>
+        
+        {/*<h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>*/}
         {products.length == 0  ? 
         productsP.length == 0 ? <h1 className={s.title2}>No hay registros en la base de datos</h1>
         :
         <Container>
+            <SideBar> </SideBar>
             <h1 className={s.title1}>Registros encontrados: {productsP.length}</h1>
             <div className={s.cont_prin_card}>
                 <div className={s.cont_filter}>
-                    <div><p>Categorias</p></div>
-                < Filter categories={categories} handlerSelect={handlerSelect}/>
+                    {/*<div><p>Categorias</p></div>*/}
+                {/*<Filter categories={categories} handlerSelect={handlerSelect}/>*/}
                 </div>
                 <div className={s.cont_card}>
                 <Row >
@@ -113,7 +114,7 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
         <div className={s.cont_prin_card}> 
         <div className={s.cont_filter}>
         <div><p>Categorias</p></div>
-        < Filter categories={categories} handlerSelect={handlerSelect}/>
+        {/*< Filter categories={categories} handlerSelect={handlerSelect}/>*/}
         </div> 
         <div className={s.cont_card}>   
         <Row>

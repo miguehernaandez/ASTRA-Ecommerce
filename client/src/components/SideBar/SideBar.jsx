@@ -13,6 +13,7 @@ function SideBar({categories,getCategoryP,getProductByCategoryP}) {
     const [sidebar,setSideBar] = useState(false)
     
     const showSideBar= ()=>setSideBar(!sidebar)
+    
     return (
         <>
         <div className='navbar'>
@@ -27,22 +28,28 @@ function SideBar({categories,getCategoryP,getProductByCategoryP}) {
         <nav className={ sidebar ? 'nav-menu active':'nav-menu'}>
             <ul className='nav-menu-items'>
                 <li className='navbar-toogle'>
-                    <Link to ="#" className='menu-bars'>
-                        <AiIcons.AiOutlineClose/>
+                    <Link to ="#" className='menu-bars' >
+                        <AiIcons.AiOutlineClose onClick={showSideBar}/>
+                        
                     </Link>
+                </li>
+                <li>
+                    <bsIcon.BiCart/>
+                    <h4 ><a id='links' href="/products/catalogo" >Mostrar todos</a></h4>
                 </li>
                 {
                     categories.map((item,index)=>{
                         return(
                             <li key={index} className={item.cName} onClick={()=>getProductByCategoryP(item.name)}>
                                 <bsIcon.BiCart/>
-                                <span><h4>{item.name}</h4></span>
+                                <span><h4 onClick={showSideBar}>{item.name}</h4></span>
                                                                
                                 
                             </li>
                         );
                     })
                 }
+
 
 
             </ul>

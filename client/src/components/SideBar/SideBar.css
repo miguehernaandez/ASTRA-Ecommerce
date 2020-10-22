@@ -37,6 +37,11 @@
     list-style:none;
     height: 60px;
 }
+.displayText{
+    display:flex;
+    text-decoration: none;
+    text-decoration-color: whitesmoke;
+}
 h4{
     text-decoration: none;
     columns: #f5f5f5;
@@ -49,8 +54,9 @@ h4{
     padding: 0 16px;
     border-radius: 4px;
 }
-.nav-text a:hover{
-    background-color: #F19953;
+h4:hover{
+    background-color: #f5f5f5;
+    color:black
 }
 .nav-menu-items {
     width: 100%;
@@ -67,4 +73,12 @@ h4{
 }
 span{
     margin-left: 16px;
+}
+#links{
+    color:#ffffff;
+    text-decoration:none;
+}
+#links:hover{
+    background-color: #f5f5f5;
+    color:black
 }
