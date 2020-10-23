@@ -10,31 +10,26 @@
 
 
 .social{
-background: var(--blanco);
+background: var(--azul);
 padding: 25px 50px;
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
 }
 
-.fl{
-	display: flex;
-	justify-content:
-}
-
-a.social{
-  margin: 0 1rem;
-  transition: transform 250ms;
-  display: inline-block;
-}
 
 a.social:hover{
   transform: translateY(-2px);
+	color: var(--blanco);
 }
 
 a.twitter{
-	display: flex;
-	justify-content: flex-end;
+	padding: 2em;
   color: var(--celeste);
 }
 
 a.instagram {
+	padding: 2em;
   color: var(--naranja);
 }

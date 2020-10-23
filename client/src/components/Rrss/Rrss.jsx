@@ -10,17 +10,20 @@ import s from '../../styles/Rrss.module.css';
 export default function SocialFollow(){
   return(
     <div  className={s.social}>
-      <div className="d-flex justify-content-around">
+      <div className={s.tw}>
       <a href='https://www.instagram.com/fordiscover_hl/'
       className={s.instagram}>
-      <FontAwesomeIcon icon={faInstagram} size='2x'/>
+      <FontAwesomeIcon icon={faInstagram} size='3x'/>
       </a>
+    </div>
 
-      <a href='https://twitter.com/ecommercehenry1'
+    <div>
+     <a href='https://twitter.com/ecommercehenry1'
       className={s.twitter}>
-      <FontAwesomeIcon icon={faTwitter} size='2x'/>
+      <FontAwesomeIcon icon={faTwitter} size='3x'/>
       </a>
       </div>
+  
     </div>
 
   );
