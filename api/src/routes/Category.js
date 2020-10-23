@@ -7,7 +7,12 @@ const { OK, CREATED, UPDATED, ERROR, NOT_FOUND, ERROR_SERVER } = require('../con
 
 //// 'Get Categories' route in '/products/category'
 server.get('/category', (req, res)=> {
-    Categories.findAll()    
+    Categories.findAll({
+        
+            order:[
+                ['name','ASC'],
+            ]
+    })    
         .then(categorys => {
             return res.json({
                 result: categorys,
@@ -49,6 +54,7 @@ server.get('/category/:catName', (req, res, next) =>{
         }]
     })
     .then(products => {
+        
         return res.status(OK).json({
             message: 'Success',
             data: products
