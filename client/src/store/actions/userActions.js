@@ -128,20 +128,20 @@ export function updateUser(data) {
 	};
 }
 
-export function getUserDetail(id){
-	
+export function getUserDetail(id) {
 	return (dispatch) => {
-		axios.get(`http://${url}/users/${id}`)
-			.then(res => {
-				console.log('***** Detail USer **********')
-				console.log(res)
+		axios
+			.get(`http://${url}/users/${id}`)
+			.then((res) => {
+				console.log('***** Detail USer **********');
+				console.log(res);
 				dispatch({
 					type: DETAIL_USER,
-					users: res.data.user
-				})
+					users: res.data.user,
+				});
 			})
-			.catch(er => {
-				console.log(er)
-			})
-	}
+			.catch((er) => {
+				console.log(er);
+			});
+	};
 }
