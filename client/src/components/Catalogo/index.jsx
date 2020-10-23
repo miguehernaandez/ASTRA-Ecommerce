@@ -5,6 +5,7 @@ import ProductCard from '../ProductCard/index';
 import Navegacion from '../Navegacion/Navegacion'
 import Filter from '../Filter/index';
 import Page from '../Pagination/index.jsx';
+import SideBar from '../SideBar/SideBar.jsx';
 import { connect } from 'react-redux';
 import {
     getCategories,
@@ -14,7 +15,10 @@ import {
     getProducts
 }from '../../store/actions/product_actions';
 import {Container, Row, Col, Form, Pagination} from 'react-bootstrap';
+import { Link } from 'react-router-dom'
+import * as faIcons from "react-icons/fa";
 import s from '../../styles/catalogo.module.css';
+import style from '../SideBar/SideBar.css';
 const url = 'localhost:3001';
 
 var enlacesUser = [
@@ -66,17 +70,20 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
     return (
 
     <div>
+        
         < Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch}/>
-        <h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>
+        
+        {/*<h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>*/}
         {products.length == 0  ? 
         productsP.length == 0 ? <h1 className={s.title2}>No hay registros en la base de datos</h1>
         :
         <Container>
+            <SideBar> </SideBar>
             <h1 className={s.title1}>Registros encontrados: {productsP.length}</h1>
             <div className={s.cont_prin_card}>
                 <div className={s.cont_filter}>
-                    <div><p>Categorias</p></div>
-                < Filter categories={categories} handlerSelect={handlerSelect}/>
+                    {/*<div><p>Categorias</p></div>*/}
+                {/*<Filter categories={categories} handlerSelect={handlerSelect}/>*/}
                 </div>
                 <div className={s.cont_card}>
                 <Row >
@@ -107,7 +114,7 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
         <div className={s.cont_prin_card}> 
         <div className={s.cont_filter}>
         <div><p>Categorias</p></div>
-        < Filter categories={categories} handlerSelect={handlerSelect}/>
+        {/*< Filter categories={categories} handlerSelect={handlerSelect}/>*/}
         </div> 
         <div className={s.cont_card}>   
         <Row>
