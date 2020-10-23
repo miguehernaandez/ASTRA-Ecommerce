@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Route, Switch , Link } from 'react-router-dom';
-import axios from 'axios';
+
 import Footer from '../Footer/Footer.jsx';
 import Navegacion from '../Navegacion/Navegacion';
 import { Accordion, Navbar, Card, Button, Container } from 'react-bootstrap';

@@ -14,6 +14,7 @@ import Catalogo from './components/Catalogo/index';
 import FormUsers from './components/FormUsers/FormUsers.jsx';
 import UsersData from './components/AdminForm/UsersData';
 import UserDetaul from './components/AdminForm/DetailUser.jsx'
+import Contacto from './components/Contacto/Contacto.js';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
@@ -29,8 +30,8 @@ const url = 'localhost:3001';
 
 var enlacesUser = [
 	{ text: 'Catalogo', to: '/products/catalogo' },
-	{ text: 'FAQs', to: '/' },
-	{ text: 'Contacto', to: '/' },
+	{ text: 'FAQs', to: '/faqs' },
+	{ text: 'Contacto', to: '/c' },
 	{ text: 'Ayuda', to: '/' },
 	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
 	{ text: 'ADMIN', to: '/admin' },
