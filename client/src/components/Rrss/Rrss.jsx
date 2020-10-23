@@ -10,7 +10,7 @@ import s from '../../styles/Rrss.module.css';
 export default function SocialFollow(){
   return(
     <div  className={s.social}>
-      <div className={s.tw}>
+      <div >
       <a href='https://www.instagram.com/fordiscover_hl/'
       className={s.instagram}>
       <FontAwesomeIcon icon={faInstagram} size='3x'/>
