@@ -67,9 +67,13 @@ function App() {
 				<Route path='/' exact>
 					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
 					<Slider />
+
 					<Footer></Footer>
 					{/* <FormUsers></FormUsers> */}
 				</Route>
+
+				<Route path='/Faqs'  exact component={Faqs} />
+
 				{/* <Route path='/admin' exact > */}
 				<Route path='/admin'>
 					<Navegacion links={enlacesAdmin} showSearchbar={false} />
@@ -82,17 +86,19 @@ function App() {
 					<Route path='/admin/users' component={UsersData} />
 					<Route path='/admin/orders' component={Orders} />
 				</Route>
+
 				<Route path='/users' exact>
 
 					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
 					<FormUsers></FormUsers>
 					<Footer></Footer>
 				</Route>
-					<Route path='/Faqs' component={Faqs} />
+
 				<Route path='/products/product/:id'>
 					<Navegacion links={enlacesUser} showSearchbar={true} />
 					<ProductDet />
 				</Route>
+
 				<Route path='/users/cart' component={CartShop} />
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
 				<Route path='/users/:id' component={UserDetaul}/>
