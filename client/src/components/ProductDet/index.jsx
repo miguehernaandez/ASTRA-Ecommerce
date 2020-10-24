@@ -15,6 +15,7 @@ import s from '../../styles/ProductDet.module.css';
 import Navegacion from '../Navegacion/Navegacion';
 import Footer from '../Footer/Footer';
 import Slider from '../Slider/Slider';
+import AddReview from '../Modals/AddReview';
 
 // Iconos
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,6 +36,7 @@ const url = 'localhost:3001';
 const Product = ({ productsP,getProductP, addToCartP }) => {
 	
 	const [qty, setQty] = useState(1)
+	const [show, setShow] = useState(false)
 	const match = useRouteMatch();
 	const history = useHistory();
 	const { id } = match.params;
@@ -55,6 +57,7 @@ const Product = ({ productsP,getProductP, addToCartP }) => {
 
 	console.log(objP)
 	useEffect(() => {
+		document.body.style.backgroundColor = "white"
 		getProductP();
 	}, []);
 
@@ -63,14 +66,14 @@ const Product = ({ productsP,getProductP, addToCartP }) => {
 		<div>
 			 <div className={s.cont_prin}>
 				<div className={s.cont}>
-					<div className={s.cont_img}>
-						
+					<div className={s.cont_img}>						
 						<img src={objP.image}></img>
 					</div>
 					<div className={s.cont_info}>
 						<h3>{`${objP.name}` || `Product Name Here`}</h3>
 						<h4>$ {`${objP.price}` || `00000d`}</h4>
 						<h6>Referencia: {`${objP.sku}` || `codReferencia`}</h6>
+						<div className={s.contReviw}>
 						<div className={s.icon}>
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
@@ -78,6 +81,9 @@ const Product = ({ productsP,getProductP, addToCartP }) => {
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 						</div>
+						<p onClick={()=>setShow(true)}>Escribir comentario</p>
+						</div>
+						
 						<p>{`${objP.description}` || `Descripcion no disponible`}</p>
 						<p>
 							<span className={s.dim}>Dimensiones:</span> {`${objP.dimentions}` || `noDisponible`}
@@ -107,6 +113,11 @@ const Product = ({ productsP,getProductP, addToCartP }) => {
 					</div>
 				</div>
 			</div>
+			<AddReview
+			show={show}
+			setShow={setShow}
+			product={objP}
+			/>
 			<Footer />
 		</div>
 	);

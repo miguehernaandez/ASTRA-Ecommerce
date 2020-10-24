@@ -1,4 +1,6 @@
 import React from 'react';
+ 
+
 // Logo
 import logo from '../../multimedia/logo.png';
 
@@ -17,7 +19,10 @@ import { connect } from 'react-redux'
 // React -Routes
 import { Link } from 'react-router-dom';
 
+
+
 function Navegacion(props) {
+	
 	
 	console.log('********props nav ***************')
 	console.log(props.cartP[0])
@@ -50,11 +55,14 @@ function Navegacion(props) {
 					{/* <SearchBar></SearchBar> */}
 				</Col>
 
-				<Col lg={1} className={'d-flex'}>
+				<Col lg={2} className={`d-flex ${s.cont_ico}`}>
 					<Link to='/users'>
 					{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon}`} icon={userLogin} size={'1x'} />}
 					</Link>
-						
+					<Link className={s.sesion} to='/login'>
+					<p>Inicia Sesion</p>
+					</Link>
+											
 					{!!props.showSearchbar && <div className={s.contCart}><Link to='/users/cart'><FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'1x'} /></Link><span className={s.shopCartIconSpan}>{props.cartP[0] ? props.cartP[0].products.length: 0}</span></div>}
 					
 					{!props.showSearchbar && (
@@ -64,6 +72,7 @@ function Navegacion(props) {
 					)}
 				</Col>
 			</Container>
+	
 		</Navbar>
 	);
 }

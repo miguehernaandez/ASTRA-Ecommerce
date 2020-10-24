@@ -67,7 +67,11 @@
 	color: var(--azul);
 }
 
-.userLoginIcon,
+.userLoginIcon {
+	font-size: 1.4em;
+	color: var(--celeste);
+	transition: 300ms;
+}
 .shopCartIcon {
 	color: var(--celeste);
 	transition: 300ms;
@@ -95,4 +99,24 @@
 	left: 6px;
 	border-radius: 50%;
 	font-size: 12px;
+}
+.sesion{
+	/* background-color: yellow; */
+	width: 100px !important;
+	margin-left: 2px;
+	
+}
+.sesion p{
+	padding-top: 15px;
+	color: white;
+	font-size: 0.8em;
+	cursor: pointer;	
+}
+
+.cont_ico{
+	/* background-color: violet; */
+	width: 100px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }

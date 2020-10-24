@@ -19,6 +19,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
 import CartShop from './components/Cart/card';// Redux
+import Loggin from './components/Loggin/loggin'
 
 
 
@@ -93,6 +94,8 @@ function App() {
 				<Route path='/users/cart' component={CartShop} />
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
 				<Route path='/users/:id' component={UserDetaul}/>
+				<Route path='/login' component={Loggin} />
+				
 			</Switch>
 		</div>
 	);
