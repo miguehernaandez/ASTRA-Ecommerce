@@ -1,0 +1,32 @@
+:root {
+	--azul: #1f2333;
+	--celeste: #3b8ea5;
+	--blanco: #edf7f6;
+	--naranja: #f19953;
+}
+
+
+.main-content{
+  max-width:  500px;
+  margin: 0 auto;
+  padding:  100px 0 0;
+}
+
+
+.resposive {
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  position: relative;
+}
+
+iframe{
+  height: 500px;
+  width: 440px;
+}
+
+.resposive iframe {
+  position: absolute;
+  width:100%;
+  height: 100%
+}

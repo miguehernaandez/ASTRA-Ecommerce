@@ -31,7 +31,7 @@ const url = 'localhost:3001';
 var enlacesUser = [
 	{ text: 'Catalogo', to: '/products/catalogo' },
 	{ text: 'FAQs', to: '/faqs' },
-	{ text: 'Contacto', to: '/c' },
+	{ text: 'Contacto', to: '/contacto' },
 	{ text: 'Ayuda', to: '/' },
 	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
 	{ text: 'ADMIN', to: '/admin' },
@@ -70,6 +70,8 @@ function App() {
 					<Footer></Footer>
 					{/* <FormUsers></FormUsers> */}
 				</Route>
+
+				<Route path='/contacto' exact component={Contacto} />
 				{/* <Route path='/admin' exact > */}
 				<Route path='/admin'>
 					<Navegacion links={enlacesAdmin} showSearchbar={false} />
