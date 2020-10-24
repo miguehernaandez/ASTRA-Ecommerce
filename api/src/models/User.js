@@ -1,7 +1,13 @@
 const Sequelize = require('sequelize');
 
+
+
 module.exports = (sequelize) => {
 	sequelize.define('user', {
+		name: {
+			type: DataTypes.STRING,
+			allowNull:false
+		},
 		email: {
 			type: Sequelize.STRING,
 			allowNull: false,
@@ -29,3 +35,5 @@ module.exports = (sequelize) => {
 		},
 	});
 };
+
+

@@ -1,17 +1,22 @@
 const server = require('express').Router(); //Import router from express module.
 const { User, Order, Product } = require('../db.js'); // Import Categories model.
 const { OK, CREATED, UPDATED, ERROR, NOT_FOUND, ERROR_SERVER } = require('../constants'); // Import Status constants.
+const passport = require('passport')
+const {isAuthenticated, isAdmin} = require('../passport/midellwares')
 const crypto = require('crypto');
+
 
 // Start Routes
 
 //// 'Create User' route in '/'
-server.post('/', function (req, res) {
-	const { email, password, role } = req.body;
-	console.log(email, password, role);
+
+server.post('/',   function (req, res) {
+	const { email, password, role, name } = req.body;
+
 	console.log(req.body);
-	User.create({ email, password, role })
+	User.create({ name, email, password, role })
 		.then((user) => {
+			console.log(user)
 			return res.status(CREATED).json({
 				message: 'Usuario creado exitosamente!',
 				data: user,
@@ -123,8 +128,46 @@ server.get('/:id', (req, res, next) => {
 				});
 			});
 	});
+
+})
+})
+
+/**************************************** Login **************************************** */
+
+
+
+
+server.post('/singin', function(req, res, next) {
+	passport.authenticate('login', function(err, user, info) {
+	  if (err) { return res.send({message: 'User or Email incorrect'}); }
+	  if (!user) { return res.send({message: 'User or Email incorrect'}); }
+	  req.logIn(user, function(err) {
+		if (err) { return next(err); }
+		return res.send({data: user});
+	  });
+	})(req, res, next);
 });
+
+server.get('/log/logout', (req, res) => {
+	req.logOut();
+	res.send({ message: "logout" });
+});
+
+
+
+// server.post('/singin', (req, res) => {
+// 	console.log(req.user)
+// 	return res.send(req.body)
+// })
+
+
 
 // End Routes
 
 module.exports = server;
+
+
+
+
+
+

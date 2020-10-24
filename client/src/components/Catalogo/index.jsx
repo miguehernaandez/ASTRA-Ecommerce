@@ -32,6 +32,22 @@ var enlacesUser = [
 
 const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, onSearch, getProductByCategoryP})=> {
 
+    var enlacesUserConAdmin = [
+        { text: 'Catalogo', to: '/products/catalogo' },
+        { text: 'FAQs', to: '/' },
+        { text: 'Contacto', to: '/' },
+        { text: 'Ayuda', to: '/' },
+        // { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
+        { text: 'ADMIN', to: '/admin' },
+    ];
+    var enlacesUserSinAdmin = [
+        { text: 'Catalogo', to: '/products/catalogo' },
+        { text: 'FAQs', to: '/' },
+        { text: 'Contacto', to: '/' },
+        { text: 'Ayuda', to: '/' },
+        // { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
+    ]
+
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(8);
    
@@ -70,10 +86,10 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
     return (
 
     <div>
-        
-        < Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch}/>
-        
-        {/*<h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>*/}
+
+        < Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch}/>
+        <h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>
+
         {products.length == 0  ? 
         productsP.length == 0 ? <h1 className={s.title2}>No hay registros en la base de datos</h1>
         :

@@ -19,7 +19,7 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
 	console.log(createUserSuccessP);
 	console.log(usersP);
 	const getUserData = function () {
-		let // nombre = document.getElementById(`nombre`).value,
+		let name = document.getElementById(`name`).value,
 			// 	apellido = document.getElementById(`apellido`).value,
 			// 	telefono = document.getElementById(`telefono`).value,
 			// 	dni = document.getElementById(`dni`).value,
@@ -40,6 +40,7 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
 			// apellido,
 			// telefono,
 			// dni,
+			name,
 			email,
 			// fechaNacimiento,
 			// direccion,
@@ -145,6 +146,12 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
 											<Form.Control className={`${s.input}`} type={'tel'} placeholder='Numero de Telefono' id={`telefono`} required />
 										</Form.Group>
 									</Col> */}
+									<Col>
+										<Form.Group>
+											<Form.Label>Name</Form.Label>
+											<Form.Control className={`${s.input}`} type='name' placeholder='Name' id={`name`} required />
+										</Form.Group>
+									</Col>
 									<Col>
 										<Form.Group>
 											<Form.Label>Email</Form.Label>

@@ -20,6 +20,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
 import CartShop from './components/Cart/card';// Redux
+import Login from './components/Login/Login';
+import ProfileUser from './components/ProfileUser/ProfileUser';
+import PrivateAdmin from './components/Routes/routePrivate'
 
 
 
@@ -37,6 +40,21 @@ var enlacesUser = [
 	{ text: 'ADMIN', to: '/admin' },
 ];
 
+var enlacesUserConAdmin = [
+	{ text: 'Catalogo', to: '/products/catalogo' },
+	{ text: 'FAQs', to: '/' },
+	{ text: 'Contacto', to: '/' },
+	{ text: 'Ayuda', to: '/' },
+	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
+	{ text: 'ADMIN', to: '/admin' },
+];
+var enlacesUserSinAdmin = [
+	{ text: 'Catalogo', to: '/products/catalogo' },
+	{ text: 'FAQs', to: '/' },
+	{ text: 'Contacto', to: '/' },
+	{ text: 'Ayuda', to: '/' },
+	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
+]
 var enlacesAdmin = [
 	{ text: 'Inicio', to: '/admin' },
 	{ text: 'Usuarios', to: '/admin/users' },
@@ -60,12 +78,15 @@ function App() {
 		});
 	};
 
+
+
+
 	return (
 		<div>
 			{/* <ProductCard/> */}
 			<Switch>
 				<Route path='/' exact>
-					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<Slider />
 
 					<Footer></Footer>
@@ -76,11 +97,12 @@ function App() {
 
 				{/* <Route path='/admin' exact > */}
 				<Route path='/admin'>
-					<Navegacion links={enlacesAdmin} showSearchbar={false} />
+					<Navegacion linksA={enlacesAdmin} showSearchbar={false} />
 					<PrinciapalAdmin />
-					<Route path='/admin' exact>
+					<PrivateAdmin path='/admin' exact component={WellcomeAdmin}/>
+					{/* <PrivateAdmin path='/admin' exact >
 						<WellcomeAdmin />
-					</Route>
+					</PrivateAdmin> */}
 					<Route path='/admin/product' component={Product} />
 					<Route path='/admin/category' component={Category} />
 					<Route path='/admin/users' component={UsersData} />
@@ -89,23 +111,25 @@ function App() {
 
 				<Route path='/users' exact>
 
-					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin}  showSearchbar={true} onSearch={onSearch} />
+
 					<FormUsers></FormUsers>
 					<Footer></Footer>
 				</Route>
 
 				<Route path='/products/product/:id'>
-					<Navegacion links={enlacesUser} showSearchbar={true} />
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} />
 					<ProductDet />
 				</Route>
 
 				<Route path='/users/cart' component={CartShop} />
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
 				<Route path='/users/:id' component={UserDetaul}/>
-				{/*ruta FAQs*/}
 
+				<Route path='/login' component={Login}/>
+				<Route path='/profile' component={ProfileUser}/>
+			</Switch>
 
-		</Switch>
 		</div>
 	);
 }

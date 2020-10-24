@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+
 // Logo
 import logo from '../../multimedia/logo.png';
 
@@ -16,8 +18,25 @@ import { connect } from 'react-redux'
 
 // React -Routes
 import { Link } from 'react-router-dom';
+//Coockie
+import Cookie from 'js-cookie';
+
+//Actions
+import {logout} from '../../store/actions/loginActions'
 
 function Navegacion(props) {
+	console.log('State User Loaded')
+	console.log(props.userLogin)
+
+	const history = useHistory();
+
+	const handlerClick = () => {
+		window.location = '/'
+		//history.push('/')
+		props.loginActionP()
+		Cookie.remove('userLoad');
+		return
+	 }
 	
 	console.log('********props nav ***************')
 	console.log(props.cartP[0])
@@ -32,8 +51,37 @@ function Navegacion(props) {
 				</Col>
 
 				{/* Sector central del navbar: links y buscador */}
-				<Col lg={6} className={`d-flex`}>
-					{props.links.map((enlace) => {
+				{props.userLogin
+					? props.userLogin.role === 'client' 
+						? 
+							<Col lg={6} className={`d-flex`}>
+							{props.linksU.map((enlace) => {
+								return (
+									<div key={enlace.text} className={`flex-fill ${s.separador}`}>
+										<Nav.Link href='#' as={Link} to={enlace.to} className={`${s.navbarLinks}`}>
+											{enlace.text}
+										</Nav.Link>
+									</div>
+								);
+							})}
+							{/* Link: Categorias */}
+							</Col>
+						:
+							<Col lg={6} className={`d-flex`}>
+							{props.linksA.map((enlace) => {
+								return (
+									<div key={enlace.text} className={`flex-fill ${s.separador}`}>
+										<Nav.Link href='#' as={Link} to={enlace.to} className={`${s.navbarLinks}`}>
+											{enlace.text}
+										</Nav.Link>
+									</div>
+								);
+							})}
+							{/* Link: Categorias */}
+							</Col>
+					: 
+					<Col lg={6} className={`d-flex`}>
+					{props.linksU.map((enlace) => {
 						return (
 							<div key={enlace.text} className={`flex-fill ${s.separador}`}>
 								<Nav.Link href='#' as={Link} to={enlace.to} className={`${s.navbarLinks}`}>
@@ -43,26 +91,45 @@ function Navegacion(props) {
 						);
 					})}
 					{/* Link: Categorias */}
-				</Col>
+					</Col>
+			 }
 
 				<Col className='contenedorSearchInput' lg={3}>
 					{props.showSearchbar && <SearchBar onSearch={props.onSearch}></SearchBar>}
 					{/* <SearchBar></SearchBar> */}
 				</Col>
-
+				{!props.userLogin  ? 
 				<Col lg={1} className={'d-flex'}>
 					<Link to='/users'>
 					{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon}`} icon={userLogin} size={'1x'} />}
 					</Link>
-						
+					<Link to='/login'>
+					{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon}`} icon={userLogin} size={'1x'} />}
+					</Link>
 					{!!props.showSearchbar && <div className={s.contCart}><Link to='/users/cart'><FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'1x'} /></Link><span className={s.shopCartIconSpan}>{props.cartP[0] ? props.cartP[0].products.length: 0}</span></div>}
-					
 					{!props.showSearchbar && (
 						<Nav.Link href='#' as={Link} to={'/'} className={`${s.navbarLinks}`}>
 							Logout
 						</Nav.Link>
 					)}
 				</Col>
+				:
+					<Col lg={1} className={'d-flex'}>
+					{
+						<div className={s.contProfile}>
+							{props.userLogin.role === 'admin'  ? 
+							<span className={s.textProfile}>Admin {props.userLogin.name}</span>
+							:
+							<span className={s.textProfile}>{props.userLogin.name}</span>}
+						
+						 <Nav.Link href='#' as={Link} to={'/'} className={`${s.navbarLinks}`} onClick={handlerClick}>
+							Logout
+						</Nav.Link>
+						{!!props.showSearchbar && <div className={s.contCart}><Link to='/users/cart'><FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'1x'} /></Link><span className={s.shopCartIconSpan}>{props.cartP[0] ? props.cartP[0].products.length: 0}</span></div>}
+						</div>
+					}
+					</Col>
+				}
 			</Container>
 		</Navbar>
 	);
@@ -71,13 +138,14 @@ function Navegacion(props) {
 
 function mapStateToProps(state){
     return {
-        cartP: state.cart,
+		cartP: state.cart,
+		userLogin: state.userLogged
     }
 }
 
 function mapDispatchToProps(dispatch){
     return {
-
+		loginActionP : () => dispatch(logout())
     }
 }
 
