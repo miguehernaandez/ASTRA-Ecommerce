@@ -13,17 +13,12 @@ import ProductCard from './components/ProductCard/index';
 import Catalogo from './components/Catalogo/index';
 import FormUsers from './components/FormUsers/FormUsers.jsx';
 import UsersData from './components/AdminForm/UsersData';
-import UserDetaul from './components/AdminForm/DetailUser.jsx'
+import UserDetaul from './components/AdminForm/DetailUser.jsx';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
-import CartShop from './components/Cart/card';// Redux
-
-
-
-
-
+import CartShop from './components/Cart/card'; // Redux
 
 const url = 'localhost:3001';
 
@@ -31,7 +26,6 @@ var enlacesUser = [
 	{ text: 'Catalogo', to: '/products/catalogo' },
 	{ text: 'FAQs', to: '/' },
 	{ text: 'Contacto', to: '/' },
-	{ text: 'Ayuda', to: '/' },
 	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
 	{ text: 'ADMIN', to: '/admin' },
 ];
@@ -41,9 +35,8 @@ var enlacesAdmin = [
 	{ text: 'Usuarios', to: '/admin/users' },
 	{ text: 'Categorías', to: '/admin/category' },
 	{ text: 'Productos', to: '/admin/product' },
-	{ text: 'Ordenes', to: '/admin/orders' }
+	{ text: 'Ordenes', to: '/admin/orders' },
 ];
-
 
 function App() {
 	const [products, setProduct] = useState([]);
@@ -92,11 +85,10 @@ function App() {
 				</Route>
 				<Route path='/users/cart' component={CartShop} />
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
-				<Route path='/users/:id' component={UserDetaul}/>
+				<Route path='/users/:id' component={UserDetaul} />
 			</Switch>
 		</div>
 	);
 }
-
 
 export default App;
