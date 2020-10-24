@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const Sequelize = require('sequelize');
 
 
 
@@ -9,18 +9,29 @@ module.exports = (sequelize) => {
 			allowNull:false
 		},
 		email: {
-			type: DataTypes.STRING,
+			type: Sequelize.STRING,
 			allowNull: false,
 			unique: true,
 		},
 		password: {
-			type: DataTypes.STRING,
+			type: Sequelize.STRING,
 			allowNull: false,
+			// Poner esta funcion aca hace que estos datos no aparezcan en queries como user.findAll()
+			get() {
+				return () => this.getDataValue('password');
+			},
 		},
 		role: {
-			type: DataTypes.ENUM('client', 'admin', 'Guest'),
+			type: Sequelize.ENUM('client', 'admin', 'Guest'),
 			defaultValue: 'Guest',
 			allowNull: false,
+		},
+		// Esto se utiliza para la encriptacion de la contrasena
+		salt: {
+			type: Sequelize.STRING,
+			get() {
+				return () => this.getDataValue('salt');
+			},
 		},
 	});
 };

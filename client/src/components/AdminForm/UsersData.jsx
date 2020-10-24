@@ -1,22 +1,17 @@
 import React from 'react';
 import { Table, Button } from 'react-bootstrap';
-// import AddProduct from '../Modals/AddProduct';
-// import AddCategories from '../Modals/AddCategories';
-// import AddProductCategories from '../Modals/AddProductCategories';
-// import UpdateProduct from '../Modals/UpdateProduct';
 import s from '../../styles/adminProduct.module.css';
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { getUsers, deleteUser, updateUser, getUserDetail } from '../../store/actions/userActions';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const url = 'localhost:3001';
 
 const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getUserDetailP }) => {
-	console.log(usersP);
+	// console.log(usersP);
 	// console.log(successP);
 	/*********************** Local States ************************* */
 	// const [users, setUsers] = useState(usersP);
@@ -30,14 +25,13 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 		}
 	};
 
-	const handleUpdatePassword = function (email, id, password, role) {
+	const handleUpdatePassword = function (email, id, role) {
 		console.log('Funciona el boton del lapiz PASSWORD');
 		var confirmResetPassword = window.confirm(`Estas a punto de resetear la contraseña del usuario:\n${email}\nDeseas continuar?`);
 		if (confirmResetPassword) {
 			const data = {
 				email,
 				id,
-				password: 'randomPassword',
 				role,
 			};
 			console.log(data);
@@ -46,9 +40,10 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 		window.location.reload();
 	};
 
-	const handleUpdateRole = function (email, id, password, role) {
+	const handleUpdateRole = function (email, id, role) {
 		// Siempre le llegan los datos de la tabla, por lo que cada vez que se ejecute esta funcion deberia actualizarse la tabla
 		console.log('Funciona el boton del lapiz ROLE');
+		console.log(role);
 		var newRole;
 		if (role == 'client') {
 			newRole = 'admin';
@@ -60,7 +55,6 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 			const data = {
 				email,
 				id,
-				password,
 				role: newRole,
 			};
 			console.log(data);
@@ -73,7 +67,6 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 
 	useEffect(() => {
 		getUsersP();
-		// deleteUsersP();
 	}, []);
 
 	/****************************** Render ********************************** */
@@ -88,7 +81,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 							<tr>
 								<th>ID</th>
 								<th>Email</th>
-								<th>Password</th>
+								<th>Resetear Password</th>
 								<th>Rol</th>
 								<th>Fecha de Creacion</th>
 								<th>Ordenes</th>
@@ -104,15 +97,17 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 										<td>{usuario.email}</td>
 										<td>
 											{usuario.password}
-											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdatePassword(usuario.email, usuario.id, usuario.password, usuario.role)} />
+											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdatePassword(usuario.email, usuario.id, usuario.role)} />
 										</td>
 										<td>
 											{usuario.role}
-											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdateRole(usuario.email, usuario.id, usuario.password, usuario.role)} />
+											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdateRole(usuario.email, usuario.id, usuario.role)} />
 										</td>
 										<td>{usuario.createdAt}</td>
 										<td>
-											<Button as={Link} to={`/users/${usuario.id}`} onClick={() => getUserDetailP(usuario.id)}>Ordenes</Button>
+											<Button as={Link} className={`my-0 py-0 ${s.orderButton}`} to={`/users/${usuario.id}`} onClick={() => getUserDetailP(usuario.id)}>
+												Ordenes
+											</Button>
 										</td>
 										<td className={s.icons}>
 											<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={`mx-3 ${s.iconDelete}`} onClick={() => handleDelete(usuario.id, usuario.email)} />
@@ -155,7 +150,7 @@ function mapDispatchToProps(dispatch) {
 		getUsersP: () => dispatch(getUsers()),
 		deleteUserP: (id) => dispatch(deleteUser(id)),
 		updateUserP: (data) => dispatch(updateUser(data)),
-		getUserDetailP : (id) => dispatch(getUserDetail(id))
+		getUserDetailP: (id) => dispatch(getUserDetail(id)),
 	};
 }
 
