@@ -204,4 +204,13 @@
 
 }
 
+.buttonFC{
+    background-color: var(--naranja);
+    color: white;
+    font-weight: bold;
+    font-family:'Open Sans', sans-serif; 
+    border: none;
+    margin: 0 10px;
+}
+
 

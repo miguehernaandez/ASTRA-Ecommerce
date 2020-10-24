@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
-import { addToCart, removeFromCart, updateFromCart } from '../../store/actions/cart_actions'
+import { addToCart, removeFromCart, updateFromCart, deleteCart } from '../../store/actions/cart_actions'
 import { Link } from 'react-router-dom'
 import s from '../../styles/carrito.module.css'
 import { Table, Button } from 'react-bootstrap';
@@ -12,20 +12,27 @@ import { useState } from 'react'
 
 
 
-const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFromCartP}) => {
+const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFromCartP, deleteCartP}) => {
     const [quantity, setQuantity] = useState(0)
     const {idUser} = match.params
     //console.log(cartP[0].products)
     let cartP2 =  cartP.length < 1 ? [] :  cartP[0].products
     // const  qty = location.search.split('=')[1]
-    var enlacesUser = [
+    var enlacesUserConAdmin = [
         { text: 'Catalogo', to: '/products/catalogo' },
         { text: 'FAQs', to: '/' },
         { text: 'Contacto', to: '/' },
         { text: 'Ayuda', to: '/' },
-        { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
+        // { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
         { text: 'ADMIN', to: '/admin' },
     ];
+    var enlacesUserSinAdmin = [
+        { text: 'Catalogo', to: '/products/catalogo' },
+        { text: 'FAQs', to: '/' },
+        { text: 'Contacto', to: '/' },
+        { text: 'Ayuda', to: '/' },
+        // { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
+    ]
 
 
     const increment = (dat)=> {
@@ -63,7 +70,7 @@ const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFr
                 </div>
             :
             <div>
-            < Navegacion links={enlacesUser} showSearchbar={false}/>
+            < Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={false}/>
             <div className={s.cont_prin}>
                 <div className={s.cont1}>
                     <img className={`${s.logo}`} src={logo}></img>
@@ -151,7 +158,8 @@ const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFr
                         </div>
                     </div>
                     <div className={s.cont_button1}>
-                        <Button className={s.buttonF}>Finalizar compra</Button>
+                        <Button className={s.buttonF}>Finalizar compra</Button>{"    "}
+                        <Button className={s.buttonFC} onClick={deleteCartP}>Cancelar compra</Button>
 
                     </div>
 
@@ -179,8 +187,9 @@ function mapDispatchToProps(dispatch){
     return {
         addToCartP : (id, qty) => dispatch(addToCart(id, qty)),
         removeFromCartP : (id) => dispatch(removeFromCart(id)),
-        updateFromCartP : (id, qty) => dispatch(updateFromCart(id, qty))
-
+        updateFromCartP : (id, qty) => dispatch(updateFromCart(id, qty)),
+        deleteCartP: () => dispatch(deleteCart())
+ 
     }
 }
 

@@ -2,6 +2,7 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcrypt')
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/development`, {
@@ -43,6 +44,16 @@ Product.belongsToMany(Categories, { through: 'Product_Category' });
 Categories.belongsToMany(Product, { through: 'Product_Category' });
 User.hasMany(Order);
 Order.belongsTo(User);
+
+/***************************** Function of Model *****************/
+User.prototype.encryptPassword = function(password) {
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+}	
+User.prototype.comparePassword = function(password){
+	return bcrypt.compareSync(password, this.password);
+}
+
+/**************************************************************** */
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

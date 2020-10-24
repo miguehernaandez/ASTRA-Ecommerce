@@ -8,7 +8,8 @@ const { OK, CREATED, ERROR, ERROR_SERVER } = require('../constants/index'); // I
 server.post('/:userId/cart', function (req, res) {
     console.log(req.body)
     // return res.send(req.body)
-     const { userId } = req.params;
+	 const { userId } = req.params;
+	 console.log(userId)
      const { id, qty } = req.body
 	 const newOrder = Order.findOrCreate({ where: { userId } });
 	 const newProduct = Product.findOne({ where: {id: id} });
@@ -48,7 +49,27 @@ server.put('/:userId/cart', function (req, res) {
 	.catch(err => {
 		console.log(err);
 	}) 	
-})
+});
+
+server.delete('/:userId/cart', ( req, res ) => {
+	const { userId } = req.params;
+	console.log(userId)
+	Order.findAll({ where: { userId } })
+	.then( deletedCart => {
+		deletedCart.destroy();
+		return res.status(OK).json({
+			message: 'Elementos eliminados',
+			data: deletedCart
+		});
+	})
+	.catch(err => {
+		console.log('Entre l catch de delete cart')
+		return res.status(ERROR_SERVER).json({
+			message: 'Error al eliminar carrito',
+			data: err
+		});
+	});
+});
 
 //// 'remove items from cart' route in '/users/:userId/cart'
 server.delete('/:userId/cart/:idProduct', function (req, res) {
@@ -75,6 +96,8 @@ server.delete('/:userId/cart/:idProduct', function (req, res) {
 	 .catch(err => {
 	 	console.log(err);
 	 }) 	
-})
+});
+
+
 
 module.exports =  server
