@@ -51,7 +51,7 @@
 }
 
 /* .contColapse {
-	height: 50px;
+	border-top: 1px solid var(--celeste);
 } */
 
 /* Boton Hamburguesa */
@@ -85,7 +85,7 @@ button:focus {
 /* Boton Hamburguesa */
 
 .navbarLinks {
-	font-size: 14px !important;
+	font-size: 13px !important;
 	color: var(--celeste) !important;
 	transition: 300ms color !important;
 	text-align: center !important;
@@ -98,7 +98,7 @@ button:focus {
 }
 
 .navbarLinksAdmin {
-	font-size: 14px !important;
+	font-size: 13px !important;
 	color: var(--azul) !important;
 	transition: 300ms color !important;
 	text-align: center !important;
@@ -129,8 +129,8 @@ button:focus {
 	border: 1px solid var(--blanco) !important;
 	border-top-left-radius: 100px !important;
 	border-bottom-left-radius: 100px !important;
-	height: 32px !important;
-	font-size: 14px !important;
+	height: 26px !important;
+	font-size: 13px !important;
 }
 
 .contenedorLupa {
@@ -139,7 +139,7 @@ button:focus {
 	border: 1px solid var(--celeste) !important;
 	border-top-right-radius: 100px !important;
 	border-bottom-right-radius: 100px !important;
-	height: 32px !important;
+	height: 26px !important;
 }
 
 .searchIcon {
@@ -178,4 +178,16 @@ button:focus {
 	left: 6px;
 	border-radius: 50%;
 	font-size: 12px;
+}
+
+.textProfile {
+	color: white;
+	font-size: 12px;
+}
+
+.contProfile {
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
 }

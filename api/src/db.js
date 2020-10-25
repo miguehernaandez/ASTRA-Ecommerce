@@ -2,6 +2,7 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcrypt');
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 // Password Encrypting
@@ -82,6 +83,13 @@ const setSaltAndPassword = (user) => {
 User.beforeCreate(setSaltAndPassword);
 User.beforeUpdate(setSaltAndPassword);
 // <----------------------------- Password Encrypting ----------------------------->
+
+User.create({
+	email: 'admin@admin.com',
+	password: 'admin',
+	role: 'admin',
+	name: 'Admin',
+});
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

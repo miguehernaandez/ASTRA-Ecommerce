@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+
 // Logo
 import logo from '../../multimedia/logo.png';
 
@@ -10,17 +12,37 @@ import s from '../../styles/Navbar.module.css';
 
 // Font Awesome (iconos)
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser as userLogin, faShoppingCart as shopCart, faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faUser as userLogin, faSignInAlt as signIn, faShoppingCart as shopCart, faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from '../SearchBar/SearchBar';
 import { connect } from 'react-redux';
 
 // React -Routes
 import { Link } from 'react-router-dom';
+//Cookie
+import Cookie from 'js-cookie';
+
+//Actions
+import { logout } from '../../store/actions/loginActions';
 
 // <--------------------------- IMPORTS --------------------------->
 
 function Navegacion(props) {
+	// console.log('State User Loaded');
+	// console.log(props.userLogin);
+	// console.log(props.cartP[0]);
+	console.log(props);
+
+	// <--------------------------- CONSTANTES --------------------------->
+	const history = useHistory();
+
 	// <--------------------------- FUNCIONES --------------------------->
+	const handlerClick = () => {
+		window.location = '/';
+		props.loginActionP();
+		Cookie.remove('userLoad');
+		return;
+	};
+
 	const handleHamburgerIcon = function () {
 		// Esta funcion hace que cambie el icono cuando la barra de navegacion se depliega o se colapsa
 		var botonHamburguesa = document.getElementById('hamburgerButton');
@@ -30,6 +52,10 @@ function Navegacion(props) {
 		botonHamburguesa2.classList.toggle('d-none');
 	};
 	// <--------------------------- FUNCIONES --------------------------->
+
+	// console.log('********props nav ***************');
+	// console.log(props.cartP[0]);
+	// / <--------------------------- RENDER --------------------------->
 
 	return (
 		<div>
@@ -45,47 +71,114 @@ function Navegacion(props) {
 					</Navbar.Toggle>
 					<Navbar.Collapse id='responsive-navbar-nav' className={`${s.bordeRojo} ${s.contColapse} justify-content-around order-3 order-md-1`}>
 						{/* Aca adentro van los enlaces que se colapsan en pantallas mas pequenias */}
-						<Nav className={`d-flex flex-row`}>
-							{props.links.map((enlace, i, arr) => {
-								return (
-									<div key={enlace.text} className={props.showSearchbar && arr[i + 1] ? `${s.separador} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : !props.showSearchbar && arr[i + 1] ? `${s.separadorAdmin} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : !props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : ``}>
-										<Nav.Link href='#' as={Link} to={enlace.to} className={props.showSearchbar ? `${s.navbarLinks}` : `${s.navbarLinksAdmin}`}>
-											{enlace.text}
-										</Nav.Link>
-									</div>
-								);
-							})}
+						<Nav className={`d-flex flex-row pl-lg-5	`}>
+							{/* Camilo */}
+							{props.userLogin ? (
+								props.userLogin.role === 'client' ? (
+									<Col lg={6} className={`d-flex`}>
+										{props.linksU.map((enlace, i, arr) => {
+											return (
+												<div key={enlace.text} className={props.showSearchbar && arr[i + 1] ? `${s.separador} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : !props.showSearchbar && arr[i + 1] ? `${s.separadorAdmin} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : !props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : ``}>
+													<Nav.Link href='#' as={Link} to={enlace.to} className={props.showSearchbar ? `${s.navbarLinks}` : `${s.navbarLinksAdmin}`}>
+														{enlace.text}
+													</Nav.Link>
+												</div>
+											);
+										})}
+										{/* Link: Categorias */}
+									</Col>
+								) : (
+									<Col lg={6} className={`d-flex`}>
+										{props.linksA.map((enlace, i, arr) => {
+											return (
+												<div key={enlace.text} className={props.showSearchbar && arr[i + 1] ? `${s.separador} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : !props.showSearchbar && arr[i + 1] ? `${s.separadorAdmin} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : !props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : ``}>
+													<Nav.Link href='#' as={Link} to={enlace.to} className={props.showSearchbar ? `${s.navbarLinks}` : `${s.navbarLinksAdmin}`}>
+														{enlace.text}
+													</Nav.Link>
+												</div>
+											);
+										})}
+										{/* Link: Categorias */}
+									</Col>
+								)
+							) : (
+								<Col lg={6} className={`d-flex`}>
+									{props.linksU.map((enlace, i, arr) => {
+										return (
+											<div key={enlace.text} className={props.showSearchbar && arr[i + 1] ? `${s.separador} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : !props.showSearchbar && arr[i + 1] ? `${s.separadorAdmin} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : !props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : ``}>
+												<Nav.Link href='#' as={Link} to={enlace.to} className={props.showSearchbar ? `${s.navbarLinks}` : `${s.navbarLinksAdmin}`}>
+													{enlace.text}
+												</Nav.Link>
+											</div>
+										);
+									})}
+									{/* Link: Categorias */}
+								</Col>
+							)}
 						</Nav>
 						{/* SerachBar */}
-						{/* <Col xs={`auto`} className={`${s.bordeAmarillo}`}> */}
 						{props.showSearchbar && (
-							<Col xs={`auto`} className={`${s.bordeAmarillo} mb-2 my-md-0`}>
+							<Col xs={10} sm={6} md={`auto`} className={`${s.bordeAmarillo} mb-2 my-md-0 px-0 ml-0 mr-md-4 ml-auto mr-auto`}>
 								<SearchBar onSearch={props.onSearch}></SearchBar>
 							</Col>
 						)}
-						{/* </Col> */}
 					</Navbar.Collapse>
-					{/* Iconos de carrito y login */}
-					{props.showSearchbar && (
-						<Col xs={4} sm={2} md={`auto`} className={`${s.bordeAmarillo} order-1 order-md-3 d-flex justify-content-between justify-content-lg-around`}>
-							<Link to='/users'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mr-2`} icon={userLogin} size={'1x'} />}</Link>
-							{!!props.showSearchbar && (
-								<div className={s.contCart}>
-									<Link to='/users/cart'>
-										<FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'1x'} />
-									</Link>
-									<span className={s.shopCartIconSpan}>{props.cartP[0] ? props.cartP[0].products.length : 0}</span>
-								</div>
+					{/* user login icons y carrito y demas */}
+					{/* CAmilo */}
+					{!props.userLogin ? (
+						<div id='impostor' className={`${s.bordeAmarillo} order-1 order-md-3 mr-lg-3`}>
+							{props.showSearchbar && (
+								<Col xs={`auto`} className={`${s.bordeVerde} order-1 order-md-3 d-flex justify-content-between justify-content-lg-around`}>
+									{/* Users */}
+									<Link to='/users'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mr-3`} icon={userLogin} size={'1x'} />}</Link>
+									{/* Login */}
+									<Link to='/login'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mx-2`} icon={signIn} size={'1x'} />}</Link>
+									{!!props.showSearchbar && (
+										<div className={`${s.contCart} flex-fill mr-2`}>
+											<Link to='/users/cart'>
+												<FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'1x'} />
+											</Link>
+											<span className={s.shopCartIconSpan}>{props.cartP[0] ? props.cartP[0].products.length : 0}</span>
+										</div>
+									)}
+								</Col>
 							)}
-						</Col>
+							{!props.showSearchbar && (
+								<Col className={`order-1 order-lg-3`}>
+									<Nav.Link href='#' as={Link} to={'/'} className={`${s.navbarLinksAdmin} ${s.bordeVerde} `}>
+										Logout
+									</Nav.Link>
+								</Col>
+							)}
+						</div>
+					) : (
+						<div id='impostor' className={`${s.bordeAmarillo} order-1 order-md-3 mr-lg-3`}>
+							<Col xs={`auto`} className={`${s.bordeAmarillo} order-1 order-md-3 d-flex justify-content-between justify-content-lg-around`}>
+								{
+									<div className={s.contProfile}>
+										{props.userLogin.role === 'admin' ? <span className={s.textProfile}>Admin {props.userLogin.name}</span> : <span className={s.textProfile}>{props.userLogin.name}</span>}
+										{/* texto de prueba */}
+										{/* <span className={s.textProfile}>Admin Jorge</span> */}
+
+										<Nav.Link href='#' as={Link} to={'/'} className={`${s.navbarLinks}`} onClick={handlerClick}>
+											Logout
+										</Nav.Link>
+										{!!props.showSearchbar && (
+											<div className={s.contCart}>
+												<Link to='/users/cart'>
+													<FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'1x'} />
+												</Link>
+												<span className={s.shopCartIconSpan}>{props.cartP[0] ? props.cartP[0].products.length : 0}</span>
+											</div>
+										)}
+									</div>
+								}
+							</Col>
+						</div>
 					)}
-					{!props.showSearchbar && (
-						<Col className={`order-1 order-lg-3`}>
-							<Nav.Link href='#' as={Link} to={'/'} className={`${s.navbarLinksAdmin} ${s.bordeVerde} `}>
-								Logout
-							</Nav.Link>
-						</Col>
-					)}
+
+					{/* Mio */}
+					{/* Iconos de carrito y login */}
 				</Container>
 			</Navbar>
 		</div>
@@ -95,11 +188,14 @@ function Navegacion(props) {
 function mapStateToProps(state) {
 	return {
 		cartP: state.cart,
+		userLogin: state.userLogged,
 	};
 }
 
 function mapDispatchToProps(dispatch) {
-	return {};
+	return {
+		loginActionP: () => dispatch(logout()),
+	};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navegacion);

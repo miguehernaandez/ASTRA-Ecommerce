@@ -20,17 +20,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
 import CartShop from './components/Cart/card'; // Redux
+import Login from './components/Login/Login';
+import ProfileUser from './components/ProfileUser/ProfileUser';
+import PrivateAdmin from './components/Routes/routePrivate';
 
 const url = 'localhost:3001';
 
-var enlacesUser = [
+// <---------------Lista de Enlaces a renderizar en distintas paginas--------------->
+var enlacesUserConAdmin = [
 	{ text: 'Catalogo', to: '/products/catalogo' },
 	{ text: 'FAQs', to: '/Faqs' },
 	{ text: 'Contacto', to: '/' },
-	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
 	{ text: 'ADMIN', to: '/admin' },
 ];
-
+var enlacesUserSinAdmin = [
+	{ text: 'Catalogo', to: '/products/catalogo' },
+	{ text: 'FAQs', to: '/Faqs' },
+	{ text: 'Contacto', to: '/' },
+];
 var enlacesAdmin = [
 	{ text: 'Inicio', to: '/admin' },
 	{ text: 'Usuarios', to: '/admin/users' },
@@ -38,6 +45,7 @@ var enlacesAdmin = [
 	{ text: 'Productos', to: '/admin/product' },
 	{ text: 'Ordenes', to: '/admin/orders' },
 ];
+// <---------------Lista de Enlaces a renderizar en distintas paginas--------------->
 
 function App() {
 	const [products, setProduct] = useState([]);
@@ -55,46 +63,82 @@ function App() {
 
 	return (
 		<div>
-			{/* <ProductCard/> */}
 			<Switch>
+				{/* HOME */}
 				<Route path='/' exact>
-					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
+					{/* <Navegacion linksU={enlacesUserConAdmin} linksA={enlacesUserSinAdmin} showSearchbar={false} onSearch={onSearch} /> */}
 					<Slider />
-
 					<Footer></Footer>
-					{/* <FormUsers></FormUsers> */}
+				</Route>
+				{/* HOME */}
+
+				{/* FAQS */}
+				<Route path='/Faqs' exact>
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
+					<Faqs></Faqs>
+					<Footer></Footer>
 				</Route>
 
-				<Route path='/Faqs' exact component={Faqs} />
+				{/* FAQS */}
 
-				{/* <Route path='/admin' exact > */}
+				{/* ADMIN */}
 				<Route path='/admin'>
-					<Navegacion links={enlacesAdmin} showSearchbar={false} />
+					<Navegacion linksA={enlacesAdmin} showSearchbar={false} />
 					<PrinciapalAdmin />
-					<Route path='/admin' exact>
+					<PrivateAdmin path='/admin' exact component={WellcomeAdmin} />
+					{/* <PrivateAdmin path='/admin' exact >
 						<WellcomeAdmin />
-					</Route>
+					</PrivateAdmin> */}
 					<Route path='/admin/product' component={Product} />
 					<Route path='/admin/category' component={Category} />
 					<Route path='/admin/users' component={UsersData} />
 					<Route path='/admin/orders' component={Orders} />
 				</Route>
+				{/* ADMIN */}
 
-				<Route path='/users' exact>
-					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
-					<FormUsers></FormUsers>
+				{/* PRODUCTS */}
+				<Route path='/products/catalogo'>
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
+					<Catalogo products={products} onSearch={onSearch} />
 					<Footer></Footer>
 				</Route>
 
 				<Route path='/products/product/:id'>
-					<Navegacion links={enlacesUser} showSearchbar={true} />
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} />
 					<ProductDet />
 				</Route>
+				{/* PRODUCTS */}
 
-				<Route path='/users/cart' component={CartShop} />
-				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
+				{/* USERS */}
+				<Route path='/users' exact>
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
+					<FormUsers></FormUsers>
+					<Footer></Footer>
+				</Route>
+
+				{/* <Route path='/users/cart' component={CartShop} /> */}
+
+				<Route path='/users/cart'>
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
+					<CartShop></CartShop>
+					<Footer></Footer>
+				</Route>
+				{/* <Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route> */}
 				<Route path='/users/:id' component={UserDetaul} />
-				{/*ruta FAQs*/}
+				{/* USERS */}
+
+				{/* LOGIN */}
+				<Route path='/login' exact>
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
+					<Login></Login>
+					<Footer></Footer>
+				</Route>
+				{/* LOGIN */}
+
+				{/* PROFILE */}
+				<Route path='/profile' component={ProfileUser} />
+				{/* PROFILE */}
 			</Switch>
 		</div>
 	);

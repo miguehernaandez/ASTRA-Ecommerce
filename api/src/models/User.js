@@ -2,6 +2,10 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
 	sequelize.define('user', {
+		name: {
+			type: Sequelize.STRING,
+			allowNull: false,
+		},
 		email: {
 			type: Sequelize.STRING,
 			allowNull: false,

@@ -19,3 +19,7 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const UPDATE_FROM_CART = 'UPDATE_FROM_CART';
 export const DETAIL_USER = 'DETAIL_USER'
 export const GET_ORDERS = 'GET_ORDERS';
+export const DELETE_CART = 'DELETE_CART';
+export const LOGIN = 'LOGIN';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGOUT = 'LOGOUT'

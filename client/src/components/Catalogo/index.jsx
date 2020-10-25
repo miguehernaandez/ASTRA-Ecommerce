@@ -59,9 +59,7 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 	}, []);
 
 	return (
-		<div>
-			<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
-
+		<div className={`${s.contPrincipal}`}>
 			{/*<h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>*/}
 			{products.length == 0 ? (
 				productsP.length == 0 ? (
