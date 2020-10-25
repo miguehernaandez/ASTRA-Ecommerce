@@ -1,35 +1,37 @@
-const Sequelize = require('sequelize');
+const { DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 module.exports = (sequelize) => {
-	sequelize.define('user', {
+	const User = sequelize.define('user', {
 		name: {
-			type: Sequelize.STRING,
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 		email: {
-			type: Sequelize.STRING,
+			type: DataTypes.STRING,
 			allowNull: false,
 			unique: true,
 		},
 		password: {
-			type: Sequelize.STRING,
+			type: DataTypes.STRING,
 			allowNull: false,
-			// Poner esta funcion aca hace que estos datos no aparezcan en queries como user.findAll()
-			get() {
-				return () => this.getDataValue('password');
-			},
 		},
 		role: {
-			type: Sequelize.ENUM('client', 'admin', 'Guest'),
+			type: DataTypes.ENUM('client', 'admin', 'Guest'),
 			defaultValue: 'Guest',
 			allowNull: false,
 		},
-		// Esto se utiliza para la encriptacion de la contrasena
 		salt: {
-			type: Sequelize.STRING,
-			get() {
-				return () => this.getDataValue('salt');
-			},
+			type: DataTypes.STRING,
 		},
 	});
+
+	User.encryptPassword = function (password) {
+		return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+	};
+	User.comparePassword = function (password, userPassword) {
+		console.log(userPassword);
+		console.log(password);
+		return bcrypt.compareSync(password, userPassword);
+	};
 };

@@ -30,7 +30,7 @@ const url = 'localhost:3001';
 var enlacesUserConAdmin = [
 	{ text: 'Catalogo', to: '/products/catalogo' },
 	{ text: 'FAQs', to: '/Faqs' },
-	{ text: 'Contacto', to: '/' },
+	// { text: 'Contacto', to: '/' },
 	{ text: 'ADMIN', to: '/admin' },
 ];
 var enlacesUserSinAdmin = [

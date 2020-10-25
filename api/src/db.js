@@ -59,37 +59,30 @@ Order.belongsTo(User);
 
 // <----------------------------- Password Encrypting ----------------------------->
 // Funciones auxiliares para la encriptacion
-User.generateSalt = function () {
-	return crypto.randomBytes(16).toString('base64');
-};
-User.encryptPassword = function (plainText, salt) {
-	return crypto.createHash('RSA-SHA256').update(plainText).update(salt).digest('hex');
-};
+// User.generateSalt = function () {
+// 	return crypto.randomBytes(16).toString('base64');
+// };
+// User.encryptPassword = function (plainText, salt) {
+// 	return crypto.createHash('RSA-SHA256').update(plainText).update(salt).digest('hex');
+// };
 
-// Esta funcion se utiliza para corroborar si la contraseña que llega es igual a la almacenada en la base de datos a traves de la encriptacion
-User.prototype.correctPassword = function (enteredPassword) {
-	return User.encryptPassword(enteredPassword, this.salt()) === this.password();
-};
+// // Esta funcion se utiliza para corroborar si la contraseña que llega es igual a la almacenada en la base de datos a traves de la encriptacion
+// User.prototype.correctPassword = function (enteredPassword) {
+// 	return User.encryptPassword(enteredPassword, this.salt()) === this.password();
+// };
 
-// Esta funcion es la que encripta el dato de la contraseña utilizando los hooks de mas abajo
-const setSaltAndPassword = (user) => {
-	if (user.changed('password')) {
-		user.salt = User.generateSalt();
-		user.password = User.encryptPassword(user.password(), user.salt());
-	}
-};
+// // Esta funcion es la que encripta el dato de la contraseña utilizando los hooks de mas abajo
+// const setSaltAndPassword = (user) => {
+// 	if (user.changed('password')) {
+// 		user.salt = User.generateSalt();
+// 		user.password = User.encryptPassword(user.password(), user.salt());
+// 	}
+// };
 
-// Hooks que se utilizan para encriptar el valor ingresado de contraseña antes de crearse por primera vez y cada vez que se actualiza
-User.beforeCreate(setSaltAndPassword);
-User.beforeUpdate(setSaltAndPassword);
+// // Hooks que se utilizan para encriptar el valor ingresado de contraseña antes de crearse por primera vez y cada vez que se actualiza
+// User.beforeCreate(setSaltAndPassword);
+// User.beforeUpdate(setSaltAndPassword);
 // <----------------------------- Password Encrypting ----------------------------->
-
-User.create({
-	email: 'admin@admin.com',
-	password: 'admin',
-	role: 'admin',
-	name: 'Admin',
-});
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

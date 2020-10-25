@@ -69,9 +69,9 @@ function Navegacion(props) {
 						<FontAwesomeIcon id={`hamburgerButton`} className={`${s.bordeVerde} flex-fill ${s.plusIcon}`} icon={faBars} size={'1x'} onClick={handleHamburgerIcon} />
 						<FontAwesomeIcon id={`hamburgerButton2`} className={`${s.bordeVerde} flex-fill ${s.plusIcon} d-none mr-1`} icon={faTimes} size={'1x'} onClick={handleHamburgerIcon} />
 					</Navbar.Toggle>
-					<Navbar.Collapse id='responsive-navbar-nav' className={`${s.bordeRojo} ${s.contColapse} justify-content-around order-3 order-md-1`}>
+					<Navbar.Collapse id='responsive-navbar-nav' className={` ${s.contColapse} justify-content-around order-3 order-md-1`}>
 						{/* Aca adentro van los enlaces que se colapsan en pantallas mas pequenias */}
-						<Nav className={`d-flex flex-row pl-lg-5	`}>
+						<Nav className={`d-flex flex-row pl-lg-5 ${s.bordeRojo}`}>
 							{/* Camilo */}
 							{props.userLogin ? (
 								props.userLogin.role === 'client' ? (
@@ -88,10 +88,10 @@ function Navegacion(props) {
 										{/* Link: Categorias */}
 									</Col>
 								) : (
-									<Col lg={6} className={`d-flex`}>
+									<Col lg={6} className={`d-flex flex-column flex-sm-row`}>
 										{props.linksA.map((enlace, i, arr) => {
 											return (
-												<div key={enlace.text} className={props.showSearchbar && arr[i + 1] ? `${s.separador} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : !props.showSearchbar && arr[i + 1] ? `${s.separadorAdmin} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : !props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0` : ``}>
+												<div key={enlace.text} className={props.showSearchbar && arr[i + 1] ? `${s.separador} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0 border-0` : !props.showSearchbar && arr[i + 1] ? `${s.separadorAdmin} flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0 border-0` : props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0 border-0` : !props.showSearchbar ? `flex-fill d-flex flex-column justify-content-center mb-2 mb-md-0 border-0` : ``}>
 													<Nav.Link href='#' as={Link} to={enlace.to} className={props.showSearchbar ? `${s.navbarLinks}` : `${s.navbarLinksAdmin}`}>
 														{enlace.text}
 													</Nav.Link>
@@ -118,15 +118,14 @@ function Navegacion(props) {
 						</Nav>
 						{/* SerachBar */}
 						{props.showSearchbar && (
-							<Col xs={10} sm={6} md={`auto`} className={`${s.bordeAmarillo} mb-2 my-md-0 px-0 ml-0 mr-md-4 ml-auto mr-auto`}>
+							<Col xs={10} sm={6} md={4} className={`${s.bordeAmarillo} mb-2 my-md-0 px-0 ml-0 mr-md-4 ml-auto mr-auto`}>
 								<SearchBar onSearch={props.onSearch}></SearchBar>
 							</Col>
 						)}
 					</Navbar.Collapse>
 					{/* user login icons y carrito y demas */}
-					{/* CAmilo */}
 					{!props.userLogin ? (
-						<div id='impostor' className={`${s.bordeAmarillo} order-1 order-md-3 mr-lg-3`}>
+						<div id='impostor' className={`${s.bordeAmarillo} order-1 order-md-3 mr-md-3`}>
 							{props.showSearchbar && (
 								<Col xs={`auto`} className={`${s.bordeVerde} order-1 order-md-3 d-flex justify-content-between justify-content-lg-around`}>
 									{/* Users */}
@@ -152,14 +151,18 @@ function Navegacion(props) {
 							)}
 						</div>
 					) : (
-						<div id='impostor' className={`${s.bordeAmarillo} order-1 order-md-3 mr-lg-3`}>
-							<Col xs={`auto`} className={`${s.bordeAmarillo} order-1 order-md-3 d-flex justify-content-between justify-content-lg-around`}>
+						<div id='impostor' className={`${s.bordeRojo} order-1 order-md-3 mr-md-3`}>
+							<Col xs={`auto`} className={`${s.bordeAmarillo} mx-0 px-0 order-1 order-md-3 d-flex justify-content-between justify-content-lg-around`}>
 								{
-									<div className={s.contProfile}>
-										{props.userLogin.role === 'admin' ? <span className={s.textProfile}>Admin {props.userLogin.name}</span> : <span className={s.textProfile}>{props.userLogin.name}</span>}
-										{/* texto de prueba */}
-										{/* <span className={s.textProfile}>Admin Jorge</span> */}
-
+									<div className={`${s.contProfile}`}>
+										{props.userLogin.role === 'admin' ? (
+											<Col className={`d-flex flex-column px-0 mx-0`}>
+												<span className={`${s.textProfile} text-center`}>Admin </span>
+												<span className={`${s.textProfile} text-center`}>{props.userLogin.name}</span>
+											</Col>
+										) : (
+											<span className={s.textProfile}>{props.userLogin.name}</span>
+										)}
 										<Nav.Link href='#' as={Link} to={'/'} className={`${s.navbarLinks}`} onClick={handlerClick}>
 											Logout
 										</Nav.Link>

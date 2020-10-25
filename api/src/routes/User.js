@@ -11,9 +11,9 @@ const crypto = require('crypto');
 
 server.post('/', function (req, res) {
 	const { email, password, role, name } = req.body;
-
 	console.log(req.body);
-	User.create({ name, email, password, role })
+	let passEncrypt = User.encryptPassword(password);
+	User.create({ name, email, password: passEncrypt, role })
 		.then((user) => {
 			console.log(user);
 			return res.status(CREATED).json({
@@ -22,8 +22,6 @@ server.post('/', function (req, res) {
 			});
 		})
 		.catch((err) => {
-			console.log('error de ruta');
-			console.log(err);
 			return res.status(ERROR).json({
 				message: 'Error al crear usuario',
 				data: err,
