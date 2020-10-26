@@ -6,6 +6,9 @@ import logo from '../../multimedia/logo.png';
 // Bootstrap
 import { Col, Navbar, Container, Form, Button, InputGroup, FormControl, Row } from 'react-bootstrap';
 
+// React -Routes
+import { Link } from 'react-router-dom';
+
 // Font Awesome (iconos)
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -18,11 +21,13 @@ export default function Footer() {
 	return (
 		<Navbar className={`${s.footer} justify-content-center pt-lg-5`}>
 			<Container className={`d-flex flex-column`}>
-				<Row className={`${s.bordeRojo} justify-content-between w-100`}>
-					<Col xs={12} lg={2} className={`${s.bordeVerde} d-flex order-3 order-lg-1 align-items-center justify-content-center justify-content-lg-start p-0`}>
-						<Navbar.Brand href='#home'>
+				<Row className={`${s.bordeRojo} justify-content-between align-items-center w-100`}>
+					<Col xs={12} lg={2} className={`${s.bordeVerde} d-flex order-3 order-lg-1 align-items-center justify-content-center  p-0 mt-5 mt-lg-0`}>
+						<Navbar.Brand className={`p-0 m-0`}>
 							{/* Logo */}
-							<img className={`${s.logo}`} src={logo}></img>
+							<Link to='/'>
+								<img className={`${s.logo}`} src={logo}></img>
+							</Link>
 						</Navbar.Brand>
 					</Col>
 					<div className={`${s.separador} d-none d-lg-block order-2 order-lg-2`}></div>
@@ -47,10 +52,10 @@ export default function Footer() {
 					<div className={`${s.separador} d-none d-lg-block order-2 order-lg-4`}></div>
 					<Col xs={12} lg={2} className={`${s.bordeVerde} order-2 order-lg-5 d-flex justify-content-around align-items-center`}>
 						{/* Iconos Redes Sociales */}{' '}
-						<a href='https://www.instagram.com/fordiscover_hl/'  target='_blank' className={s.instagram} >
+						<a href='https://www.instagram.com/fordiscover_hl/' className={s.instagram}>
 							<FontAwesomeIcon icon={faInstagram} size='2x' />
 						</a>
-						<a href='https://twitter.com/ecommercehenry1' target='_blank' className={s.twitter}>
+						<a href='https://twitter.com/ecommercehenry1' className={s.twitter}>
 							<FontAwesomeIcon icon={faTwitter} size='2x' />
 						</a>
 						{/*	<FontAwesomeIcon className={`flex-fill ${s.userLoginIcon}`} icon={userLogin} size={'lg'} />

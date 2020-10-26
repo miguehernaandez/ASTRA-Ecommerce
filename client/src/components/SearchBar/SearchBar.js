@@ -12,7 +12,6 @@ import { faSearch as searchIcon } from '@fortawesome/free-solid-svg-icons';
 import s from '../../styles/Navbar.module.css';
 
 export default function SearchBar(props) {
-	
 	const [product, setProduct] = useState('');
 	let { onSearch } = props;
 
@@ -32,7 +31,7 @@ export default function SearchBar(props) {
 		onSearch(product);
 		let textInput = document.getElementById('inlineFormInputGroup');
 		textInput.value = '';
-		setProduct(textInput.value)
+		setProduct(textInput.value);
 		return;
 	};
 
@@ -44,7 +43,7 @@ export default function SearchBar(props) {
 				<InputGroup.Append>
 					<Button variant='primary' type='submit' className={`${s.contenedorLupa}`}>
 						{/* <InputGroup.Text  > */}
-						<FontAwesomeIcon className={`${s.searchIcon}`} icon={searchIcon} />
+						<FontAwesomeIcon className={`${s.searchIcon} mb-1`} icon={searchIcon} />
 						{/* </InputGroup.Text> */}
 					</Button>
 				</InputGroup.Append>

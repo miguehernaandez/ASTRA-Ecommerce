@@ -156,7 +156,7 @@ button:focus {
 }
 
 .userLoginIcon {
-	font-size: 1.4em;
+	font-size: 1.1em;
 	color: var(--celeste);
 	transition: 300ms;
 }

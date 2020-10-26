@@ -2,7 +2,7 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 // Password Encrypting
@@ -62,19 +62,15 @@ Order.belongsTo(User);
 //     return crypto.randomBytes(16).toString('base64')
 // }
 // User.methods.encryptPassword = function(password) {
-// 	return bcrypt.hashSync(password, bcrypt.genSaltSync(10)) 
-// }	
+// 	return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+// }
 // User.methods.comparePassword = function(password){
 // 	return bcrypt.compareSync(password, this.password);
 // }
 
-
-
-
 // User.prototype.correctPassword = function(enteredPassword) {
 //     return User.encryptPassword(enteredPassword, this.salt()) === this.password()
 // }
-
 
 // <----------------------------- Password Encrypting ----------------------------->
 // Funciones auxiliares para la encriptacion
@@ -102,7 +98,6 @@ Order.belongsTo(User);
 // User.beforeCreate(setSaltAndPassword);
 // User.beforeUpdate(setSaltAndPassword);
 // <----------------------------- Password Encrypting ----------------------------->
-
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
