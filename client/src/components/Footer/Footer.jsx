@@ -18,9 +18,9 @@ export default function Footer() {
 	return (
 		<Navbar className={`${s.footer} justify-content-center pt-lg-5`}>
 			<Container className={`d-flex flex-column`}>
-				<Row className={`${s.bordeRojo} justify-content-between w-100`}>
-					<Col xs={12} lg={2} className={`${s.bordeVerde} d-flex order-3 order-lg-1 align-items-center justify-content-center justify-content-lg-start p-0`}>
-						<Navbar.Brand href='#home'>
+				<Row className={`${s.bordeRojo} justify-content-between align-items-center w-100`}>
+					<Col xs={12} lg={2} className={`${s.bordeVerde} d-flex order-3 order-lg-1 align-items-center justify-content-center  p-0 mt-5 mt-lg-0`}>
+						<Navbar.Brand href='#home' className={`p-0 m-0`}>
 							{/* Logo */}
 							<img className={`${s.logo}`} src={logo}></img>
 						</Navbar.Brand>
