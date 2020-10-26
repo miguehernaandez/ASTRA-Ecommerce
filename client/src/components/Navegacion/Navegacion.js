@@ -26,8 +26,6 @@ import { logout } from '../../store/actions/loginActions';
 
 // <--------------------------- IMPORTS --------------------------->
 
-
-
 function Navegacion(props) {
 	// console.log('State User Loaded');
 	// console.log(props.userLogin);
@@ -160,10 +158,12 @@ function Navegacion(props) {
 										{props.userLogin.role === 'admin' ? (
 											<Col className={`d-flex flex-column px-0 mx-0`}>
 												<span className={`${s.textProfile} text-center`}>Admin </span>
-												 <span className={`${s.textProfile} text-center`}>{props.userLogin.name}</span>
+												<span className={`${s.textProfile} text-center`}>{props.userLogin.name}</span>
 											</Col>
 										) : (
-											<Link to='/profile'><span className={s.textProfile}>{props.userLogin.name}</span></Link>
+											<Link to='/profile'>
+												<span className={s.textProfile}>{props.userLogin.name}</span>
+											</Link>
 										)}
 										<Nav.Link href='#' as={Link} to={'/'} className={`${s.navbarLinks}`} onClick={handlerClick}>
 											Logout

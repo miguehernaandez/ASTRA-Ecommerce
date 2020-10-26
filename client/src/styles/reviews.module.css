@@ -23,26 +23,25 @@
 }
 
 .bordeRojo {
-	border: none
-} 
+	border: none;
+}
 
 .hr {
 	padding: 0px;
 	margin: 0px;
-} 
+}
 
 .openCloseIcon {
 	color: var(--celeste);
 	transition: 300ms;
 }
 
-.reviewInfo{
+.reviewInfo {
 	/* border: 1px solid black; */
 	width: 100%;
-	padding: 2% 2%;
 }
 
-.likesReview{
+.likesReview {
 	display: flex;
 	justify-content: flex-end;
 }
