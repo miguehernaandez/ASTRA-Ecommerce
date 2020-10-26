@@ -7,6 +7,7 @@ import s from '../../styles/carrito.module.css'
 import { Table, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../../multimedia/logo.png';
+import CardVacio from '../../multimedia/carrtvacio.png';
 import {faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 import Navegacion from '../Navegacion/Navegacion'
 import { useState } from 'react';
@@ -16,7 +17,7 @@ import { useState } from 'react';
 
 const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFromCartP, deleteCartP, getOrdersP, orderP,userLogin}) => {
     const [quantity, setQuantity] = useState(0)
-    const {idUser} = match.params
+    // const {idUser} = match.params
     //console.log(cartP[0].products)
     let cartP2 =  cartP.length < 1 ? [] :  cartP[0].products
     let orderP2 =  orderP.length < 1? [] :  orderP[0].products
@@ -38,7 +39,7 @@ const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFr
     ]
 
 
-    /****************************** USEEFECT ******************************* */
+    /********** USEEFECT *********** */
     // useEffect(()=> {
     //     getOrdersP();
     //     if(userLogin){
@@ -46,22 +47,17 @@ const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFr
     //     }
         
     // },[])
-     /****************************** USEEFECT ******************************* */
-    console.log('**************ORDER***************')
+     /********** USEEFECT *********** */
+    console.log('*****ORDER******')
     console.log(userLogin)
 
 
     return(
         
         <div>
-            {cartP2.length < 1 ? 
-                <div>
-                    <h1>CARRITO VACIO</h1> 
-                    <Link to='/'>Sigue comprando</Link>
-                </div>
-            :
+            
             <div>
-            < Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={false}/>
+            {/* < Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={false}/> */}
             <div className={s.cont_prin}>
                 <div className={s.cont1}>
                     <img className={`${s.logo}`} src={logo}></img>
@@ -72,9 +68,17 @@ const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFr
 
                     </ul>
                 </div>
-                <div className={s.cont2}>
-                    <h1>Mi carrito</h1>
-                    <div className={s.cont_table}>
+                <h1>Mi carrito</h1>
+                {cartP2.length < 1 ? 
+                <div className={s.cardVacio}>
+                    <img src={CardVacio}></img>
+                    <h1>!TU CARRITO DE COMPRAS AHORA ESTA VACIO¡</h1> 
+                    <h6>Busca y añade los articulos que mas te gusten al carrito</h6>
+                    <Link className={s.link} to='/'>Sigue comprando</Link>
+                </div>
+               :
+                <div className={s.cont2}>                  
+                     <div className={s.cont_table}>
                         <Table  size="sm">
                             <thead className={s.tableTitle}>
                                 <tr>
@@ -155,11 +159,13 @@ const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFr
                     </div>
 
                 </div>
+             } 
 
             </div>
+       
             </div>
 
-        }                    
+                          
         </div>
 
 
