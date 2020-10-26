@@ -3,7 +3,7 @@ import s from '../../styles/addReview.module.css';
 import {Button, Modal, Row, Col, Form } from 'react-bootstrap';
 import Review from '../Review/review'
 
-const AddReview = ({show, setShow, product})=>{
+const AddReview = ({show, setShow, product, reviewForm, handlerAddReview, review, handlerRate})=>{
     return(
         <Modal
         show={show}
@@ -33,17 +33,19 @@ const AddReview = ({show, setShow, product})=>{
                         <div className={s.title2}>
                             <h6>Calificación general</h6>
                             <div className={s.strat}>
-                                <Review/>
+                                <Review
+                                handlerRate={handlerRate}
+                                />
                             </div>
 
                         </div>
                         <Form.Group>
                             <Form.Label className={s.title2}>Titulo</Form.Label>
-                            <Form.Control className={s.input} size="sm" type="text" placeholder="Ejemplo: ¡Es muy liviano!"/>
+                            <Form.Control name='title' className={s.input} size="sm" type="text" placeholder="Ejemplo: ¡Es muy liviano!" onChange={reviewForm}/>
                         </Form.Group>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
                             <Form.Label className={s.title2}>Escriba su comentario</Form.Label>
-                            <Form.Control className={s.input} as="textarea" rows={3} />
+                            <Form.Control name='content' className={s.input} as="textarea" rows={3} onChange={reviewForm}/>
                         </Form.Group>
                     </Form>
                     <div className={s.recordar}>
@@ -52,7 +54,7 @@ const AddReview = ({show, setShow, product})=>{
                         <Button className={s.button}>NO</Button>                       
                     </div>
                     <div className={s.addCom}>
-                    <Button className={s.button2}>Agregar comentario</Button> 
+                    <Button className={s.button2} onClick={()=> handlerAddReview(review, product.id)}>Agregar comentario</Button> 
                     </div>
                      
 

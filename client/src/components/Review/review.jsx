@@ -4,21 +4,22 @@ import {Button, Modal, Row, Col, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-const Review = ()=>{
+const Review = ({handlerRate})=>{
     return (
         <div className={s.container}>
-               <div className={s.rating}>
-                   <input id="rating-1" name='rating'type="radio" value='1'></input>
-                   <label for="rating-1" name='rating'></label>
-                   <input id="rating-2" name='rating' type="radio" value='2'></input>
-                   <label for="rating-2" name='rating'></label>
-                   <input id="rating-3" name='rating' type="radio" value='3'></input>
-                   <label for="rating-3" name='rating'></label>
-                   <input id="rating-4" name='rating' type="radio" value='4'></input>
-                   <label for="rating-4" name='rating'></label>
-                   <input id="rating-5" name='rating' type="radio" value='5'></input>
-                   <label for="rating-5" name='rating'></label>
-               </div>
+             <form name='rate' className={s.rating} >
+                    <input id="rate-1" name='rate'type="radio" value='5' onChange={handlerRate}></input>
+                   <label for="rate-1" name='rate'></label>
+                   <input id="rate-2" name='rate' type="radio" value='4' onChange={handlerRate}></input>
+                   <label for="rate-2" name='rate'></label>
+                   <input id="rate-3" name='rate' type="radio" value='3' onChange={handlerRate}></input>
+                   <label for="rate-3" name='rate'></label>
+                   <input id="rate-4" name='rate' type="radio" value='2' onChange={handlerRate}></input>
+                   <label for="rate-4" name='rate'></label>
+                   <input id="rate-5" name='rate' type="radio" value='1' onChange={handlerRate}></input>
+                   <label for="rate-5" name='rate'></label>
+             </form>
+               
         </div>
     )
            

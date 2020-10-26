@@ -100,23 +100,16 @@
 	border-radius: 50%;
 	font-size: 12px;
 }
-.sesion{
-	/* background-color: yellow; */
-	width: 100px !important;
-	margin-left: 2px;
-	
-}
-.sesion p{
-	padding-top: 15px;
+
+.textProfile{
 	color: white;
-	font-size: 0.8em;
-	cursor: pointer;	
+	font-size: 12px;
 }
 
-.cont_ico{
-	/* background-color: violet; */
-	width: 100px;
+
+.contProfile{
 	display: flex;
-	justify-content: space-between;
+	height: 100%;
+	justify-content: center;
 	align-items: center;
 }

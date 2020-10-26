@@ -14,12 +14,15 @@ import Catalogo from './components/Catalogo/index';
 import FormUsers from './components/FormUsers/FormUsers.jsx';
 import UsersData from './components/AdminForm/UsersData';
 import UserDetaul from './components/AdminForm/DetailUser.jsx'
+import Faqs from './components/FAQs/Faqs.jsx';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
 import CartShop from './components/Cart/card';// Redux
-import Loggin from './components/Loggin/loggin'
+import Login from './components/Login/Login';
+import ProfileUser from './components/ProfileUser/ProfileUser';
+import PrivateAdmin from './components/Routes/routePrivate'
 
 
 
@@ -30,13 +33,28 @@ const url = 'localhost:3001';
 
 var enlacesUser = [
 	{ text: 'Catalogo', to: '/products/catalogo' },
-	{ text: 'FAQs', to: '/' },
+	{ text: 'FAQs', to: '/Faqs' },
 	{ text: 'Contacto', to: '/' },
 	{ text: 'Ayuda', to: '/' },
 	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
 	{ text: 'ADMIN', to: '/admin' },
 ];
 
+var enlacesUserConAdmin = [
+	{ text: 'Catalogo', to: '/products/catalogo' },
+	{ text: 'FAQs', to: '/' },
+	{ text: 'Contacto', to: '/' },
+	{ text: 'Ayuda', to: '/' },
+	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
+	{ text: 'ADMIN', to: '/admin' },
+];
+var enlacesUserSinAdmin = [
+	{ text: 'Catalogo', to: '/products/catalogo' },
+	{ text: 'FAQs', to: '/' },
+	{ text: 'Contacto', to: '/' },
+	{ text: 'Ayuda', to: '/' },
+	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
+]
 var enlacesAdmin = [
 	{ text: 'Inicio', to: '/admin' },
 	{ text: 'Usuarios', to: '/admin/users' },
@@ -60,43 +78,58 @@ function App() {
 		});
 	};
 
+
+
+
 	return (
 		<div>
 			{/* <ProductCard/> */}
 			<Switch>
 				<Route path='/' exact>
-					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<Slider />
+
 					<Footer></Footer>
 					{/* <FormUsers></FormUsers> */}
 				</Route>
+
+				<Route path='/Faqs'  exact component={Faqs} />
+
 				{/* <Route path='/admin' exact > */}
 				<Route path='/admin'>
-					<Navegacion links={enlacesAdmin} showSearchbar={false} />
+					<Navegacion linksA={enlacesAdmin} showSearchbar={false} />
 					<PrinciapalAdmin />
-					<Route path='/admin' exact>
+					<PrivateAdmin path='/admin' exact component={WellcomeAdmin}/>
+					{/* <PrivateAdmin path='/admin' exact >
 						<WellcomeAdmin />
-					</Route>
+					</PrivateAdmin> */}
 					<Route path='/admin/product' component={Product} />
 					<Route path='/admin/category' component={Category} />
 					<Route path='/admin/users' component={UsersData} />
 					<Route path='/admin/orders' component={Orders} />
 				</Route>
+
 				<Route path='/users' exact>
-					<Navegacion links={enlacesUser} showSearchbar={true} onSearch={onSearch} />
+
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin}  showSearchbar={true} onSearch={onSearch} />
+
 					<FormUsers></FormUsers>
 					<Footer></Footer>
 				</Route>
+
 				<Route path='/products/product/:id'>
-					<Navegacion links={enlacesUser} showSearchbar={true} />
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} />
 					<ProductDet />
 				</Route>
+
 				<Route path='/users/cart' component={CartShop} />
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
 				<Route path='/users/:id' component={UserDetaul}/>
-				<Route path='/login' component={Loggin} />
-				
+
+				<Route path='/login' component={Login}/>
+				<Route path='/profile' component={ProfileUser}/>
 			</Switch>
+
 		</div>
 	);
 }

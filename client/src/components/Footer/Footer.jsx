@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Rrss from '../Rrss/Rrss.jsx';
 // Logo
 import logo from '../../multimedia/logo.png';
 
@@ -46,10 +46,11 @@ export default function Footer() {
 				<div className={`${s.separador}`}></div>
 				<Col lg={3} className={'d-flex'}>
 					{/* Iconos Redes Sociales */}
-					<FontAwesomeIcon className={`flex-fill ${s.userLoginIcon}`} icon={userLogin} size={'lg'} />
+						<Rrss></Rrss>
+				{/*	<FontAwesomeIcon className={`flex-fill ${s.userLoginIcon}`} icon={userLogin} size={'lg'} />
 					<FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'lg'} />
 					<FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'lg'} />
-					<FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'lg'} />
+					<FontAwesomeIcon className={`flex-fill ${s.shopCartIcon}`} icon={shopCart} size={'lg'} />*/}
 				</Col>
 			</Container>
 		</Navbar>
