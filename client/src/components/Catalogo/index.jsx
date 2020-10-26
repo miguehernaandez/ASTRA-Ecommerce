@@ -5,6 +5,7 @@ import ProductCard from '../ProductCard/index';
 import Navegacion from '../Navegacion/Navegacion'
 import Filter from '../Filter/index';
 import Page from '../Pagination/index.jsx';
+import SideBar from '../SideBar/SideBar.jsx';
 import { connect } from 'react-redux';
 import {
     getCategories,
@@ -14,6 +15,8 @@ import {
     getProducts
 }from '../../store/actions/product_actions';
 import {Container, Row, Col, Form, Pagination} from 'react-bootstrap';
+import { Link } from 'react-router-dom'
+import * as faIcons from "react-icons/fa";
 import s from '../../styles/catalogo.module.css';
 const url = 'localhost:3001';
 
@@ -82,16 +85,24 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
     return (
 
     <div>
+
         < Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch}/>
         <h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>
+
         {products.length == 0  ? 
         productsP.length == 0 ? <h1 className={s.title2}>No hay registros en la base de datos</h1>
         :
         <Container>
+            <SideBar> </SideBar>
             <h1 className={s.title1}>Registros encontrados: {productsP.length}</h1>
-            < Filter categories={categories} handlerSelect={handlerSelect}/>
-            <Row >
-            {currentPostsCat.map((p)=> {
+            <div className={s.cont_prin_card}>
+                <div className={s.cont_filter}>
+                    {/*<div><p>Categorias</p></div>*/}
+                {/*<Filter categories={categories} handlerSelect={handlerSelect}/>*/}
+                </div>
+                <div className={s.cont_card}>
+                <Row >
+                {currentPostsCat.map((p)=> {
                 return (
                     <Col lg="3">
                     <ProductCard 
@@ -106,12 +117,21 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
                 )
             })}
             </Row>
+                </div>           
+            
+            </div>
+           
             <Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate}/>
         </Container>
         :
         <Container>
         <h1 className={s.title1}>Registros encontrados: {products.length}</h1>
-        < Filter categories={categories} handlerSelect={handlerSelect}/>
+        <div className={s.cont_prin_card}> 
+        <div className={s.cont_filter}>
+        <div><p>Categorias</p></div>
+        {/*< Filter categories={categories} handlerSelect={handlerSelect}/>*/}
+        </div> 
+        <div className={s.cont_card}>   
         <Row>
         {currentPostsSearch.map((p)=> {
             return (
@@ -128,6 +148,8 @@ const Catalogo = ({products, productsP, categories, getCategoryP, getProductP, o
             )
         })}
         </Row>
+        </div> 
+        </div>
         <Page postsPerPage={postsPerPage} totalPosts={products.length} paginate={paginate}/>
         </Container>
     }

@@ -1,7 +1,7 @@
 /* Import de fonts */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 .cont_prin{
-    width: 70%;    
+    width: 100%;    
     margin: auto;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -30,7 +30,7 @@
 }
 .cont_info{
     width: 38%;
-    padding-top: 12px;  
+    padding-top: 5px;  
 }
 .cont_info h3{
     color: #1F2333;
@@ -63,7 +63,7 @@
     font-family: 'Open Sans', sans-serif;
     margin-left: 8% ;
     margin-right: 5%;
-    margin-top: 25px;
+    margin-top: 15px;
     text-align: justify;
     
 }
@@ -128,9 +128,36 @@
     padding-left: 1px !important;
     padding-right: 1px !important;
 }
+.contReviw{
+    display: flex;
+    align-items: center;
+}
+.contReviw p{
+    padding-left: 2px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.8em;
+    color: #1F2333 !important; 
+    cursor: pointer;
+}
+.contReviw p:hover{
+    color:#3B8EA5 ;
+    text-decoration-line: underline;
+}
+
+
 .icon{
+    font-size: 1.3em;
     padding-left: 8%;
-    color:#F19953 ;
+}
+
+.icon .estrellaColor {
+    color: #F19953;
+	margin: 2px;
+}
+
+.icon .estrellaInactiva {
+    color: lightgrey;
+	margin: 2px;
 }
 
 .cont_cant2{

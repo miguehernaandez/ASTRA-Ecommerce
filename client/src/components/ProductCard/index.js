@@ -54,12 +54,23 @@ function ProductCard({ name, description, img, price, id, destacado, stock, addT
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 				</div>
 				{/* <Card.Text className={`my-1 ${s.productCardDescription}`}>{`${description}` || `Product Name`} </Card.Text> */}
-				<Card.Text className={`my-1 ${s.productCardPrice}`}>{`$ ${price}` || `Product Name`}</Card.Text>
+				<Card.Text className={`my-1 ${s.productCardPrice}`}>
+					{stock == 0 ?
+					<div></div>
+					:
+					<div>
+						{`$ ${price}` || `Product Name`}
+					</div>
+					
+					}
+					</Card.Text>
 				<Row className={`d-flex justify-content-around `} >
 					{stock == 0 ? 
-						<Button as={Link} to={`/products/product/${id}`} className={`mb-1 ${s.productCardButton}`}>
+						<div className={s.cont_stockButon}>				
+						<Button as={Link} to={`/products/product/${id}`} className={`mb-1 ${s.productStockButton}`}>
 							Ver Detalles
 						</Button>
+						</div>
 					:
 					<div className={s.buttons}>
 						<Button as={Link} to={`/products/product/${id}`} className={`mb-1 ${s.productCardButton}`}>

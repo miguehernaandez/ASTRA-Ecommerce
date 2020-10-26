@@ -1,3 +1,4 @@
+
 import { 
   ADD_CATEGORY, GET_CATEGORIES, 
   DELETE_CATEGORY, MODIFY_CATEGORY, 
@@ -9,12 +10,14 @@ import {
   UPDATE_FROM_CART, CREATE_USER, 
   GET_USERS, DELETE_USER, UPDATE_USER, DETAIL_USER,
   DELETE_CART,
-  LOGIN, LOGIN_ERROR, LOGOUT} from '../constants/constans';
+  LOGIN, LOGIN_ERROR, LOGOUT,
+  ADD_REVIEW,UPDATE_REVIEW, DELETE_REVIEW} from '../constants/constans';
 
   import Cookie from 'js-cookie';
 
   const cartItems = Cookie.getJSON('cartItems') || []
   const userLoad = Cookie.getJSON('userLoad') || null
+
 
 
 const inicialState = {
@@ -25,17 +28,18 @@ const inicialState = {
 	userSelected: [],
 	orders: [],
 
+
 	userLogged: userLoad,
 	logged: false,
 
 
 	messageError: ''
+
 };
 
 const ReducerCategory = (state = inicialState, action) => {
 	console.log(action);
 	switch (action.type) {
-
 		/****************************** CATEGORIES ********************************/
 		case GET_CATEGORIES:
 			return { ...state, categories: action.categories };
@@ -120,20 +124,20 @@ const ReducerCategory = (state = inicialState, action) => {
 
 		case UPDATE_USER:
 			console.log(action.payload.data);
-			const { id, password, role } = action.payload.data;
-			console.log(id, password, role);
+			const { id, role } = action.payload.data;
+			console.log(id, role);
 			var userToUpdatePosition = state.users.indexOf(state.users.filter((user) => user.id === id)[0]);
 			// console.log(userToUpdatePosition);
 			var userToUpdate = state.users[userToUpdatePosition];
 			// console.log(userToUpdate);
-			var userUpdated = { ...userToUpdate, password: password, role: role };
+			var userUpdated = { ...userToUpdate, role: role };
 			var oldUsers = state.users;
 			// console.log(oldUsers);
 			oldUsers[userToUpdatePosition] = userUpdated;
 			return { ...state, users: oldUsers };
 
 		case DETAIL_USER:
-			return {...state, userSelected: action.users}
+			return { ...state, userSelected: action.users };
 
 		case ERROR_MESSAGE:
 			console.log('error en algun lado: el reducer');
@@ -167,6 +171,7 @@ const ReducerCategory = (state = inicialState, action) => {
 
 		/****************************** ORDERS ************************************/
 		case GET_ORDERS:
+
 			return {...state, orders: action.orders };
 		
 		/********************************* LOGIN ********************************* */
@@ -178,6 +183,11 @@ const ReducerCategory = (state = inicialState, action) => {
 			return {...state, userLogged: null, messageError: '', cart:[], logged:false}
 		
 		default: return inicialState;
+
+		/****************************** REVIEW ********************************/
+		case ADD_REVIEW:
+			return {...state, products:action.products}
+
 	}
 };
 

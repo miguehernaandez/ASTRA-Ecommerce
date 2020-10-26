@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const { DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt')
 
@@ -10,24 +11,19 @@ module.exports = (sequelize) => {
 			allowNull:false
 		},
 		email: {
-			type: DataTypes.STRING,
+			type: Sequelize.STRING,
 			allowNull: false,
 			unique: true,
 		},
 		password: {
-			type: DataTypes.STRING,
+			type: Sequelize.STRING,
 			allowNull: false,
-
 		},
 		role: {
-			type: DataTypes.ENUM('client', 'admin', 'Guest'),
+			type: Sequelize.ENUM('client', 'admin', 'Guest'),
 			defaultValue: 'Guest',
 			allowNull: false,
 		},
-		salt: {
-			type: DataTypes.STRING,
-
-		}
 	});
 
 	User.encryptPassword = function(password) {

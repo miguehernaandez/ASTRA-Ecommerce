@@ -39,13 +39,13 @@ const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFr
 
 
     /****************************** USEEFECT ******************************* */
-    useEffect(()=> {
-        getOrdersP();
-        if(userLogin){
-            cartP2 = orderP[0].products
-        }
+    // useEffect(()=> {
+    //     getOrdersP();
+    //     if(userLogin){
+    //         cartP2 = orderP[0].products
+    //     }
         
-    },[])
+    // },[])
      /****************************** USEEFECT ******************************* */
     console.log('**************ORDER***************')
     console.log(userLogin)

@@ -155,7 +155,11 @@ button:focus {
 	color: var(--azul);
 }
 
-.userLoginIcon,
+.userLoginIcon {
+	font-size: 1.4em;
+	color: var(--celeste);
+	transition: 300ms;
+}
 .shopCartIcon {
 	color: var(--celeste);
 	transition: 300ms;

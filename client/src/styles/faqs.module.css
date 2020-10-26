@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+
+
+:root {
+	--azul: #1f2333;
+	--celeste: #3b8ea5;
+	--blanco: #edf7f6;
+	--naranjo: #FFB86C ;
+  --gris: #E6E6E6;
+  --negro: #000000;
+}
+
+
+h5{
+  front-family: 'Open Sans' , sans-serif ;
+}
+
+h6{
+  front-family: 'Open Sans' , sans-serif ;
+}
+
+.Pregunta  {
+
+background-color: var(--gris) !important;
+
+
+}
+
+.Respuesta {
+  background-color: var(--naranjo) ;
+
+}
+
+.containerSize{
+  max-height: 600px;
+}

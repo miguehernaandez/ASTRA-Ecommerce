@@ -14,6 +14,7 @@ import Catalogo from './components/Catalogo/index';
 import FormUsers from './components/FormUsers/FormUsers.jsx';
 import UsersData from './components/AdminForm/UsersData';
 import UserDetaul from './components/AdminForm/DetailUser.jsx'
+import Faqs from './components/FAQs/Faqs.jsx';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
@@ -52,9 +53,13 @@ function App() {
 				<Route path='/' exact>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<Slider />
+
 					<Footer></Footer>
 					{/* <FormUsers></FormUsers> */}
 				</Route>
+
+				<Route path='/Faqs'  exact component={Faqs} />
+
 				{/* <Route path='/admin' exact > */}
 				<Route path='/admin'>
 					<PrivateAdmin path='/admin' exact component={WellcomeAdmin}/>
@@ -63,21 +68,28 @@ function App() {
 					<PrivateAdmin path='/admin/users' component={UsersData} />
 					<PrivateAdmin path='/admin/orders' component={Orders} />
 				</Route>
+
 				<Route path='/users' exact>
+
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin}  showSearchbar={true} onSearch={onSearch} />
+
 					<FormUsers></FormUsers>
 					<Footer></Footer>
 				</Route>
+
 				<Route path='/products/product/:id'>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} />
 					<ProductDet />
 				</Route>
+
 				<Route path='/users/cart' component={CartShop} />
 				<Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route>
 				<Route path='/users/:id' component={UserDetaul}/>
+
 				<Route path='/login' component={Login}/>
 				<PrivateRoute path='/profile' component={ProfileUser}/>
 			</Switch>
+
 		</div>
 	);
 }
