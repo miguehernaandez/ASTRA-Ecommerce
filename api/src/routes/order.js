@@ -7,7 +7,7 @@ const { OK, CREATED, ERROR, ERROR_SERVER } = require('../constants/index'); // I
 //// 'Get Orders' route in '/'
 server.get('/', function (req, res) {
 
-	Order.findAll({ include: [ { model: User } ] })	
+	Order.findAll({ include: [ { model: User}, {model: Product}  ] })	
 	.then(orders => {
 		return res.json({
 			message: 'Sucess',

@@ -22,46 +22,11 @@ import axios from 'axios';
 import CartShop from './components/Cart/card';// Redux
 import Login from './components/Login/Login';
 import ProfileUser from './components/ProfileUser/ProfileUser';
-import PrivateAdmin from './components/Routes/routePrivate'
-
-
-
-
-
+import PrivateAdmin from './components/Routes/PrivateAdmin';
+import PrivateRoute from './components/Routes/PrivateRoute'
+import {enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from './constans/constans'
 
 const url = 'localhost:3001';
-
-var enlacesUser = [
-	{ text: 'Catalogo', to: '/products/catalogo' },
-	{ text: 'FAQs', to: '/Faqs' },
-	{ text: 'Contacto', to: '/' },
-	{ text: 'Ayuda', to: '/' },
-	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
-	{ text: 'ADMIN', to: '/admin' },
-];
-
-var enlacesUserConAdmin = [
-	{ text: 'Catalogo', to: '/products/catalogo' },
-	{ text: 'FAQs', to: '/' },
-	{ text: 'Contacto', to: '/' },
-	{ text: 'Ayuda', to: '/' },
-	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
-	{ text: 'ADMIN', to: '/admin' },
-];
-var enlacesUserSinAdmin = [
-	{ text: 'Catalogo', to: '/products/catalogo' },
-	{ text: 'FAQs', to: '/' },
-	{ text: 'Contacto', to: '/' },
-	{ text: 'Ayuda', to: '/' },
-	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
-]
-var enlacesAdmin = [
-	{ text: 'Inicio', to: '/admin' },
-	{ text: 'Usuarios', to: '/admin/users' },
-	{ text: 'Categorías', to: '/admin/category' },
-	{ text: 'Productos', to: '/admin/product' },
-	{ text: 'Ordenes', to: '/admin/orders' }
-];
 
 
 function App() {
@@ -97,16 +62,11 @@ function App() {
 
 				{/* <Route path='/admin' exact > */}
 				<Route path='/admin'>
-					<Navegacion linksA={enlacesAdmin} showSearchbar={false} />
-					<PrinciapalAdmin />
 					<PrivateAdmin path='/admin' exact component={WellcomeAdmin}/>
-					{/* <PrivateAdmin path='/admin' exact >
-						<WellcomeAdmin />
-					</PrivateAdmin> */}
-					<Route path='/admin/product' component={Product} />
-					<Route path='/admin/category' component={Category} />
-					<Route path='/admin/users' component={UsersData} />
-					<Route path='/admin/orders' component={Orders} />
+					<PrivateAdmin path='/admin/product' component={Product} />
+					<PrivateAdmin path='/admin/category' component={Category} />
+					<PrivateAdmin path='/admin/users' component={UsersData} />
+					<PrivateAdmin path='/admin/orders' component={Orders} />
 				</Route>
 
 				<Route path='/users' exact>
@@ -127,7 +87,7 @@ function App() {
 				<Route path='/users/:id' component={UserDetaul}/>
 
 				<Route path='/login' component={Login}/>
-				<Route path='/profile' component={ProfileUser}/>
+				<PrivateRoute path='/profile' component={ProfileUser}/>
 			</Switch>
 
 		</div>
