@@ -2,15 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Table, Button } from 'react-bootstrap';
 import {  Link  } from 'react-router-dom';
-import Navegacion from '../Navegacion/Navegacion';
 import s from '../../styles/detailUser.module.css'
-var enlacesAdmin = [
-	{ text: 'Inicio', to: '/admin' },
-	{ text: 'Usuarios', to: '/admin/users' },
-	{ text: 'Categorías', to: '/admin/category' },
-	{ text: 'Productos', to: '/admin/product' },
-	{ text: 'Ordenes', to: '/admin/orders' }
-];
+import {enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from '../../constans/constans';
+import Navegacion from '../Navegacion/Navegacion'
+
 
 
 
@@ -22,7 +17,7 @@ const UserDetaul = ({userSelectedP}) => {
     return (
         
         <div>
-             < Navegacion links={enlacesAdmin} showSearchbar={false}/>
+            <Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesAdmin} showSearchbar={false} />
             {userSelectedP.length === 0 || userSelectedP[0].orders.length === 0 ? 
             
             

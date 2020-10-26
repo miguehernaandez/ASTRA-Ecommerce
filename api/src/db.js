@@ -46,12 +46,23 @@ User.hasMany(Order);
 Order.belongsTo(User);
 
 /***************************** Function of Model *****************/
-User.prototype.encryptPassword = function(password) {
-	return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-}	
-User.prototype.comparePassword = function(password){
-	return bcrypt.compareSync(password, this.password);
-}
+// User.generateSalt = function() {
+//     return crypto.randomBytes(16).toString('base64')
+// }
+// User.methods.encryptPassword = function(password) {
+// 	return bcrypt.hashSync(password, bcrypt.genSaltSync(10)) 
+// }	
+// User.methods.comparePassword = function(password){
+// 	return bcrypt.compareSync(password, this.password);
+// }
+
+
+
+
+// User.prototype.correctPassword = function(enteredPassword) {
+//     return User.encryptPassword(enteredPassword, this.salt()) === this.password()
+// }
+
 
 /**************************************************************** */
 

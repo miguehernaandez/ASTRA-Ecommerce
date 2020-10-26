@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import { addToCart, removeFromCart, updateFromCart, deleteCart } from '../../store/actions/cart_actions'
+import { getOrders } from '../../store/actions/order_actions'
 import { Link } from 'react-router-dom'
 import s from '../../styles/carrito.module.css'
 import { Table, Button } from 'react-bootstrap';
@@ -8,15 +9,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../../multimedia/logo.png';
 import {faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 import Navegacion from '../Navegacion/Navegacion'
-import { useState } from 'react'
+import { useState } from 'react';
 
 
 
-const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFromCartP, deleteCartP}) => {
+
+const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFromCartP, deleteCartP, getOrdersP, orderP,userLogin}) => {
     const [quantity, setQuantity] = useState(0)
     const {idUser} = match.params
     //console.log(cartP[0].products)
     let cartP2 =  cartP.length < 1 ? [] :  cartP[0].products
+    let orderP2 =  orderP.length < 1? [] :  orderP[0].products
     // const  qty = location.search.split('=')[1]
     var enlacesUserConAdmin = [
         { text: 'Catalogo', to: '/products/catalogo' },
@@ -35,29 +38,17 @@ const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFr
     ]
 
 
-    const increment = (dat)=> {
-        console.log(dat)
-    }
-
-    const decrement = (dat)=> {
-        console.log(dat)
-    }
-
-    const handlerInput = (id, qty) => {
-        console.log("entre: "+ qty)
-        setQuantity(qty)
-        return addToCartP(id, qty)
-    }
-
-
-
     /****************************** USEEFECT ******************************* */
-    // useEffect(()=> {
-    //     if(idUser){
-    //         addToCartP(idUser, qty)
-    //     }
-    // },[])
+    useEffect(()=> {
+        getOrdersP();
+        if(userLogin){
+            cartP2 = orderP[0].products
+        }
+        
+    },[])
      /****************************** USEEFECT ******************************* */
+    console.log('**************ORDER***************')
+    console.log(userLogin)
 
 
     return(
@@ -180,6 +171,8 @@ const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFr
 function mapStateToProps(state){
     return {
         cartP: state.cart,
+        orderP : state.orders,
+        userLogin: state.userLogged
     }
 }
 
@@ -188,7 +181,8 @@ function mapDispatchToProps(dispatch){
         addToCartP : (id, qty) => dispatch(addToCart(id, qty)),
         removeFromCartP : (id) => dispatch(removeFromCart(id)),
         updateFromCartP : (id, qty) => dispatch(updateFromCart(id, qty)),
-        deleteCartP: () => dispatch(deleteCart())
+        deleteCartP: () => dispatch(deleteCart()),
+        getOrdersP : () => dispatch(getOrders())
  
     }
 }

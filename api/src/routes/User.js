@@ -10,7 +10,8 @@ const {isAuthenticated, isAdmin} = require('../passport/midellwares')
 server.post('/',   function (req, res) {
 	const { email, password, role, name } = req.body;
 	console.log(req.body);
-	User.create({ name, email, password, role })
+	let passEncrypt = User.encryptPassword(password)
+	User.create({ name, email, password:passEncrypt, role })
 		.then((user) => {
 			console.log(user)
 			return res.status(CREATED).json({
@@ -27,7 +28,7 @@ server.post('/',   function (req, res) {
 });
 
 // GET USERS
-server.get('/', (req, res) => {
+server.get('/',  (req, res) => {
 	User.findAll()
 		.then((users) => {
 			users.sort(function (a, b) {

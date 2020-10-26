@@ -5,7 +5,6 @@ import AddCategories from '../Modals/AddCategories';
 import AddProductCategories from '../Modals/AddProductCategories';
 import UpdateProduct from '../Modals/UpdateProduct';
 import s from '../../styles/adminProduct.module.css';
-import axios from 'axios';
 import {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTrashAlt, faPencilAlt, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
@@ -21,6 +20,8 @@ import {
     addProductCat,
     dltProductCat
 } from '../../store/actions/product_actions';
+import {enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from '../../constans/constans'
+import Navegacion from '../Navegacion/Navegacion'
 
 const url = 'localhost:3001';
 
@@ -148,7 +149,7 @@ const Product = ({
         return (
         <div>
         <div>
-            {/* <Menu/> */}
+        <Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesAdmin} showSearchbar={false} />
             <div className= {s.table_prin}>
             <Table  striped bordered hover size="sm">
                     <thead className={s.tableTitle}>
