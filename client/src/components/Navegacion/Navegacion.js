@@ -24,6 +24,8 @@ import Cookie from 'js-cookie';
 //Actions
 import {logout} from '../../store/actions/loginActions'
 
+
+
 function Navegacion(props) {
 	console.log('State User Loaded')
 	console.log(props.userLogin)
@@ -37,6 +39,7 @@ function Navegacion(props) {
 		Cookie.remove('userLoad');
 		return
 	 }
+	
 	
 	console.log('********props nav ***************')
 	console.log(props.cartP[0])
@@ -131,6 +134,7 @@ function Navegacion(props) {
 					</Col>
 				}
 			</Container>
+	
 		</Navbar>
 	);
 }

@@ -12,14 +12,14 @@ export default function SocialFollow(){
     <div  className={s.social}>
       <div className={s.tw}>
       <a href='https://www.instagram.com/fordiscover_hl/'
-      className={s.instagram}>
+      className={s.instagram} target="_blank">
       <FontAwesomeIcon icon={faInstagram} size='3x'/>
       </a>
     </div>
 
     <div>
      <a href='https://twitter.com/ecommercehenry1'
-      className={s.twitter}>
+      className={s.twitter} target="_blank">
       <FontAwesomeIcon icon={faTwitter} size='3x'/>
       </a>
       </div>

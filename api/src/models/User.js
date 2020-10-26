@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 
 
@@ -17,9 +18,9 @@ module.exports = (sequelize) => {
 			type: Sequelize.STRING,
 			allowNull: false,
 			// Poner esta funcion aca hace que estos datos no aparezcan en queries como user.findAll()
-			get() {
-				return () => this.getDataValue('password');
-			},
+			// get() {
+			// 	return () => this.getDataValue('password');
+			// },
 		},
 		role: {
 			type: Sequelize.ENUM('client', 'admin', 'Guest'),
