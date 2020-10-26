@@ -6,6 +6,9 @@ import logo from '../../multimedia/logo.png';
 // Bootstrap
 import { Col, Navbar, Container, Form, Button, InputGroup, FormControl, Row } from 'react-bootstrap';
 
+// React -Routes
+import { Link } from 'react-router-dom';
+
 // Font Awesome (iconos)
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -20,9 +23,11 @@ export default function Footer() {
 			<Container className={`d-flex flex-column`}>
 				<Row className={`${s.bordeRojo} justify-content-between align-items-center w-100`}>
 					<Col xs={12} lg={2} className={`${s.bordeVerde} d-flex order-3 order-lg-1 align-items-center justify-content-center  p-0 mt-5 mt-lg-0`}>
-						<Navbar.Brand href='#home' className={`p-0 m-0`}>
+						<Navbar.Brand className={`p-0 m-0`}>
 							{/* Logo */}
-							<img className={`${s.logo}`} src={logo}></img>
+							<Link to='/'>
+								<img className={`${s.logo}`} src={logo}></img>
+							</Link>
 						</Navbar.Brand>
 					</Col>
 					<div className={`${s.separador} d-none d-lg-block order-2 order-lg-2`}></div>

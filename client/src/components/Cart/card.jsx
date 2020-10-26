@@ -13,7 +13,7 @@ import { useState } from 'react';
 
 const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateFromCartP, deleteCartP, getOrdersP, orderP, userLogin }) => {
 	const [quantity, setQuantity] = useState(0);
-	const { idUser } = match.params;
+	// const { idUser } = match.params;
 	//console.log(cartP[0].products)
 	let cartP2 = cartP.length < 1 ? [] : cartP[0].products;
 	let orderP2 = orderP.length < 1 ? [] : orderP[0].products;
@@ -47,7 +47,7 @@ const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateF
 	console.log(userLogin);
 
 	return (
-		<div>
+		<div className={`${s.contPrincipal}`}>
 			{cartP2.length < 1 ? (
 				<div>
 					<h1>CARRITO VACIO</h1>
@@ -55,7 +55,6 @@ const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateF
 				</div>
 			) : (
 				<div>
-					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={false} />
 					<div className={s.cont_prin}>
 						<div className={s.cont1}>
 							<img className={`${s.logo}`} src={logo}></img>

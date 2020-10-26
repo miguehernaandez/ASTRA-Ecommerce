@@ -76,22 +76,29 @@ server.delete('/', (req, res) => {
 // MODIFICAR DATOS DEL USER
 server.put('/', (req, res) => {
 	console.log(req.body);
-	const { email, id, role } = req.body;
-	// Se genera un numero aleatorio con crypto.randomBytes
-	var newRandomNumber = '';
-	newRandomNumber = crypto.randomBytes(4, (err, buf) => {
-		if (err) throw err;
-		console.log(`${buf.length} bytes of random data: ${buf.toString('hex')}`);
-		// Se asigna el numero aleatorio a la variable newRandomNumber
-		newRandomNumber = buf.toString('hex');
-	});
+	const { email, id, role, resetPassword } = req.body;
+	console.log(resetPassword);
+
+	if (resetPassword) {
+		// Se genera un numero aleatorio con crypto.randomBytes
+		var newRandomNumber = '';
+		newRandomNumber = crypto.randomBytes(10, (err, buf) => {
+			if (err) throw err;
+			console.log(`${buf.length} bytes of random data: ${buf.toString('hex')}`);
+			// Se asigna el numero aleatorio a la variable newRandomNumber
+			newRandomNumber = User.encryptPassword(buf.toString('hex'));
+		});
+	}
 
 	User.findOne({ where: { email } })
 		.then((user) => {
 			console.log('Dentro del .then');
 			console.log(newRandomNumber);
 			// Se actualizan los datos
-			user.password = newRandomNumber;
+			// resetPassword es 'true' solo cuando se aprieta el boton de resetear password, sino es 'false'
+			if (resetPassword) {
+				user.password = newRandomNumber;
+			}
 			user.role = role;
 			// Se guardan los datos
 			user.save();

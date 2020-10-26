@@ -13,7 +13,7 @@ import ProductCard from './components/ProductCard/index';
 import Catalogo from './components/Catalogo/index';
 import FormUsers from './components/FormUsers/FormUsers.jsx';
 import UsersData from './components/AdminForm/UsersData';
-import UserDetaul from './components/AdminForm/DetailUser.jsx';
+import UserDetail from './components/AdminForm/DetailUser.jsx';
 import Faqs from './components/FAQs/Faqs.jsx';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -48,14 +48,13 @@ function App() {
 				{/* HOME */}
 				<Route path='/' exact>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
-					{/* <Navegacion linksU={enlacesUserConAdmin} linksA={enlacesUserSinAdmin} showSearchbar={false} onSearch={onSearch} /> */}
 					<Slider />
 					<Footer></Footer>
 				</Route>
 				{/* HOME */}
 
 				{/* FAQS */}
-				<Route path='/Faqs' exact>
+				<Route path='/faqs' exact>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<Faqs></Faqs>
 					<Footer></Footer>
@@ -93,17 +92,18 @@ function App() {
 					<Footer></Footer>
 				</Route>
 
-				<Route path='/login' component={Login} />
-				<PrivateRoute path='/profile' component={ProfileUser} />
-
 				<Route path='/users/cart'>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<CartShop></CartShop>
 					<Footer></Footer>
 				</Route>
-				{/* <Route path='/products/catalogo' render={() => <Catalogo products={products} onSearch={onSearch} />}></Route> */}
-				<Route path='/users/:id' component={UserDetaul} />
+
+				<Route path='/users/:id' component={UserDetail} />
 				{/* USERS */}
+
+				{/* PROFILE */}
+				<PrivateRoute path='/profile' component={ProfileUser} />
+				{/* PROFILE */}
 
 				{/* LOGIN */}
 				<Route path='/login' exact>
@@ -112,10 +112,6 @@ function App() {
 					<Footer></Footer>
 				</Route>
 				{/* LOGIN */}
-
-				{/* PROFILE */}
-				<Route path='/profile' component={ProfileUser} />
-				{/* PROFILE */}
 			</Switch>
 		</div>
 	);

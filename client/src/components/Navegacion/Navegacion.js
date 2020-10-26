@@ -161,7 +161,9 @@ function Navegacion(props) {
 												<span className={`${s.textProfile} text-center`}>{props.userLogin.name}</span>
 											</Col>
 										) : (
-											<span className={s.textProfile}>{props.userLogin.name}</span>
+											<Link to='/profile'>
+												<span className={s.textProfile}>{props.userLogin.name}</span>
+											</Link>
 										)}
 										<Nav.Link href='#' as={Link} to={'/'} className={`${s.navbarLinks}`} onClick={handlerClick}>
 											Logout

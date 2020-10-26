@@ -5,13 +5,18 @@
 	--blanco: #edf7f6;
 	--naranja: #f19953;
 }
+
+.contPrincipal {
+	min-height: 400px;
+}
+
 .cont_prin {
 	/* border: 1px solid blue; */
 	min-height: 400px;
 	width: 90%;
 	margin: auto;
 }
-.cont_prin .cont1 {
+.cont1 {
 	/* border: 1px solid red; */
 	width: 100%;
 	height: 70px;
@@ -19,7 +24,7 @@
 	justify-content: space-between;
 	align-items: center;
 }
-.cont_prin .cont2 {
+.cont2 {
 	/* border: 1px solid green; */
 	width: 100%;
 	height: 200px;

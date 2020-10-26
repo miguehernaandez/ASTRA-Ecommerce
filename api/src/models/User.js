@@ -33,12 +33,3 @@ module.exports = (sequelize) => {
 		return bcrypt.compareSync(password, userPassword);
 	};
 };
-
-User.encryptPassword = function (password) {
-	return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-};
-User.comparePassword = function (password, userPassword) {
-	console.log(userPassword);
-	console.log(password);
-	return bcrypt.compareSync(password, userPassword);
-};
