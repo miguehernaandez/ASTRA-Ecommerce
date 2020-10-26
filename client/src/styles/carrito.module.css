@@ -9,7 +9,79 @@
 .contPrincipal {
 	min-height: 400px;
 }
+.cont1 .logo{
+    height: 60px;
+}
+.cont1 ul li{
+    display: inline-block;
+}
+.cont1 ul li i{
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 100px;
+    margin-right: 10px;
+    margin-left: 15px;   
+}
+.cont1 ul li span{
+    font-size: 13px;
+    font-weight: lighter;
+    font-family:'Open Sans', sans-serif;
+}
+h1{
+    font-size: 25px;
+    font-family:'Open Sans', sans-serif;
+}
+.cardVacio{
+    box-shadow: -1px 10px 18px 2px rgba(0,0,0,0.75);
+    width: 50%;
+    /* height: 200px; */
+    margin: auto;
+    text-align: center;
+    border-radius: 30px;
+   padding: 1%;
+}
+.cardVacio h1{
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--celeste);
+    font-size: 1em;
+    font-family:'Open Sans', sans-serif; 
 
+}
+.cardVacio h6{
+    font-weight: bold;
+    font-size: 0.7em;
+    font-family:'Open Sans', sans-serif; 
+
+} 
+.cardVacio .link{
+    font-weight: bold;
+    color: var(--celeste);
+    font-size: 0.8em;
+    font-family:'Open Sans', sans-serif;
+}
+.cont2 .cont_table{
+    width: 100%;
+    margin-top: 25px;
+    /* border: 1px solid red; */
+}
+.cont2 .cont_table .tableTitle{
+    font-size: 13px;
+    color: var(--azul);
+    font-family:'Open Sans', sans-serif;
+    background-color: #f5f5f5;
+}
+.product{
+    display: flex;
+    border: none;
+    
+}
+.cont_img > img{
+    background-color: violet;
+    max-width: 5rem !important;
+    max-height: 5rem    !important;
+    margin-right: 15px;
+}
 .cont_prin {
 	/* border: 1px solid blue; */
 	min-height: 400px;
@@ -199,11 +271,11 @@
 	background-color: var(--celeste);
 }
 
-.buttonFC {
-	background-color: var(--naranja);
-	color: white;
-	font-weight: bold;
-	font-family: 'Open Sans', sans-serif;
-	border: none;
-	margin: 0 10px;
+.buttonFC{
+    background-color: var(--naranja);
+    color: white;
+    font-weight: bold;
+    font-family:'Open Sans', sans-serif; 
+    border: none;
+    margin: 0 10px;
 }
