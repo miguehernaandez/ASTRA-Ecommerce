@@ -6,21 +6,23 @@
 }
 
 
-.main-content{
-  max-width:  500px;
-  margin: 0 auto;
+.form{
+  max-width:  50%;
+	max-height: 40%;
+	height: 40px;
+  margin: 0;
   padding:  100px 0 0;
 }
 
 
 .resposive {
-  width: 100%;
-  height: 0;
+  width: 45%;
+  height: 40%;
   padding-bottom: 56.25%;
   position: relative;
 }
 
-iframe{
+.main-content iframe{
   height: 500px;
   width: 440px;
 }
@@ -29,4 +31,11 @@ iframe{
   position: absolute;
   width:100%;
   height: 100%
+}
+
+.map {
+	width: 600px;
+	height: 450px;
+	border:0;
+
 }
