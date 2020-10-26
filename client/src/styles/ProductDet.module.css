@@ -148,7 +148,16 @@
 .icon{
     font-size: 1.3em;
     padding-left: 8%;
-    color:#FCD93A;
+}
+
+.icon .estrellaColor {
+    color: #F19953;
+	margin: 2px;
+}
+
+.icon .estrellaInactiva {
+    color: lightgrey;
+	margin: 2px;
 }
 
 .cont_cant2{

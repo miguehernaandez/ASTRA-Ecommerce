@@ -15,7 +15,9 @@ import { faStar, faThumbsUp, faThumbsDown, faMinus, faPlus } from '@fortawesome/
 // CSS
 import s from '../../styles/reviews.module.css';
 
-export default function Reviews({arrayReviews}) {
+export default function Reviews({ arrayReviews, promedioGeneral, renderCantEstrellas}) {
+	console.log('**********************Componente Reviews***********************************')
+	console.log(arrayReviews);
 	// Los datos que necesito de las reviews son: cantEstrellas, cuerpoTextoReview,	likes, dislikes
 	// <-----------------------------REVIEWS DE PRUEBA----------------------------->
 	// var review1 = {
@@ -60,18 +62,8 @@ export default function Reviews({arrayReviews}) {
 
 	// <-----------------------------FUNCIONES----------------------------->
 	// Promeio general del producto (funcion autoinvocada)
-	const promedioGeneral = (function (arrayReviews) {
-        if(arrayReviews){
-            var cantReviews = arrayReviews.length;
-		    var totalEstrellas = 0;
-		    arrayReviews.forEach((review) => {
-			totalEstrellas += review.rate;
-		});
-		return Math.round(totalEstrellas / cantReviews).toFixed(1);
-        }
-		
-	})(arrayReviews);
 
+	const cantEstrellasPromGeneral = renderCantEstrellas(promedioGeneral);
 	// Opinion general (puede ser 'malo', 'regular', 'bueno', 'muy bueno' o 'excelente')
 	const opinionGeneral = function (numEstrellas) {
 		var opciones = ['malo', 'regular', 'bueno', 'muy bueno', 'excelente'];
@@ -79,24 +71,15 @@ export default function Reviews({arrayReviews}) {
 	};
 
 	// Devuelve un array con 5 elementos que son 'true' o 'false'. Se utiliza para renderizar estrellas de color por cada 'true' y estrellas grises por cada 'false'
-	const renderCantEstrellas = function (num) {
-		var arrayEstrellas = [];
-		for (let i = 0; i < num; i++) {
-			arrayEstrellas.push(true);
-		}
-		for (let i = 0; i < 5 - num; i++) {
-			arrayEstrellas.push(false);
-		}
-		return arrayEstrellas;
-	};
+
 
 	// Cantidad de estrellas del promedio general
-	const cantEstrellasPromGeneral = renderCantEstrellas(promedioGeneral);
+
 	// console.log(cantEstrellasPromGeneral);
 
 	// Devuelve el valor que va dentro del atributo 'now' en cada progress bar
 	const nowProgressBar = function (array, estrellas) {
-		var nowNumerador = array.filter((review) => review.cantEstrellas == estrellas);
+		var nowNumerador = array.filter((review) => review.rate == estrellas);
 		return Math.floor((nowNumerador.length / array.length) * 100);
 	};
 
@@ -116,17 +99,32 @@ export default function Reviews({arrayReviews}) {
 	// arrayReviews = true; // Esta linea es solo para probar. 'true' muestra los comentarios, 'false' un texto auxiliar
 	// <-----------------------------PRUEBA DE REVIEWS----------------------------->
 
-	return (
-		<Card className={`my-5 p-4 ${s.productReviewCard}`}>
-			<Row className={`${s.bordeRojo} justify-content-end w-100 m-0 mt-n1`}>
-				<FontAwesomeIcon icon={faMinus} size={'1x'} id={`minusIcon`} className={`${s.openCloseIcon}`} onClick={handleOpenClose} />
-				<FontAwesomeIcon icon={faPlus} size={'1x'} id={`plusIcon`} className={`${s.openCloseIcon} d-none`} onClick={handleOpenClose} />
-			</Row>
-			<Row className={`${s.bordeRojo} justify-content-center justify-content-md-start w-100 m-0`}>
-				<h3 className={``}>Opiniones sobre el producto</h3>
-			</Row>
-			{arrayReviews && arrayReviews.length < 1 ? (
-				<div className={`${s.contPrincipal}`} id={`contPrincipal`}>
+	if (!arrayReviews || arrayReviews.length < 1){
+		return (
+			<Card className={`my-5 p-4 ${s.productReviewCard}`}>
+				<Row className={`${s.bordeRojo} justify-content-end w-100 m-0 mt-n1`}>
+					<FontAwesomeIcon icon={faMinus} size={'1x'} id={`minusIcon`} className={`${s.openCloseIcon}`} onClick={handleOpenClose} />
+					<FontAwesomeIcon icon={faPlus} size={'1x'} id={`plusIcon`} className={`${s.openCloseIcon} d-none`} onClick={handleOpenClose} />
+				</Row>
+				<Row className={`${s.bordeRojo} justify-content-center justify-content-md-start w-100 m-0`}>
+					<h3 className={``}>Opiniones sobre el producto</h3>
+				</Row>
+				<Row className={`${s.bordeRojo} w-100 m-0 my-2`}>
+					<p className={`${s.opinionDetalladaComentario} px-1 my-1`}>Aún no hay opiniones de este producto. Sé el primero en opinar!</p>
+				</Row>
+			</Card>
+		)
+	} else {
+		return (
+			<Card className={`my-5 p-4 ${s.productReviewCard}`}>
+				<Row className={`${s.bordeRojo} justify-content-end w-100 m-0 mt-n1`}>
+					<FontAwesomeIcon icon={faMinus} size={'1x'} id={`minusIcon`} className={`${s.openCloseIcon}`} onClick={handleOpenClose} />
+					<FontAwesomeIcon icon={faPlus} size={'1x'} id={`plusIcon`} className={`${s.openCloseIcon} d-none`} onClick={handleOpenClose} />
+				</Row>
+				<Row className={`${s.bordeRojo} justify-content-center justify-content-md-start w-100 m-0`}>
+					<h3 className={``}>Opiniones sobre el producto</h3>
+				</Row>
+				<div className={ s.contPrincipal } id={`contPrincipal`}>
 					<hr className={`m-0 p-0`}></hr>
 					<Row className={`${s.bordeRojo} row align-items-center py-3 m-0`}>
 						<Col xs={12} md={4} lg={3} className={`${s.bordeRojo} ${s.colResumenReviews} p-0 d-flex flex-column justify-content-around`}>
@@ -159,7 +157,7 @@ export default function Reviews({arrayReviews}) {
 											<ProgressBar className={`${s.progressBar}`} variant='info' now={nowProgressBar(arrayReviews, 5 - i)} />
 										</Col>
 										<Col xs={`auto`} className={`p-0 m-0 text-left`}>
-											<p className={`${s.bordeRojo} ${s.progressBarText} p-0 m-0`}>{arrayReviews.filter((review) => review.cantEstrellas == 5 - i).length}</p>
+											<p className={`${s.bordeRojo} ${s.progressBarText} p-0 m-0`}>{arrayReviews.filter((review) => review.rate == 5 - i).length}</p>
 										</Col>
 									</Row>
 								);
@@ -170,8 +168,10 @@ export default function Reviews({arrayReviews}) {
 					<Row className={`${s.bordeRojo} my-2 mx-0`}>
 						{/* <------------------ .map de cada comentario ------------------> */}
 						{arrayReviews.map((review) => {
+							console.log('*****************************')
+							console.log(arrayReviews)
 							return (
-								<div className={`my-2`}>
+								<div className={`${s.reviewInfo}`}>
 									<Row className={`${s.bordeRojo}`}>
 										{renderCantEstrellas(review.rate).map((elem) => {
 											if (elem) return <FontAwesomeIcon icon={faStar} size={'1x'} className={`${s.estrellaColor}`} />;
@@ -179,7 +179,7 @@ export default function Reviews({arrayReviews}) {
 										})}
 									</Row>
 									<Row>
-										<h6 className={`${s.opinionGeneralComentario} p-1 mt-1 mb-0`}>Opinion general: {opinionGeneral(review.cantEstrellas)}</h6>
+										<h6 className={`${s.opinionGeneralComentario} p-1 mt-1 mb-0`}>Opinion general: {opinionGeneral(review.rate)}</h6>
 									</Row>
                                     <Row>
 										<h5 className={`${s.opinionGeneralComentario} p-1 mt-1 mb-0`}>{review.title}</h5>
@@ -187,30 +187,28 @@ export default function Reviews({arrayReviews}) {
 									<Row className={``}>
 										<p className={`${s.opinionDetalladaComentario} px-1 my-1`}>{review.content}</p>
 									</Row>
-									<Row>
+									<Row className={s.likesReview}>
 										<Col className={`${s.bordeRojo} pb-1 px-0 ml-3`} xs={`auto`}>
 											<FontAwesomeIcon icon={faThumbsUp} size={'1x'} className={`${s.iconLikes}`} />
 										</Col>
 										<Col className={`${s.bordeRojo} p-0 m-0`} xs={`auto`}>
-											<p className={`${s.cantLikes}`}>{review.likes}</p>
+											<p className={`${s.cantLikes}`}>15</p>
 										</Col>
 										<Col className={`${s.bordeRojo} pt-1 px-0 ml-3`} xs={`auto`}>
 											<FontAwesomeIcon icon={faThumbsDown} size={'1x'} className={`${s.iconLikes}`} />
 										</Col>
 										<Col className={`${s.bordeRojo} p-0 m-0`} xs={`auto`}>
-											<p className={`${s.cantLikes}`}>{review.dislikes}</p>
+											<p className={`${s.cantLikes}`}>7</p>
 										</Col>
 									</Row>
+									<hr className={`m-0 mb-4 p-0`}></hr>
 								</div>
+								
 							);
 						})}
 					</Row>
 				</div>
-			) : (
-				<Row className={`${s.bordeRojo} w-100 m-0 my-2`}>
-					<p className={`${s.opinionDetalladaComentario} px-1 my-1`}>Aún no hay opiniones de este producto. Sé el primero en opinar!</p>
-				</Row>
-			)}
-		</Card>
-	);
+			</Card>
+		)
+	}
 }

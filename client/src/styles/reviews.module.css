@@ -22,18 +22,29 @@
 	padding-right: 30px; */
 }
 
-/* .bordeRojo {
-	border: 1px solid red;
-} */
+.bordeRojo {
+	border: none
+} 
 
-/* .hr {
+.hr {
 	padding: 0px;
 	margin: 0px;
-} */
+} 
 
 .openCloseIcon {
 	color: var(--celeste);
 	transition: 300ms;
+}
+
+.reviewInfo{
+	/* border: 1px solid black; */
+	width: 100%;
+	padding: 2% 2%;
+}
+
+.likesReview{
+	display: flex;
+	justify-content: flex-end;
 }
 
 .openCloseIcon:hover {
@@ -81,6 +92,7 @@
 .opinionDetalladaComentario {
 	color: black;
 	font-size: 14px;
+	text-align: justify;
 }
 
 .iconLikes {
