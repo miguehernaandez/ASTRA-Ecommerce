@@ -1,5 +1,5 @@
 import React from 'react';
-import Rrss from '../Rrss/Rrss.jsx';
+// import Rrss from '../Rrss/Rrss.jsx';
 // Logo
 import logo from '../../multimedia/logo.png';
 

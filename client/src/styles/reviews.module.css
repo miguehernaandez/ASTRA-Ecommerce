@@ -1,0 +1,106 @@
+/* Import de fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+/* Colores personalizados */
+/* :root {
+	--azul: #1f2333;
+	--celeste: #3b8ea5;
+	--blanco: #edf7f6;
+	--naranja: #f19953;
+} */
+
+* {
+	box-sizing: border-box;
+}
+
+.productReviewCard {
+	/* background-color: var(--celeste) !important; */
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.51);
+	border-radius: 7px;
+	padding-top: 30px;
+	/* padding-left: 30px;
+	padding-right: 30px; */
+}
+
+.bordeRojo {
+	border: none
+} 
+
+.hr {
+	padding: 0px;
+	margin: 0px;
+} 
+
+.openCloseIcon {
+	color: var(--celeste);
+	transition: 300ms;
+}
+
+.reviewInfo{
+	/* border: 1px solid black; */
+	width: 100%;
+	padding: 2% 2%;
+}
+
+.likesReview{
+	display: flex;
+	justify-content: flex-end;
+}
+
+.openCloseIcon:hover {
+	color: var(--azul);
+}
+
+.colResumenReviews {
+	min-height: 125px;
+}
+
+.productPromedio {
+	font-size: 50px;
+	line-height: 50px;
+}
+
+.estrellaColor {
+	color: var(--naranja);
+	margin: 2px;
+}
+
+.estrellaInactiva {
+	color: lightgrey;
+	margin: 2px;
+}
+
+.cantOpinionesText {
+	font-size: 14px;
+	line-height: 14px;
+}
+
+.progressBar {
+	height: 3px !important;
+}
+
+.progressBarText {
+	font-size: 13px;
+}
+
+.opinionGeneralComentario {
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 16px;
+}
+
+.opinionDetalladaComentario {
+	color: black;
+	font-size: 14px;
+	text-align: justify;
+}
+
+.iconLikes {
+	color: var(--celeste);
+}
+
+.cantLikes {
+	display: inline-block;
+	padding-left: 10px;
+	font-size: 14px;
+}

@@ -13,7 +13,6 @@ import { Container, Row, Col, Form, Pagination } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as faIcons from 'react-icons/fa';
 import s from '../../styles/catalogo.module.css';
-import style from '../SideBar/SideBar.css';
 const url = 'localhost:3001';
 
 var enlacesUser = [

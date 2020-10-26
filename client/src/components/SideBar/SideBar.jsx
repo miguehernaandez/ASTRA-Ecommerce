@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import * as faIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-
-import { connect } from 'react-redux';
-import './SideBar.css';
-import { getCategories, getProductByCategory } from '../../store/actions/category_actions';
-import { IoIcon } from 'react-icons/io';
 import * as bsIcon from 'react-icons/bi';
+import * as faIcons from 'react-icons/fa';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getCategories, getProductByCategory } from '../../store/actions/category_actions';
+// import s from './SideBar.css';
 
 function SideBar({ categories, getCategoryP, getProductByCategoryP }) {
 	const [sidebar, setSideBar] = useState(false);
@@ -15,7 +13,7 @@ function SideBar({ categories, getCategoryP, getProductByCategoryP }) {
 	const showSideBar = () => setSideBar(!sidebar);
 
 	return (
-		<>
+		<div>
 			<div className='navbar'>
 				<Link to='#' className='menu-bars'>
 					<faIcons.FaBars onClick={showSideBar}>
@@ -51,7 +49,7 @@ function SideBar({ categories, getCategoryP, getProductByCategoryP }) {
 					})}
 				</ul>
 			</nav>
-		</>
+		</div>
 	);
 }
 function mapStateToProps(state) {

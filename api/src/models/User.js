@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const { DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 
@@ -21,9 +22,6 @@ module.exports = (sequelize) => {
 			defaultValue: 'Guest',
 			allowNull: false,
 		},
-		salt: {
-			type: DataTypes.STRING,
-		},
 	});
 
 	User.encryptPassword = function (password) {
@@ -34,4 +32,13 @@ module.exports = (sequelize) => {
 		console.log(password);
 		return bcrypt.compareSync(password, userPassword);
 	};
+};
+
+User.encryptPassword = function (password) {
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+};
+User.comparePassword = function (password, userPassword) {
+	console.log(userPassword);
+	console.log(password);
+	return bcrypt.compareSync(password, userPassword);
 };

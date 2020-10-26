@@ -6,6 +6,8 @@ import { Nav, Navbar, Form, Button, FormControl, Jumbotron } from 'react-bootstr
 import {Redirect, Link} from 'react-router-dom'
 import {logout,  loginActiontest} from '../../store/actions/loginActions'
 import Cookie from 'js-cookie';
+import {enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from '../../constans/constans';
+import Navegacion from '../Navegacion/Navegacion'
 
 
 const ProfileUser = ({userLoggedP, logoutP, loginActionP}) => {
@@ -15,6 +17,8 @@ const ProfileUser = ({userLoggedP, logoutP, loginActionP}) => {
     // useEffect(()=> {
     //     if(!userLoggedP){
     //         return history.push('/login')
+    //     }else{
+    //         setModal(true)
     //     }
     // },[])
 
@@ -28,16 +32,15 @@ const ProfileUser = ({userLoggedP, logoutP, loginActionP}) => {
 
     return (
         <div>
+        <Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} />
         <Jumbotron>
-                    <h1> {userLoggedP ? 'Hello, Wellcome ' + userLoggedP.name : 'User or Password Incorrect! '}!</h1>
+                    <h1> Wellcome {userLoggedP.name} </h1>
                     <p>
                         Logged Success !!
                     </p>
                     <p>
-                        {userLoggedP ?  <Button variant="primary">Learn more</Button> : <Link to={'/login'}>Try Now</Link>}
-                       
+                          <Button variant="primary">Learn more</Button> 
                     </p>
-                    {userLoggedP && <Button onClick={handlerClick}>logout</Button>}
         </Jumbotron>
         </div>
     )

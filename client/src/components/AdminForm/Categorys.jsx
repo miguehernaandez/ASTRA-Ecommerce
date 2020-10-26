@@ -14,6 +14,8 @@ import {
     updCategory,
     deleteCategory
 } from '../../store/actions/category_actions'
+import {enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from '../../constans/constans'
+import Navegacion from '../Navegacion/Navegacion'
 
 
 const url = 'localhost:3001';
@@ -73,6 +75,7 @@ const Categorys = ({categories, getCategoryP, addCategoryP, updCategoryP, delete
     /****************************** Render ********************************** */
     return (
         <div>
+            <Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesAdmin} showSearchbar={false} />
             {/* <Menu/> */}
             <div className={s.table_prin}>
                 {/* <Menu/> */}

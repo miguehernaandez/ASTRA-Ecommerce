@@ -6,10 +6,13 @@ function isAuthenticated(req, res, next) {
   }
 
   function isAdmin(req, res, next) {
-    if(req.user && req.user.rol === "admin") {
-      return next();
+    console.log(req.user)
+    if(req.user && req.user.role === "admin") {
+      return true;
     } else {
-      return res.status(401).send();
+      res.status(401).send();
+      console.log('hp')
+      return 
     }
   }
 

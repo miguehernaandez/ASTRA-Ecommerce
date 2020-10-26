@@ -7,6 +7,8 @@ import { faTrashAlt, faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-s
 import { connect } from 'react-redux';
 import { getUsers, deleteUser, updateUser, getUserDetail } from '../../store/actions/userActions';
 import { Link } from 'react-router-dom';
+import {enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from '../../constans/constans';
+import Navegacion from '../Navegacion/Navegacion'
 
 const url = 'localhost:3001';
 
@@ -74,7 +76,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 	return (
 		<div>
 			<div>
-				{/* <Menu/> */}
+			<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesAdmin} showSearchbar={false} />
 				<div className={s.table_prin}>
 					<Table striped bordered hover size='sm'>
 						<thead className={s.tableTitle}>

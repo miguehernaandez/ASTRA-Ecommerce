@@ -10,7 +10,8 @@ import {
   UPDATE_FROM_CART, CREATE_USER, 
   GET_USERS, DELETE_USER, UPDATE_USER, DETAIL_USER,
   DELETE_CART,
-  LOGIN, LOGIN_ERROR, LOGOUT} from '../constants/constans';
+  LOGIN, LOGIN_ERROR, LOGOUT,
+  ADD_REVIEW,UPDATE_REVIEW, DELETE_REVIEW} from '../constants/constans';
 
   import Cookie from 'js-cookie';
 
@@ -182,6 +183,10 @@ const ReducerCategory = (state = inicialState, action) => {
 			return {...state, userLogged: null, messageError: '', cart:[], logged:false}
 		
 		default: return inicialState;
+
+		/****************************** REVIEW ********************************/
+		case ADD_REVIEW:
+			return {...state, products:action.products}
 
 	}
 };

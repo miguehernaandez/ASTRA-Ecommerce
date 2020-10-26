@@ -46,7 +46,12 @@ passport.use(
 					if (user) {
 						if (User.comparePassword(password, user.password)) {
 							console.log(user.password + 'Entre al IF');
-							return done(null, user);
+							return done(null, {
+								email: user.email,
+								id: user.id,
+								role: user.role,
+								name: user.name,
+							});
 						} else {
 							console.log('Password incorrect');
 							return done(new Error('Password incorrect'));
