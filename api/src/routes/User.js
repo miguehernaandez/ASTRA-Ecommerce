@@ -80,12 +80,13 @@ server.put('/', (req, res) => {
 	console.log(resetPassword);
 
 	if (resetPassword) {
-		// Se genera un numero aleatorio con crypto.randomBytes
 		var newRandomNumber = '';
+		// Se genera un numero aleatorio con crypto.randomBytes
 		newRandomNumber = crypto.randomBytes(10, (err, buf) => {
 			if (err) throw err;
 			console.log(`${buf.length} bytes of random data: ${buf.toString('hex')}`);
 			// Se asigna el numero aleatorio a la variable newRandomNumber
+			// Ademas se utiliza la funcion encryptPassword de bcrypt para la encriptacion
 			newRandomNumber = User.encryptPassword(buf.toString('hex'));
 		});
 	}
