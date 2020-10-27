@@ -111,7 +111,7 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
 	};
 
 	return (
-		<div className={`my-4`}>
+		<div className={`${s.contPrincipal} my-4 `}>
 			<Container>
 				<Card className={`p-3 m-2 ${s.formCard}`}>
 					<h1 className={`${s.formTitle}`}>Registrate</h1>

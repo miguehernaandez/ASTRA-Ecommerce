@@ -27,7 +27,7 @@
 .cont2 {
 	/* border: 1px solid green; */
 	width: 100%;
-	height: 200px;
+	/* height: 200px; */
 }
 .cont1 .logo {
 	height: 60px;
@@ -95,18 +95,6 @@
 }
 .cantidadTitle {
 	width: 15%;
-}
-.cont_cant {
-	/* background-color: royalblue; */
-	/* position: absolute;
-    top: 40px; */
-}
-.cantidad {
-	/* width: 100%; */
-	/* display: flex;
-    /* background-color: red; */
-	/* position: relative; */
-	/* bottom: 35px; */
 }
 
 .cont_button {

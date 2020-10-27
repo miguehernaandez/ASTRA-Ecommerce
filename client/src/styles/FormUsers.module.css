@@ -9,6 +9,10 @@
 	--naranja: #f19953;
 } */
 
+.contPrincipal {
+	min-height: 70vh;
+}
+
 .formCard {
 	box-shadow: 1px 1px 5px black;
 }
@@ -51,5 +55,4 @@ label {
 .botonSubmit:disabled {
 	background-color: grey;
 	border: 1px solid grey;
-	
 }

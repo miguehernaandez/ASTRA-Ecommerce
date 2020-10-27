@@ -8,7 +8,6 @@ import { Table, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../../multimedia/logo.png';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import Navegacion from '../Navegacion/Navegacion';
 import { useState } from 'react';
 
 const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateFromCartP, deleteCartP, getOrdersP, orderP, userLogin }) => {
@@ -18,21 +17,6 @@ const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateF
 	let cartP2 = cartP.length < 1 ? [] : cartP[0].products;
 	let orderP2 = orderP.length < 1 ? [] : orderP[0].products;
 	// const  qty = location.search.split('=')[1]
-	var enlacesUserConAdmin = [
-		{ text: 'Catalogo', to: '/products/catalogo' },
-		{ text: 'FAQs', to: '/' },
-		{ text: 'Contacto', to: '/' },
-		{ text: 'Ayuda', to: '/' },
-		// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
-		{ text: 'ADMIN', to: '/admin' },
-	];
-	var enlacesUserSinAdmin = [
-		{ text: 'Catalogo', to: '/products/catalogo' },
-		{ text: 'FAQs', to: '/' },
-		{ text: 'Contacto', to: '/' },
-		{ text: 'Ayuda', to: '/' },
-		// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
-	];
 
 	/****************************** USEEFECT ******************************* */
 	// useEffect(()=> {
@@ -55,7 +39,7 @@ const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateF
 				</div>
 			) : (
 				<div>
-					<div className={s.cont_prin}>
+					<div className={`${s.cont_prin} my-3`}>
 						<div className={s.cont1}>
 							<img className={`${s.logo}`} src={logo}></img>
 							<ul>
