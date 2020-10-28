@@ -27,6 +27,9 @@ module.exports = (sequelize) => {
         isDecimal: true
       }
     },
+    paymentMethod: {
+      type: DataTypes.STRING,
+    },
 		date_placed: {
 			type: DataTypes.DATE,
     },
