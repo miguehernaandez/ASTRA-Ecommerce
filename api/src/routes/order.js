@@ -27,6 +27,7 @@ server.post('/shopping/:userId', function (req, res) {
 	 const { id } = req.body
 	 const  qty  = req.body.order_line.quantity
 	 console.log(req.body)
+	
 	const newOrder = Order.findOrCreate({ where: { userId }, defaults: {status:'created'} });
 	const newProduct = Product.findOne({ where: {id: id} });
 	Promise.all([ newOrder,  newProduct])
