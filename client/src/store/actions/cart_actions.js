@@ -25,10 +25,11 @@ export function addToCart(id, qty, userID){
     console.log('entre a AddToCart')
     const product = {id, qty}
     let idUser = 1;
+    console.log(userID)
     console.log(product)
     return async (dispatch, getState)=> {
 
-        axios.post(`http://${url}/users/${userID ? userID : 1}/cart`, product)
+        axios.post(`http://${url}/users/${idUser}/cart`, product)
             .then(res => {
                 console.log('*****')
                 console.log(res.data)
