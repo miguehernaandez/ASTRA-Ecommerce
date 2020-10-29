@@ -66,11 +66,10 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 				) : (
 					<Container>
 						{/* <SideBar> </SideBar> */}
-						<h1 className={s.title1}>Registros encontrados: {productsP.length}</h1>
+						{/* <h1 className={s.title1}>Resultados ({productsP.length})</h1> */}
 						<div className={s.cont_prin_card}>
 							<div className={s.cont_filter}>
-								{/*<div><p>Categorias</p></div>*/}
-								{/*<Filter categories={categories} handlerSelect={handlerSelect}/>*/}
+								<Filter categories={categories} products={products} handlerSelect={handlerSelect}/>
 							</div>
 							<div className={s.cont_card}>
 								<Row>
@@ -90,13 +89,13 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 				)
 			) : (
 				<Container>
-					<h1 className={s.title1}>Registros encontrados: {products.length}</h1>
+					{/* <h1 className={s.title1}>Resultados ({products.length})</h1> */}
 					<div className={s.cont_prin_card}>
 						<div className={s.cont_filter}>
 							<div>
 								<p>Categorias</p>
 							</div>
-							{/*< Filter categories={categories} handlerSelect={handlerSelect}/>*/}
+							< Filter categories={categories} products={products} handlerSelect={handlerSelect}/>
 						</div>
 						<div className={s.cont_card}>
 							<Row>
