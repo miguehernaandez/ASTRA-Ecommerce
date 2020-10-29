@@ -1,7 +1,7 @@
 const server = require('express').Router(); //Import router from express module.
 const { OK, CREATED, UPDATED, ERROR, NOT_FOUND, ERROR_SERVER } = require('../constants'); // Import Status constants.
 
-const { Product, Categories } = require('../db.js'); // Import Products model.
+const { Product, Categories, Review } = require('../db.js'); // Import Products model.
 const {Op} = require('sequelize'); // Import operator from sequelize module.
 
 
@@ -11,7 +11,7 @@ const {Op} = require('sequelize'); // Import operator from sequelize module.
 server.get('/', ( req, res ) => {
 	//Product.findAll().then(products => res.status(STATUS.OK).json({message: 'Success',data: products})
 	Product.findAll({
-		include: Categories
+		include: [{model:Categories},{model: Review}]
 	}) 
 		.then(products => {
 			return res.status(OK).json({
@@ -33,7 +33,8 @@ server.get('/', ( req, res ) => {
 server.get('/product/:id', (req, res) =>{
 	const {id} = req.params;
 
-	return Product.findOne({ where:{ id }} )
+	return Product.findOne({ where:{ id }, include:Review})
+
 	.then( products => {
 		return res.status(OK).json({
 			message: 'Success',
@@ -74,7 +75,7 @@ server.put('/:id', ( req, res ) => {
 
 	const { name,description,price,stock,dimentions,image,sku} = req.body
 
-	return Product.findOne({ where: { id } })
+	return Product.findOne({ where: { id }})
 	.then( product => {
 
 		product.name = name;
@@ -122,7 +123,7 @@ server.get('/search', (req, res, next) =>{
 	const value = req.query.query;
 	let queryParameters;
 	if(value === ''){
-		queryParameters = {include: Categories};
+		queryParameters = {include:[{model:Categories},{model: Review}]};
 	}
 	else {
 		queryParameters = {
@@ -132,7 +133,7 @@ server.get('/search', (req, res, next) =>{
 					{ description: { [Op.iLike]: `%${value}%` } } 
 				]
 			},
-			include: Categories
+			include:[{model:Categories},{model: Review}]
 		}
 	}
 	return Product.findAll(queryParameters)
@@ -156,7 +157,7 @@ server.put('/:product_id/category/:category_id', (req, res, next)=>{
 				.then(() => {
 					Product.findOne({
 						where: {id: product_id},
-						include: Categories
+						include: [{model:Categories},{model: Review}]
 					})
 						.then((data) => {
 							console.log(data)
@@ -181,7 +182,7 @@ server.delete('/:product_id/category/:category_id', (req, res)=>{
 				.then(() => {
 					Product.findOne({
 						where: {id: product_id},
-						include: Categories
+						include: [{model:Categories},{model: Review}]
 					})
 						.then((data) => {
 							console.log(data)

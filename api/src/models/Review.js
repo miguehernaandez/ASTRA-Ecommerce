@@ -13,18 +13,13 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isNumeric: true,
-        isDecimal: true
+        isNumeric: true
       }
-    },
-    date_created: {
-      type: DataTypes.DATE,
     },
     content: {
       type: DataTypes.TEXT,
       alloNull: false,
     }
-
 
   });
 }

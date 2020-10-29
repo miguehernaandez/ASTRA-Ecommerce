@@ -7,6 +7,8 @@ import { faTrashAlt, faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-s
 import { connect } from 'react-redux';
 import { getUsers, deleteUser, updateUser, getUserDetail } from '../../store/actions/userActions';
 import { Link } from 'react-router-dom';
+import { enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from '../../constans/constans';
+import Navegacion from '../Navegacion/Navegacion';
 
 const url = 'localhost:3001';
 
@@ -25,7 +27,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 		}
 	};
 
-	const handleUpdatePassword = function (email, id, role) {
+	const handleUpdatePassword = function (email, id, role, resetPassword) {
 		console.log('Funciona el boton del lapiz PASSWORD');
 		var confirmResetPassword = window.confirm(`Estas a punto de resetear la contraseña del usuario:\n${email}\nDeseas continuar?`);
 		if (confirmResetPassword) {
@@ -33,14 +35,15 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 				email,
 				id,
 				role,
+				resetPassword,
 			};
 			console.log(data);
 			updateUserP(data);
 		}
-		window.location.reload();
+		// window.location.reload();
 	};
 
-	const handleUpdateRole = function (email, id, role) {
+	const handleUpdateRole = function (email, id, role, resetPassword) {
 		// Siempre le llegan los datos de la tabla, por lo que cada vez que se ejecute esta funcion deberia actualizarse la tabla
 		console.log('Funciona el boton del lapiz ROLE');
 		console.log(role);
@@ -56,11 +59,12 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 				email,
 				id,
 				role: newRole,
+				resetPassword,
 			};
 			console.log(data);
 			updateUserP(data);
 		}
-		window.location.reload();
+		// window.location.reload();
 	};
 
 	/****************************** Component Life Cycle ********************************** */
@@ -74,7 +78,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 	return (
 		<div>
 			<div>
-				{/* <Menu/> */}
+				<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesAdmin} showSearchbar={false} />
 				<div className={s.table_prin}>
 					<Table striped bordered hover size='sm'>
 						<thead className={s.tableTitle}>
@@ -97,11 +101,11 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 										<td>{usuario.email}</td>
 										<td>
 											{usuario.password}
-											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdatePassword(usuario.email, usuario.id, usuario.role)} />
+											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdatePassword(usuario.email, usuario.id, usuario.role, true)} />
 										</td>
 										<td>
 											{usuario.role}
-											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdateRole(usuario.email, usuario.id, usuario.role)} />
+											<FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={`mx-3 ${s.iconUpdate}`} onClick={() => handleUpdateRole(usuario.email, usuario.id, usuario.role, false)} />
 										</td>
 										<td>{usuario.createdAt}</td>
 										<td>

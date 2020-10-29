@@ -12,7 +12,7 @@ import s from '../../styles/ProductCard.module.css';
 import { connect } from 'react-redux'
 import { addToCart } from '../../store/actions/cart_actions';
 
-function ProductCard({ name, description, img, price, id, destacado, stock, addToCartP}) {
+function ProductCard({ name, description, img, price, id, destacado, stock, addToCartP, userLoggedP}) {
 	// console.log('name: ' + name);
 	// console.log('description: ' + description);
 	// console.log('img: ' + img);
@@ -76,7 +76,7 @@ function ProductCard({ name, description, img, price, id, destacado, stock, addT
 						<Button as={Link} to={`/products/product/${id}`} className={`mb-1 ${s.productCardButton}`}>
 						Ver Detalles
 						</Button>
-						<Button onClick={() => addToCartP(id, 1)} className={`mb-1 ${s.productCardButton2}`}>
+						<Button onClick={() => addToCartP(id, 1, userLoggedP ? userLoggedP.id : 1)} className={`mb-1 ${s.productCardButton2}`}>
 						Agregar al carrito
 						</Button>
 					</div>
@@ -97,13 +97,13 @@ function ProductCard({ name, description, img, price, id, destacado, stock, addT
 
 function mapStateToProps(state){
     return {
-        
+        userLoggedP : state.userLogged,
     }
 }
 
 function mapDispatchToProps(dispatch){
     return {
-        addToCartP : (id, qty) => dispatch(addToCart(id, qty)),
+        addToCartP : (id, qty, userID) => dispatch(addToCart(id, qty, userID)),
     }
 }
 
