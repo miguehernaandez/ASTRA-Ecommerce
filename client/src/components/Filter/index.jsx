@@ -30,15 +30,12 @@ export default function Filter(props){
                                     <button><ListGroup.Item>{x.name}</ListGroup.Item></button>
                                 </ListGroup>
                                 </Card>
-
                                 </li>
                             )
                         })}
-                    
                     </ul>
                 </div>
                 </div>
-        </div>
     )
 }
 
