@@ -1,17 +1,18 @@
 // React
 import React from 'react';
-
+import ReactDOM from 'react-dom';
 // Bootstrap
 import { Container, Card, Form, Button, Col, Row } from 'react-bootstrap';
-
 // CSS
 import s from '../../styles/FormUsers.module.css';
-
 // Redux
 import { connect } from 'react-redux';
-
 // Actions
 import { createUser } from '../../store/actions/userActions.js';
+// Google Login
+import GoogleLogin from 'react-google-login';
+import { Link } from 'react-router-dom';
+
 // <-------------------------------------------------------------->
 const url = 'localhost:3001';
 
@@ -109,6 +110,16 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
 			document.getElementById('submitButton').disabled = true;
 		}
 	};
+
+	// <--------------------------------- Google Login --------------------------------->
+	const clientIdCode = '269758003483-2l6nugnundjtidqt2djkq7kt9jptsgh8.apps.googleusercontent.com';
+
+	const responseGoogle = (response) => {
+		// alert('mepa que vamos bien che');
+		console.log(response);
+	};
+
+	// <--------------------------------- Google Login --------------------------------->
 
 	return (
 		<div className={`${s.contPrincipal} my-4`}>
@@ -254,6 +265,16 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
 							</Col>
 						</Row>
 					</Form>
+					<hr></hr>
+					<Row>
+						<Col xs={12}>
+							<h2>O ingresa con una cuenta de Google</h2>
+						</Col>
+						<Col xs={12} className={`d-flex justify-content-center mt-3`}>
+							{/* Ingreso por passport */}
+							<a href='http://localhost:3001/users/auth/google'>Sign In with Google</a>
+						</Col>
+					</Row>
 				</Card>
 			</Container>
 		</div>

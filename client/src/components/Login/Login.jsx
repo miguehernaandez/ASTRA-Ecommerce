@@ -9,6 +9,8 @@ import { loginAction } from '../../store/actions/loginActions';
 import logo from '../../multimedia/logo.png';
 import s from '../../styles/loggin.module.css';
 import { Link } from 'react-router-dom';
+// Google Login
+import { GoogleLogin } from 'react-google-login';
 
 const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
 	const [form, setForm] = useState({
@@ -33,13 +35,35 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
 		}
 	};
 
-	// useEffect(() => {
-	//     if( loggedP === false ){
-	//         return history.push('/login')
-	//     }
-	// },[])
+	useEffect(() => {
+		if (loggedP == true) {
+			window.location.href = 'http://localhost:3000/';
+		}
+	}, [loggedP]);
 
-	console.log(userLoggedP);
+	// <-------------------------- Google Login -------------------------->
+	const clientIdCode = '269758003483-2l6nugnundjtidqt2djkq7kt9jptsgh8.apps.googleusercontent.com';
+
+	const responseGoogleSuccess = (response) => {
+		// alert('mepa que vamos bien che');
+		console.log(response.profileObj.email);
+		console.log(response.profileObj.googleId);
+		var googleForm = {
+			email: response.profileObj.email,
+			password: response.profileObj.googleId,
+		};
+		console.log(googleForm);
+		loginActionP(googleForm);
+	};
+
+	const responseGoogleFailure = (response) => {
+		// alert('mepa que vamos bien che');
+		alert('Hubo un problema con la autenticacion, vuelve a intentarlo');
+		// window.location.href = 'http://localhost:3000/login';
+	};
+	// <-------------------------- Google Login -------------------------->
+
+	// console.log(userLoggedP);
 
 	return (
 		<div className={s.cont_prin}>
@@ -47,6 +71,9 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
 				<Container className={s.cont} onSubmit={handleSubmit}>
 					<div className={s.img}>
 						<FontAwesomeIcon className={s.icon} icon={faUserCircle} size={'7x'} />
+						{/* google login */}
+						<GoogleLogin clientId={clientIdCode} buttonText='Ingresar' onSuccess={responseGoogleSuccess} onFailure={responseGoogleFailure} isSignedIn={false} cookiePolicy={'single_host_origin'} />
+						{/* google login */}
 					</div>
 					<Form className={s.cont_form}>
 						{messageErrorP === '' ? <div></div> : <div className={s.messageError}>{messageErrorP}</div>}
