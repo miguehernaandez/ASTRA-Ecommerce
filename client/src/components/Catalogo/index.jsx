@@ -12,6 +12,7 @@ import { getProducts } from '../../store/actions/product_actions';
 import { Container, Row, Col, Form, Pagination } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as faIcons from 'react-icons/fa';
+import catEmpty from '../../multimedia/empty.jpg';
 import s from '../../styles/catalogo.module.css';
 const url = 'localhost:3001';
 
@@ -62,15 +63,18 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 			{/*<h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>*/}
 			{products.length == 0 ? (
 				productsP.length == 0 ? (
-					<h1 className={s.title2}>No hay registros en la base de datos</h1>
+					<div className={s.catEmpty}>
+                    <img src={catEmpty}></img>
+                    <h1>¡UPS! PARECE QUE NO HAY NADA CARGADO EN EL CATÁLOGO AÚN</h1> 
+                    <h6>Por favor, intenta de nuevo más tarde</h6>
+                    <Link className={s.link} to='/'>Seguir navegando</Link>
+                </div>
 				) : (
+					<div className={s.dplay}>
+					<Filter></Filter>
 					<Container>
-						{/* <SideBar> </SideBar> */}
 						{/* <h1 className={s.title1}>Resultados ({productsP.length})</h1> */}
 						<div className={s.cont_prin_card}>
-							<div className={s.cont_filter}>
-								<Filter categories={categories} products={products} handlerSelect={handlerSelect}/>
-							</div>
 							<div className={s.cont_card}>
 								<Row>
 									{currentPostsCat.map((p) => {
@@ -86,17 +90,15 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 
 						<Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate} />
 					</Container>
+					</div>
 				)
 			) : (
+				<div className={s.dplay}>
+
+				<Filter></Filter>
 				<Container>
 					{/* <h1 className={s.title1}>Resultados ({products.length})</h1> */}
 					<div className={s.cont_prin_card}>
-						<div className={s.cont_filter}>
-							<div>
-								<p>Categorias</p>
-							</div>
-							< Filter categories={categories} products={products} handlerSelect={handlerSelect}/>
-						</div>
 						<div className={s.cont_card}>
 							<Row>
 								{currentPostsSearch.map((p) => {
@@ -111,6 +113,7 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 					</div>
 					<Page postsPerPage={postsPerPage} totalPosts={products.length} paginate={paginate} />
 				</Container>
+				</div>
 			)}
 		</div>
 	);

@@ -88,7 +88,7 @@ const CartShop = ({match, location, addToCartP, cartP, removeFromCartP, updateFr
                 {cartP2.length < 1 ? 
                 <div className={s.cardVacio}>
                     <img src={CardVacio}></img>
-                    <h1>!TU CARRITO DE COMPRAS AHORA ESTA VACIO¡</h1> 
+                    <h1>¡TU CARRITO DE COMPRAS AHORA ESTA VACIO!</h1> 
                     <h6>Busca y añade los articulos que mas te gusten al carrito</h6>
                     <Link className={s.link} to='/'>Sigue comprando</Link>
                 </div>
