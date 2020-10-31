@@ -1,6 +1,7 @@
 // <------------------------------------ IMPORTS ------------------------------------>
 // React
 import React from 'react';
+import { useState } from 'react';
 
 // Bootstrap
 import { Card, Row, Col, ProgressBar } from 'react-bootstrap';
@@ -11,10 +12,30 @@ import { faStar, faThumbsUp, faThumbsDown, faMinus, faPlus } from '@fortawesome/
 
 // CSS
 import s from '../../styles/reviews.module.css';
+
+//Componetes
+import MyReviews from '../Modals/MyReviews';
+
+// React-Router-Dom
+import { useRouteMatch, Route, useHistory } from 'react-router-dom';
 // <------------------------------------ IMPORTS ------------------------------------>
 
-export default function Reviews({ arrayReviews, rating}) {
-	console.log(arrayReviews);
+export default function Reviews({ 
+	product, 
+	getProductP, 
+	userReviews, 
+	getUserReviews, 
+	deleteReviewP, 
+	userLoggedP,
+	handlerRate,
+	editReviewForm,
+	rating }) {
+		const arrayReviews = product.reviews;
+		console.log(arrayReviews);
+		const history = useHistory();
+		// <------------------------------ESTADOS------------------------------>
+	
+		const [show, setShow] = useState(false);
 
 	// <-----------------------------FUNCIONES----------------------------->
 	// Promeio general del producto
@@ -60,33 +81,47 @@ export default function Reviews({ arrayReviews, rating}) {
 		else if (rate <= 2.5) rate *= 18.2;
 		return rate;
 	}
-    var startWidth = colorStars(rating)
+	var startWidth = colorStars(rating)
+
+	const openMyReviews = () => {
+		if (!userLoggedP) {
+			history.push(`/login`);
+		} else {
+			getUserReviews(product.id, userLoggedP.id);
+			setShow(true);
+		}
+	};
+
+	const closeMyReviews = () => {
+			getUserReviews(product.id, userLoggedP.id);
+			getProductP()
+			setShow(false);
+	};
 
 	// <----------------------------------- RENDER ----------------------------------->
 	if (!arrayReviews || arrayReviews.length < 1) {
 		return (
 			<Card className={`my-5 p-4 ${s.productReviewCard}`}>
-				<Row className={`${s.bordeRojo} justify-content-end w-100 m-0 mt-n1`}>
-					<FontAwesomeIcon icon={faMinus} size={'1x'} id={`minusIcon`} className={`${s.openCloseIcon}`} onClick={handleOpenClose} />
-					<FontAwesomeIcon icon={faPlus} size={'1x'} id={`plusIcon`} className={`${s.openCloseIcon} d-none`} onClick={handleOpenClose} />
-				</Row>
 				<Row className={`${s.bordeRojo} justify-content-center justify-content-md-start w-100 m-0`}>
 					<h3 className={``}>Opiniones sobre el producto</h3>
 				</Row>
 				<Row className={`${s.bordeRojo} w-100 m-0 my-2`}>
 					<p className={`${s.opinionDetalladaComentario} px-1 my-1`}>Aún no hay opiniones de este producto. Sé el primero en opinar!</p>
 				</Row>
-			</Card>
+			</Card>	
+			
 		);
 	} else {
 		return (
+			<>
 			<Card className={` p-4 ${s.productReviewCard}`}>
 				<Row className={`${s.bordeRojo} justify-content-end w-100 m-0 mt-n1`}>
 					<FontAwesomeIcon icon={faMinus} size={'1x'} id={`minusIcon`} className={`${s.openCloseIcon}`} onClick={handleOpenClose} />
 					<FontAwesomeIcon icon={faPlus} size={'1x'} id={`plusIcon`} className={`${s.openCloseIcon} d-none`} onClick={handleOpenClose} />
 				</Row>
-				<Row className={`${s.bordeRojo} justify-content-center justify-content-md-start w-100 m-0`}>
-					<h3 className={``}>Opiniones sobre el producto</h3>
+				<Row className={`${s.productReviewHeader} justify-content-center justify-content-md-start w-100 m-0`}>
+						<Col xs={12} md={8}><h3>Opiniones sobre el producto</h3></Col>
+						<Col xs={12} md={4}><h6 onClick={openMyReviews}>Gestionar mis comentarios</h6></Col>
 				</Row>
 				<div className={`${s.contPrincipal}`} id={`contPrincipal`}>
 					<hr className={`m-0 p-0`}></hr>
@@ -186,6 +221,19 @@ export default function Reviews({ arrayReviews, rating}) {
 					</Row>
 				</div>
 			</Card>
+			<MyReviews 
+			show={show} 
+			setShow={setShow} 
+			product={product} 
+			user={userLoggedP} 
+			userReviews={userReviews} 
+			getUserReviews={getUserReviews}
+			deleteReviewP={deleteReviewP}
+			closeMyReviews={closeMyReviews}
+			handlerRate={handlerRate}
+			editReviewForm={editReviewForm} 
+		/>
+		</>
 		);
 	}
 }

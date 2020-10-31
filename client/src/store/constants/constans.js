@@ -24,5 +24,7 @@ export const LOGIN = 'LOGIN';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT = 'LOGOUT'
 export const ADD_REVIEW = 'ADD_REVIEW';
+export const GET_USER_REVIEWS = 'GET_USER_REVIEWS';
 export const UPDATE_REVIEW = 'UPDATE_REVIEW';
 export const DELETE_REVIEW = 'DELETE_REVIEW';
+

@@ -25,7 +25,32 @@ server.get('/:productId/review', (req, res) =>{
 		})
 	});
 });
+server.get('/:productId/review/user/:userId', (req, res) =>{
 
+	const {productId, userId} = req.params;
+	console.log('yah');
+	return Review.findAll({
+        where: {productId, userId},
+	})
+	.then(reviews => {
+		console.log('**********')
+		console.log(reviews)
+		console.log('**********')
+		return res.status(OK).json({
+			message: 'Success',
+			data: reviews
+		})
+	})
+	.catch( err => {
+		console.log('**********')
+		console.log(err)
+		console.log('**********')
+		return res.status(NOT_FOUND).json({
+			message: 'El review no se encuentra en la base de datos',
+			data: err
+		})
+	});
+});
 
 server.post('/:productId/review', (req, res) => {
 	const {productId} = req.params;
@@ -75,6 +100,28 @@ server.put('/:productId/review/:id', (req, res) => {
 	.catch(err => {
 		return res.status(ERROR).json({
 			message: 'Hubo un error al modificar la review',
+			data: err
+		})
+    })
+});
+
+server.delete('/:productId/review/:id', (req, res) => {
+	const {productId, id} = req.params;
+
+	Review.findOne({
+		where: { productId, id },
+		include: Product
+	})
+	.then(review => {
+		review.destroy();
+		return res.status(OK).json({
+			message: 'Review elimanada correctamente!', 
+			data: review 
+		})
+	})
+	.catch(err => {
+		return res.status(ERROR).json({
+			message: 'Hubo un error al eliminar la review',
 			data: err
 		})
     })

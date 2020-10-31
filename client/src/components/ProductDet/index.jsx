@@ -29,15 +29,16 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { getProducts } from '../../store/actions/product_actions';
 import { addToCart } from '../../store/actions/cart_actions';
-import { addReview } from '../../store/actions/review_actions';
+import { addReview, deleteUserReview, getUserReviews } from '../../store/actions/review_actions';
 
 const url = 'localhost:3001';
 
 // <---------------------------Componente--------------------------->
-const Product = ({ productsP, getProductP, addToCartP, addReviewP, userLoggedP }) => {
+const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, userLoggedP, getUserReviewsP, deleteReviewP }) => {
 	const [qty, setQty] = useState(1);
 	const [show, setShow] = useState(false);
 	const [showLoggin, setShowLoggin] = useState(false);
+	const [editReview, setEditReview] = useState({});
 	const [review, setReview] = useState({});
 	const match = useRouteMatch();
 	const history = useHistory();
@@ -97,6 +98,8 @@ const Product = ({ productsP, getProductP, addToCartP, addReviewP, userLoggedP }
 			...review,
 			userId: userLoggedP.id,
 		};
+		console.log(newReview)
+		console.log(productId)
 		addReviewP(newReview, productId);
 		setShow(false);
 		setReview({});
@@ -118,6 +121,33 @@ const Product = ({ productsP, getProductP, addToCartP, addReviewP, userLoggedP }
 		};
 		setReview(newReview);
 	};
+	const handlerEditRate = (e) => {
+		if (e.target.checked) {
+			setEditReview({
+				...editReview,
+				rate: parseInt(e.target.value),
+			});
+		}
+	};
+
+	const editReviewForm = (e) => {
+		let newReview = {
+			...editReview,
+			[e.target.name]: e.target.value,
+		};
+		setEditReview(newReview);
+	};
+
+	const handlerEditReview = (editReview, productId) =>{
+		let newReview = {
+			...review,
+			userId: userLoggedP.id,
+		};
+		addReviewP(newReview, productId);
+		getUserReviewsP(objP.id, userLoggedP.id);
+		setShow(false);
+		setReview({});
+	}
 
 	console.log(objP.reviews);
 	useEffect(() => {
@@ -202,7 +232,18 @@ const Product = ({ productsP, getProductP, addToCartP, addReviewP, userLoggedP }
 				</div>
 				<AddReview show={show} setShow={setShow} product={objP} handlerAddReview={handlerAddReview} reviewForm={reviewForm} review={review} handlerRate={handlerRate} />
 				<AvisoLoggin showLoggin={showLoggin} setShowLoggin={setShowLoggin}/>
-				<Reviews arrayReviews={objP.reviews} rating={rate} />
+				<Reviews 
+					product={objP} 
+					getProductP={getProductP} 
+					userReviews={userReviewsP} 
+					getUserReviews={getUserReviewsP} 
+					deleteReviewP={deleteReviewP} 
+					userLoggedP={userLoggedP}
+					handlerRate={handlerEditRate}
+					editReviewForm={editReviewForm}
+					handlerEditReview={handlerEditReview}
+					rating={rate}
+				/>
 			</Container>
 			<Footer />
 		</div>
@@ -213,6 +254,7 @@ function mapStateToProps(state) {
 	return {
 		productsP: state.products,
 		userLoggedP: state.userLogged,
+		userReviewsP: state.userReviews,
 	};
 }
 function mapDispatchToProps(dispatch) {
@@ -220,6 +262,8 @@ function mapDispatchToProps(dispatch) {
 		getProductP: () => dispatch(getProducts()),
 		addToCartP: (id, qty) => dispatch(addToCart(id, qty)),
 		addReviewP: (review, productId) => dispatch(addReview(review, productId)),
+		getUserReviewsP: (productId, userId) => dispatch(getUserReviews(productId, userId)),
+		deleteReviewP: (productId, reviewId) => dispatch(deleteUserReview(productId, reviewId)),
 	};
 }
 
