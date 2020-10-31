@@ -11,7 +11,7 @@ import {
   GET_USERS, DELETE_USER, UPDATE_USER, DETAIL_USER,
   DELETE_CART,
   LOGIN, LOGIN_ERROR, LOGOUT,
-  ADD_REVIEW,UPDATE_REVIEW, DELETE_REVIEW} from '../constants/constans';
+  ADD_REVIEW,UPDATE_REVIEW, DELETE_REVIEW, GET_USER_REVIEWS} from '../constants/constans';
 
   import Cookie from 'js-cookie';
 
@@ -27,6 +27,7 @@ const inicialState = {
 	users: [],
 	userSelected: [],
 	orders: [],
+	userReviews:[],
 
 
 	userLogged: userLoad,
@@ -187,6 +188,16 @@ const ReducerCategory = (state = inicialState, action) => {
 		/****************************** REVIEW ********************************/
 		case ADD_REVIEW:
 			return {...state, products:action.products}
+		case GET_USER_REVIEWS:
+			console.log('REVIEWS DE USUARIO EN EL REDUCER')
+			console.log(action.reviews);
+			return {...state, userReviews: action.reviews}
+		case DELETE_REVIEW:
+			let deletedReview = action.review;
+			let newReviews = state.userReviews.filter((review) => review.id !== deletedReview.id);
+			console.log('REVIEWS EN EL REDUCER DESPUÉS DE ELIMINAR UNA');
+			console.log(newReviews);
+			return {...state, userReviews: newReviews}
 
 	}
 };

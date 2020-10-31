@@ -18,13 +18,13 @@ const AddReview = ({show, setShow, product, reviewForm, handlerAddReview, review
         </Modal.Header> */}
         <Modal.Body className={`show-grid ${s.cont_body}`}>
         <Row className={s.cont}>
-            <Col xs={12} md={4} className={s.cont_img}>
+            <Col xs={12} md={12} lg={4} className={s.cont_img}>
                 <div className={s.imagen}>
                     <img src={product.image}></img>
                      <h6>{product.name}</h6>
                 </div>               
             </Col>
-            <Col xs={6} md={8} className={s.cont_inf} >
+            <Col xs={12} md={12} lg={8} className={s.cont_inf} >
                 <div className={s.info}>
                     <Modal.Header className={s.header} closeButton>
                      <Modal.Title className={s.title}>Tu opinión es importante!</Modal.Title>
@@ -48,11 +48,11 @@ const AddReview = ({show, setShow, product, reviewForm, handlerAddReview, review
                             <Form.Control name='content' className={s.input} as="textarea" rows={3} onChange={reviewForm}/>
                         </Form.Group>
                     </Form>
-                    <div className={s.recordar}>
+                    {/* <div className={s.recordar}>
                         <p>¿Recomendarias este producto a otra persona?</p>                
                         <Button className={s.button}>SI</Button>
                         <Button className={s.button}>NO</Button>                       
-                    </div>
+                    </div> */}
                     <div className={s.addCom}>
                     <Button className={s.button2} onClick={()=> handlerAddReview(review, product.id)}>Agregar comentario</Button> 
                     </div>
