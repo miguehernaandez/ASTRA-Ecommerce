@@ -121,8 +121,14 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 						</Button>
 						</div>
 					:
-					<>				
-					</>
+					<div className={s.buttons}>
+						<Button as={Link} to={`/products/product/${id}`} className={`mb-1 ${s.productCardButton}`}>
+						Ver Detalles
+						</Button>
+						<Button onClick={() => addToCartP(id, 1, userLoggedP && userLoggedP.id)} className={`mb-1 ${s.productCardButton2}`}>
+						Agregar al carrito
+						</Button>
+					</div>
 						
 					}
 				</Row>

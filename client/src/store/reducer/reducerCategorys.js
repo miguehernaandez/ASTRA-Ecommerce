@@ -11,7 +11,9 @@ import {
   GET_USERS, DELETE_USER, UPDATE_USER, DETAIL_USER,
   DELETE_CART,
   LOGIN, LOGIN_ERROR, LOGOUT,
-  ADD_REVIEW,UPDATE_REVIEW, DELETE_REVIEW, GET_USER_REVIEWS} from '../constants/constans';
+  ADD_REVIEW,  CREATE_ORDER, UPDATE_ORDER_TO_CREATE,
+  UPDATE_ORDER_TO_PROCESS, CHECKOUT_END, UPDATE_ORDER_TO_FULL, UPDATE_ORDER_TO_REJECT,
+  UPDATE_REVIEW, DELETE_REVIEW, GET_USER_REVIEWS} from '../constants/constans';
 
   import Cookie from 'js-cookie';
 
@@ -27,11 +29,13 @@ const inicialState = {
 	users: [],
 	userSelected: [],
 	orders: [],
+	orderCreated : {},
 	userReviews:[],
 
 
 	userLogged: userLoad,
 	logged: false,
+	checkout: "",
 
 
 	messageError: ''
@@ -174,6 +178,20 @@ const ReducerCategory = (state = inicialState, action) => {
 		case GET_ORDERS:
 
 			return {...state, orders: action.orders };
+		
+		case CREATE_ORDER:
+			 return {...state, orderCreated: action.payload }
+		case UPDATE_ORDER_TO_CREATE:
+			 return {...state, orderCreated: action.payload}
+		case UPDATE_ORDER_TO_PROCESS:
+			return {...state, orderCreated: action.payload}
+		case CHECKOUT_END:
+			//const {message, pay} = action
+			return {...state, checkout:action.pay}
+		case UPDATE_ORDER_TO_REJECT:
+			return {...state, orderCreated: action.payload}
+		case UPDATE_ORDER_TO_FULL:
+			return {...state, orderCreated: action.payload}
 		
 		/********************************* LOGIN ********************************* */
 		case LOGIN:

@@ -1,5 +1,6 @@
 // React
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Bootstrap
 import { Container, Card, Form, Button, Col, Row } from 'react-bootstrap';
@@ -11,12 +12,13 @@ import s from '../../styles/FormUsers.module.css';
 import { connect } from 'react-redux';
 
 // Actions
-import { createUser } from '../../store/actions/userActions.js';
+import { createUser, getUsers } from '../../store/actions/userActions.js';
 // <-------------------------------------------------------------->
 const url = 'localhost:3001';
 
-const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
-	console.log(createUserSuccessP);
+const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP}) {
+	const history = useHistory();
+	console.log(createUserP);
 	console.log(usersP);
 	const getUserData = function () {
 		let name = document.getElementById(`name`).value,
@@ -77,21 +79,20 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
 
 	const createSuccess = function () {
 		if (createUserSuccessP) {
-			return alert('Usuario creado correctamente!');
-		} else {
-			return alert('Usuario creado correctamente!');
-		}
+			return history.push('/login')
+		} 
 	};
 
 	// Funcion que se dispara al hacer submit
 	const handleSubmit = function (e) {
 		e.preventDefault();
+		console.log('Hola')
 		var data = getUserData();
 
-		// Comprobacion de que las contraseñas coincidan
-		// if (data.password != data.passwordConfirm) {
-		// 	return alert('las contras no coinciden');
-		// }
+		// // Comprobacion de que las contraseñas coincidan
+		// // if (data.password != data.passwordConfirm) {
+		// // 	return alert('las contras no coinciden');
+		// // }
 
 		console.log('se estan por enviar los datos');
 		console.log(data);
@@ -173,13 +174,14 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
 								</Form.Group>								
 							</Col>
 						</Row>
+						<Button className={`${s.botonSubmit}`} id='submitButton' type='submit' disabled={true}>
+							Registrarme
+						</Button>
 					</Form>
 				</Card>
 				<Row>
 					<Col className={s.content_buttom}>
-						<Button className={`${s.botonSubmit}`} id='submitButton' type='submit' disabled={true}>
-							Registrarme
-						</Button>
+
 					</Col>
 				</Row>
 			</Container>
@@ -197,6 +199,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		createUserP: (data) => dispatch(createUser(data)),
+		getUsersP : () => dispatch(getUsers())
 	};
 }
 

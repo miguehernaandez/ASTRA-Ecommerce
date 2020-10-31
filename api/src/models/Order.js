@@ -4,21 +4,17 @@ module.exports = (sequelize) => {
 	//modelo
 	sequelize.define('order', {
 
-    subTotal: {
-      type: DataTypes.DECIMAL,
-      validate: {
-        isNumeric: true,
-        isDecimal: true
-      }
-    },
-    shipping: {
-      type: DataTypes.DECIMAL,
-      isNumeric: true,
-      isDecimal: true
-    },
-    discount: {
+    city: {
       type: DataTypes.STRING,
-      unique: true
+    },
+    adress: {
+      type: DataTypes.STRING,
+    },
+    phone: {
+      type: DataTypes.STRING,
+    },
+    postal: {
+      type: DataTypes.STRING,
     },
     total:{
       type: DataTypes.DECIMAL,
@@ -27,14 +23,22 @@ module.exports = (sequelize) => {
         isDecimal: true
       }
     },
+    subTotal:{
+      type: DataTypes.DECIMAL,
+      validate: {
+        isNumeric: true,
+        isDecimal: true
+      }
+    },
+    iva:{
+      type: DataTypes.DECIMAL,
+      validate: {
+        isNumeric: true,
+        isDecimal: true
+      }
+    },
     paymentMethod: {
       type: DataTypes.STRING,
-    },
-		date_placed: {
-			type: DataTypes.DATE,
-    },
-    date_filled: {
-      type: DataTypes.DATE,
     },
 		status: {
       type: DataTypes.ENUM(['cart', 'created', 'in_process', 'fullfilled', 'rejected']),
