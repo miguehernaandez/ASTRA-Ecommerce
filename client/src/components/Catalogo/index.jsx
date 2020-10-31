@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import ProductCard from '../ProductCard/index';
 import Navegacion from '../Navegacion/Navegacion';
+import Contact from '../contact/ws.js';
 import Filter from '../Filter/index';
 import Page from '../Pagination/index.jsx';
 import SideBar from '../SideBar/SideBar.jsx';
@@ -89,6 +90,7 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 						</div>
 
 						<Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate} />
+						<Contact></Contact>
 					</Container>
 					</div>
 				)
@@ -112,6 +114,7 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 						</div>
 					</div>
 					<Page postsPerPage={postsPerPage} totalPosts={products.length} paginate={paginate} />
+					<Contact></Contact>
 				</Container>
 				</div>
 			)}
