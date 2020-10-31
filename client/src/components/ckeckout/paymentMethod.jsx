@@ -48,6 +48,7 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps})  {
         if(!error){
             console.log(paymentMethod)
             confirOrderProps(paymentMethod.id, total, objenderProps.id  )
+            
             history.push('/paymethod/sucess')
             //await sendStatusOrder(checkoutEndProps)
            // UpdateOrderToCreateFullorRejectProps(objenderProps.id, statuCheckout)

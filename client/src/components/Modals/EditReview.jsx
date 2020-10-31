@@ -3,9 +3,16 @@ import s from '../../styles/editReview.module.css';
 import {Button, Modal, Row, Col, Form } from 'react-bootstrap';
 import Review from '../Review/review';
 
-const EditReview = ({show, setShow, product, review, handlerRate, editReviewForm}) => {
+const EditReview = ({user, show, setShow, product, review, getUserReviews ,handlerRate, editReviewForm, handlerEditReview }) => {
     console.log('SOY LA REVIEW QUE SE VA A ACTUALIZAR')
     console.log(review)
+    console.log(user);
+
+    const handlerUpdReview = async (productId, review) =>{
+        handlerEditReview(productId, review);
+        await getUserReviews(productId, user.id);
+        setShow(false); 
+    }
     
     return ( 
         <Modal 
@@ -30,20 +37,20 @@ const EditReview = ({show, setShow, product, review, handlerRate, editReviewForm
                                 <div className={s.title2}>
                                     <h6>Calificación general</h6>
                                     <div className={s.strat}>
-                                        <Review/>
+                                        <Review handlerRate={handlerRate} review={review} />
                                     </div>
                                 </div>
                                 <Form.Group>
                                     <Form.Label className={s.title2}>Titulo</Form.Label>
-                                    {/* <Form.Control name='title' className={s.input} size="sm" type="text" placeholder="Ejemplo: ¡Es muy liviano!" onChange={reviewForm}/> */}
+                                    <Form.Control name='title' className={s.input} size="sm" type="text" value={review.title} onChange={editReviewForm}/>
                                 </Form.Group>
                                 <Form.Group controlId="exampleForm.ControlTextarea1">
                                     <Form.Label className={s.title2}>Escriba su comentario</Form.Label>
-                                    {/* <Form.Control name='content' className={s.input} as="textarea" rows={3} onChange={reviewForm}/> */}
+                                    <Form.Control name='content' className={s.input} as="textarea" rows={3} value={review.content} onChange={editReviewForm}/>
                                 </Form.Group>
                             </Form>
                             <div className={s.addCom}>
-                                {/* <Button className={s.button2} onClick={ ()=> handlerAddReview(review, product.id) }>Agregar comentario</Button>  */}
+                                <Button className={s.button2} onClick={ ()=> handlerUpdReview(product.id, review) }>Publicar comentario!</Button> 
                             </div>
                         </div>              
                     </Col>

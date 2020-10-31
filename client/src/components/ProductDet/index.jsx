@@ -29,12 +29,12 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { getProducts } from '../../store/actions/product_actions';
 import { addToCart } from '../../store/actions/cart_actions';
-import { addReview, deleteUserReview, getUserReviews } from '../../store/actions/review_actions';
+import { addReview, deleteUserReview, getUserReviews, editUserReview } from '../../store/actions/review_actions';
 
 const url = 'localhost:3001';
 
 // <---------------------------Componente--------------------------->
-const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, userLoggedP, getUserReviewsP, deleteReviewP }) => {
+const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, userLoggedP, getUserReviewsP, editUserReviewP, deleteReviewP }) => {
 	const [qty, setQty] = useState(1);
 	const [show, setShow] = useState(false);
 	const [showLoggin, setShowLoggin] = useState(false);
@@ -78,7 +78,8 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 		return rate;
 	}
     var startWidth = colorStars(rate)
-
+	const roundedRate = Math.round(rate * 10)/10;
+	const fixedRate = roundedRate.toFixed(1);
 
 	const handlerAddToCart = (id, qty) => {
 		addToCartP(id, qty);
@@ -121,6 +122,7 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 		};
 		setReview(newReview);
 	};
+
 	const handlerEditRate = (e) => {
 		if (e.target.checked) {
 			setEditReview({
@@ -128,6 +130,8 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 				rate: parseInt(e.target.value),
 			});
 		}
+		console.log('SOY EL NUEVO RATE EDITADO')
+		console.log(editReview)
 	};
 
 	const editReviewForm = (e) => {
@@ -136,17 +140,15 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 			[e.target.name]: e.target.value,
 		};
 		setEditReview(newReview);
+		console.log('SOY EL ESTADO CAMBIADO DE LA EDIT REVIEW')
+		console.log(editReview)
 	};
 
-	const handlerEditReview = (editReview, productId) =>{
-		let newReview = {
-			...review,
-			userId: userLoggedP.id,
-		};
-		addReviewP(newReview, productId);
+	const handlerEditReview = (productId, editReview) =>{
+		
+		editUserReviewP(productId, editReview);
 		getUserReviewsP(objP.id, userLoggedP.id);
-		setShow(false);
-		setReview({});
+		setEditReview({});
 	}
 
 	console.log(objP.reviews);
@@ -168,29 +170,31 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 							<h4>$ {`${objP.price}` || `00000`}</h4>
 							<h6>Referencia: {`${objP.sku}` || `codReferencia`}</h6>
 							<div className={s.contReviw}>
-						<div className={s.icon}>
-							<div className={s.emptyStars}>
-								<FontAwesomeIcon icon={faStar} />
-								<FontAwesomeIcon icon={faStar} />
-								<FontAwesomeIcon icon={faStar}  />
-								<FontAwesomeIcon icon={faStar}  />
-								<FontAwesomeIcon icon={faStar}  />
-							</div>
-							<div className={s.fullStarsRate} style={{width: startWidth + 'px'}}>
-								<div className={s.fullStars}>
-									<FontAwesomeIcon icon={faStar}  />
-									<FontAwesomeIcon icon={faStar}  />
-									<FontAwesomeIcon icon={faStar}  />
-									<FontAwesomeIcon icon={faStar}  />
-									<FontAwesomeIcon icon={faStar}  />
+							<div className={s.icon}>
+								<div className={s.emptyStarsCont}>
+									<div className={s.emptyStars}>
+										<FontAwesomeIcon icon={faStar} />
+										<FontAwesomeIcon icon={faStar} />
+										<FontAwesomeIcon icon={faStar}  />
+										<FontAwesomeIcon icon={faStar}  />
+										<FontAwesomeIcon icon={faStar}  />
+									</div>
+								</div>
+								<div className={s.fullStarsRate} style={{width: startWidth + 'px'}}>
+									<div className={s.fullStars}>
+										<FontAwesomeIcon icon={faStar}  />
+										<FontAwesomeIcon icon={faStar}  />
+										<FontAwesomeIcon icon={faStar}  />
+										<FontAwesomeIcon icon={faStar}  />
+										<FontAwesomeIcon icon={faStar}  />
+									</div>
 								</div>
 							</div>
-						</div>
- 						<div className={s.addReview}>
-							<p onClick={() => handlerReview()}>Escribir comentario</p>
-						</div>
+							<div className={s.addReview}>
+								<p onClick={() => handlerReview()}>Escribir comentario</p>
 							</div>
-
+							</div>
+							<h5>{fixedRate}/ 5.0 ({objP.reviews && objP.reviews.length} opiniones)</h5>
 							<p>{`${objP.description}` || `Descripcion no disponible`}</p>
 							<p>
 								<span className={s.dim}>Dimensiones:</span> {`${objP.dimentions}` || `noDisponible`}
@@ -239,6 +243,8 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 					getUserReviews={getUserReviewsP} 
 					deleteReviewP={deleteReviewP} 
 					userLoggedP={userLoggedP}
+					editReview={editReview}
+					setEditReview={setEditReview}
 					handlerRate={handlerEditRate}
 					editReviewForm={editReviewForm}
 					handlerEditReview={handlerEditReview}
@@ -263,6 +269,7 @@ function mapDispatchToProps(dispatch) {
 		addToCartP: (id, qty) => dispatch(addToCart(id, qty)),
 		addReviewP: (review, productId) => dispatch(addReview(review, productId)),
 		getUserReviewsP: (productId, userId) => dispatch(getUserReviews(productId, userId)),
+		editUserReviewP: (productId, review) => dispatch(editUserReview(productId, review)),
 		deleteReviewP: (productId, reviewId) => dispatch(deleteUserReview(productId, reviewId)),
 	};
 }

@@ -1,7 +1,8 @@
 const server = require('express').Router(); //Import router from express module.
 const { Order, Order_line, Product, User } = require('../db.js'); // Import Categories model.
 const { OK, CREATED, ERROR, ERROR_SERVER } = require('../constants/index'); // Import Status constants.
-const Stripe = require('stripe')
+const Stripe = require('stripe');
+const mailgunLoader = requiere('mailgun-js');
 
 // Start Routes
 
@@ -173,6 +174,28 @@ server.put('/checkout/:id', (req, res)=>{
 })
 
 server.put('/checkoutReject/:id', (req, res)=>{
+	
+	//  const { statuCheckout } = req.body;
+	const { id } = req.params;
+	console.log('fulled', id)
+	return Order.findOne({ where: {id: id}, include:{model: Product}})
+	 	.then(order => {
+			order.status = 'rejected';
+			order.save();
+		return res.status(OK).json({
+			message:`La Orden fue Rechazada`,
+			data: order
+		});
+		 })
+		.catch( err => {
+			return res.status(ERROR).json({
+				message: 'Error en el proceso de la orden',
+				data: err
+			})
+		});
+})
+
+server.post('/checkout/:id', (req, res)=>{
 	
 	//  const { statuCheckout } = req.body;
 	const { id } = req.params;

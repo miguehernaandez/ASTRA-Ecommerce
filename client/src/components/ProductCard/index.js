@@ -32,18 +32,26 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 
 	const getRate = (reviews) => {
 		let rate = 0;
-		if (reviews.length > 0){
+		if (reviews && reviews.length > 0){
 			reviews.forEach(review => {
 				rate += review.rate;
 			})
 			rate /= reviews.length;
 		}
+		return rate;
+	}
+	const rate = getRate(reviews);
+
+	const getStarWidth = (rate) =>{
 		if (rate > 2.5) rate*=18;
 		else if (rate <= 2.5) rate *= 18.2;
 		return rate;
 	}
-	if (reviews) var rate = getRate(reviews);
-	
+
+	const starWidth = getStarWidth(rate);
+
+	const roundedRate = Math.round(rate * 10)/10;
+	const fixedRate = roundedRate.toFixed(1);
 
 	//let rate = 18.2*rating;
 	return (
@@ -79,7 +87,7 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 						<FontAwesomeIcon icon={faStar} size={'1x'} />
 						<FontAwesomeIcon icon={faStar} size={'1x'} />
 					</div>
-					<div className={s.fullStarsRate} style={{width: rate + 'px'}}>
+					<div className={s.fullStarsRate} style={{width: starWidth + 'px'}}>
 						<div className={s.fullStars}>
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
@@ -87,7 +95,8 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 						</div>
-					</div>	
+					</div>
+					<div><h6>{fixedRate} / 5.0 ({reviews && reviews.length} opiniones)</h6></div>	
 				</div>
 				{/* <Card.Text className={`my-1 ${s.productCardDescription}`}>{`${description}` || `Product Name`} </Card.Text> */}
 				<div className={s.contPI}>				

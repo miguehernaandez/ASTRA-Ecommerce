@@ -207,14 +207,18 @@ const ReducerCategory = (state = inicialState, action) => {
 		case ADD_REVIEW:
 			return {...state, products:action.products}
 		case GET_USER_REVIEWS:
-			console.log('REVIEWS DE USUARIO EN EL REDUCER')
-			console.log(action.reviews);
 			return {...state, userReviews: action.reviews}
+		case UPDATE_REVIEW:
+			console.log('REVIEWS DE USUARIO EN EL REDUCER DESPUES DE EDITAR UNA')
+			console.log(action.review);
+			let editedReview = action.review;
+			let newReviewsEdit = state.userReviews;
+			let editReviewIndex = newReviewsEdit.indexOf(editedReview);
+			newReviewsEdit[editReviewIndex] = action.review;
+			return {...state, userReviews: newReviewsEdit }
 		case DELETE_REVIEW:
 			let deletedReview = action.review;
 			let newReviews = state.userReviews.filter((review) => review.id !== deletedReview.id);
-			console.log('REVIEWS EN EL REDUCER DESPUÉS DE ELIMINAR UNA');
-			console.log(newReviews);
 			return {...state, userReviews: newReviews}
 
 	}
