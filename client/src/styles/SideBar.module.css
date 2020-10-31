@@ -1,84 +1,75 @@
-.navBar{
-    display:flex;
-    background-color: #3B8EA5;
-    height: 80px;
-    justify-content: start;
-    align-items: center;
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
 
+body {
+  overflow-x: hidden;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
 }
-.menuBars{
-    display: flex;
-    margin-top: 2rem;
-    margin-left:2rem;
-    font-size:2rem;
-    background:none;
-}
-.navMenu{
-    display: flex;
-    background-color: #1f2333;
-    width:250px;
-    height: 100vh;
-    justify-content: center;
-    position:fixed;
-    top:0;
-    left:-100%;
-    transition: 850ms;
+/* Toggle Styles */
 
+#viewport {
+  padding-left: 250px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
-.navMenu.active{
-    left: 0;
-    transition:350ms;
+
+#content {
+  width: 100%;
+  position: relative;
+  margin-right: 0;
 }
-.nav-text{
-    display:flex;
-    justify-content: start;
-    align-items: center;
-    padding:5px 0px 5px 3px;
-    list-style:none;
-    height: 60px;
+
+/* Sidebar Styles */
+
+#sidebar {
+  z-index: 1000;
+  position: absolute;
+  left: 250px;
+  width: 250px;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: #181b27;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
-.displayText{
-    display:flex;
-    text-decoration: none;
-    text-decoration-color: whitesmoke;
+
+#sidebar header {
+  background-color: #263238;
+  font-size: 15px;
+  line-height: 52px;
+  text-align: center;
 }
-.menuCont{
-    text-decoration: none;
-    columns: #f5f5f5;
-    font-size: 18px;
-    width: 95%;
-    height: 100%;
-    display:flex;
-    color: #EDF7F6;
-    align-items: center;
-    padding: 0 16px;
-    border-radius: 4px;
+#sidebar header a {
+  color: #fff;
+  display: block;
+  text-decoration: none;
 }
-.menuCont:hover{
-    background-color: #f5f5f5;
-    color:black
+
+#sidebar header a:hover {
+  color: #fff;
 }
-.navMenuItems {
-    width: 100%;
-    color: #ffffff;
+
+#sidebar .nav a{
+  background: none;
+  color: #CFD8DC;
+  font-size: 14px;
 }
-.navbarToogle{
-    background-color: #1F2333;
-    display:flex;
-    width: 100px;
-    height:80px;
-    margin-top: 20px;
-    justify-content: start;
-    align-items: center;
+
+#sidebar .nav a:hover{
+  background: none;
+  color: #ECEFF1;
 }
-span{
-    margin-left: 16px;
+
+#sidebar .nav a i{
+  margin-right: 16px;
 }
-#links{
-    color:#ffffff;
-    text-decoration:none;
-}
-#links:hover{
-    background-color: #f5f5f5;
-    color:black
+
+.button{
+    background: #fff;
+    width: 23px;
 }

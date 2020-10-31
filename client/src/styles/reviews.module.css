@@ -14,16 +14,46 @@
 }
 
 .productReviewCard {
-	/* background-color: var(--celeste) !important; */
-	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.51);
-	border-radius: 7px;
-	padding-top: 30px;
-	/* padding-left: 30px;
-	padding-right: 30px; */
+	border: none !important;
+	border-radius: 4px;
+	/* margin-bottom: 30px !important; */
+
 }
 
 .bordeRojo {
 	border: none;
+}
+.icon{
+	width: 50%;
+	padding-top: 1%;
+	font-size: 1rem;
+    position: relative;
+}
+.icon .emptyStars {
+    position: absolute;
+    /* background-color: thistle; */
+    font-size: 1em;
+	width: 100%;
+    color: lightgray;
+    top: -500%;
+    left: 131%;
+    z-index:1
+}
+
+.icon .fullStarsRate {
+    /* margin-left: -94px; */
+    overflow: hidden;
+    position: absolute;
+    top: -500%;
+    left: 131%;
+    z-index:2
+}
+
+.icon .fullStarsRate .fullStars {
+    width: 500%;
+    font-size: 1em;
+	/* width: 0%; */
+	color:#F19953;
 }
 
 .hr {

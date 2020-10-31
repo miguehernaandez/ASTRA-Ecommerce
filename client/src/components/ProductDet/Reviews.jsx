@@ -13,12 +13,12 @@ import { faStar, faThumbsUp, faThumbsDown, faMinus, faPlus } from '@fortawesome/
 import s from '../../styles/reviews.module.css';
 // <------------------------------------ IMPORTS ------------------------------------>
 
-export default function Reviews({ arrayReviews, promedioGeneral, renderCantEstrellas }) {
+export default function Reviews({ arrayReviews, rating}) {
 	console.log(arrayReviews);
 
 	// <-----------------------------FUNCIONES----------------------------->
 	// Promeio general del producto
-	const cantEstrellasPromGeneral = renderCantEstrellas(promedioGeneral);
+	
 	// Opinion general (puede ser 'malo', 'regular', 'bueno', 'muy bueno' o 'excelente')
 	const opinionGeneral = function (numEstrellas) {
 		var opciones = ['malo', 'regular', 'bueno', 'muy bueno', 'excelente'];
@@ -41,6 +41,26 @@ export default function Reviews({ arrayReviews, promedioGeneral, renderCantEstre
 		console.log(contPrincipal);
 	};
 	// <-----------------------------FUNCIONES----------------------------->
+	const renderCantEstrellas = function (num) {
+		var arrayEstrellas = [];
+		for (let i = 0; i < num; i++) {
+			arrayEstrellas.push(true);
+		}
+		for (let i = 0; i < 5 - num; i++) {
+			arrayEstrellas.push(false);
+		}
+		return arrayEstrellas;
+	};
+	var cantEstrellasPromGeneral = renderCantEstrellas(Math.round(rating).toFixed(1))
+	const colorStars = (rate)=>{
+		if(!rate){
+			var rate = 0;
+		}
+		if (rate > 2.5) rate*=18;
+		else if (rate <= 2.5) rate *= 18.2;
+		return rate;
+	}
+    var startWidth = colorStars(rating)
 
 	// <----------------------------------- RENDER ----------------------------------->
 	if (!arrayReviews || arrayReviews.length < 1) {
@@ -60,7 +80,7 @@ export default function Reviews({ arrayReviews, promedioGeneral, renderCantEstre
 		);
 	} else {
 		return (
-			<Card className={`my-5 p-4 ${s.productReviewCard}`}>
+			<Card className={` p-4 ${s.productReviewCard}`}>
 				<Row className={`${s.bordeRojo} justify-content-end w-100 m-0 mt-n1`}>
 					<FontAwesomeIcon icon={faMinus} size={'1x'} id={`minusIcon`} className={`${s.openCloseIcon}`} onClick={handleOpenClose} />
 					<FontAwesomeIcon icon={faPlus} size={'1x'} id={`plusIcon`} className={`${s.openCloseIcon} d-none`} onClick={handleOpenClose} />
@@ -74,14 +94,28 @@ export default function Reviews({ arrayReviews, promedioGeneral, renderCantEstre
 						<Col xs={12} md={4} lg={3} className={`${s.bordeRojo} ${s.colResumenReviews} p-0 d-flex flex-column justify-content-around`}>
 							<Row className={`justify-content-md-end justify-content-center p-0 m-0 mt-0`}>
 								{/* Promedio general que tiene el producto */}
-								<p className={`${s.productPromedio} ${s.bordeRojo} p-0 m-0`}>{promedioGeneral}</p>
+								<p className={`${s.productPromedio} ${s.bordeRojo} p-0 m-0`}>{rating}</p>
 							</Row>
-							<Row className={`${s.bordeRojo} justify-content-md-end justify-content-center mt-1 p-0 mx-0`}>
+							<Row className={`${s.bordeRojo} `}>
 								{/* Cantidad de estrellas en promedio que tiene el producto */}
-								{cantEstrellasPromGeneral.map((elem) => {
-									if (elem) return <FontAwesomeIcon icon={faStar} size={'1x'} className={`${s.estrellaColor}`} />;
-									if (!elem) return <FontAwesomeIcon icon={faStar} size={'1x'} className={`${s.estrellaInactiva}`} />;
-								})}
+								<div className={s.icon}>
+									<div className={s.emptyStars}>
+										<FontAwesomeIcon icon={faStar} size={'1x'} />
+										<FontAwesomeIcon icon={faStar} size={'1x'} />
+										<FontAwesomeIcon icon={faStar} size={'1x'} />
+										<FontAwesomeIcon icon={faStar} size={'1x'} />
+										<FontAwesomeIcon icon={faStar} size={'1x'} />
+									</div>
+									<div className={s.fullStarsRate} style={{width: startWidth + 'px'}}>
+										<div className={s.fullStars}>
+											<FontAwesomeIcon icon={faStar} size={'1x'} />
+											<FontAwesomeIcon icon={faStar} size={'1x'} />
+											<FontAwesomeIcon icon={faStar} size={'1x'} />
+											<FontAwesomeIcon icon={faStar} size={'1x'} />
+											<FontAwesomeIcon icon={faStar} size={'1x'} />
+										</div>
+									</div>
+								</div>
 							</Row>
 							<Row className={`${s.bordeRojo} justify-content-md-end justify-content-center  p-0 mt-1 mx-0`}>
 								<p className={`${s.cantOpinionesText} my-0 text-right`}>Promedio entre {arrayReviews.length} opiniones</p>
