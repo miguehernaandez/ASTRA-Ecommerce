@@ -19,9 +19,9 @@ import Navegacion from '../Navegacion/Navegacion'
 
 const url = 'localhost:3001';
 
-const Orders = ({ orders, getOrdersP }) => {
+const Orders = ({ ordersP, getOrdersP }) => {
     console.log('OBJETO ORDENES')
-    console.log(orders)
+    console.log(ordersP)
     //console.log(props)
     /*********************** Local States ************************* */
     const [allOrders, setAllOrders] = useState([]);
@@ -76,7 +76,7 @@ const Orders = ({ orders, getOrdersP }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map(order => {
+                            {ordersP.map(order => {
                                 return (
                                     <tr className={s.tableDescrip}>
                                         <td>{order.id}</td>
@@ -100,7 +100,7 @@ const Orders = ({ orders, getOrdersP }) => {
 
 function mapStateToProps(state){
     return {
-        orders: state.orders,
+        ordersP: state.orders,
     }
 }
 
