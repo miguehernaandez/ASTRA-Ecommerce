@@ -1,5 +1,6 @@
 // React
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Bootstrap
 import { Container, Card, Form, Button, Col, Row } from 'react-bootstrap';
@@ -11,12 +12,13 @@ import s from '../../styles/FormUsers.module.css';
 import { connect } from 'react-redux';
 
 // Actions
-import { createUser } from '../../store/actions/userActions.js';
+import { createUser, getUsers } from '../../store/actions/userActions.js';
 // <-------------------------------------------------------------->
 const url = 'localhost:3001';
 
-const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
-	console.log(createUserSuccessP);
+const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP}) {
+	const history = useHistory();
+	console.log(createUserP);
 	console.log(usersP);
 	const getUserData = function () {
 		let name = document.getElementById(`name`).value,
@@ -77,21 +79,20 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
 
 	const createSuccess = function () {
 		if (createUserSuccessP) {
-			return alert('Usuario creado correctamente!');
-		} else {
-			return alert('Hubo algun problema');
-		}
+			return history.push('/login')
+		} 
 	};
 
 	// Funcion que se dispara al hacer submit
 	const handleSubmit = function (e) {
 		e.preventDefault();
+		console.log('Hola')
 		var data = getUserData();
 
-		// Comprobacion de que las contraseñas coincidan
-		// if (data.password != data.passwordConfirm) {
-		// 	return alert('las contras no coinciden');
-		// }
+		// // Comprobacion de que las contraseñas coincidan
+		// // if (data.password != data.passwordConfirm) {
+		// // 	return alert('las contras no coinciden');
+		// // }
 
 		console.log('se estan por enviar los datos');
 		console.log(data);
@@ -113,148 +114,76 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP }) {
 	return (
 		<div className={`my-4`}>
 			<Container>
-				<Card className={`p-3 m-2 ${s.formCard}`}>
-					<h1 className={`${s.formTitle}`}>Registrate</h1>
+			 <h1 className={`${s.formTitle}`}>Completa tus datos</h1>
+				<Card className={`p-3 m-2 ${s.formCard}`}>					
 					<Form onSubmit={handleSubmit}>
-						<hr></hr>
 						<Row>
-							<Col lg={3}>
-								<h2>Datos personales</h2>
+							<Col lg={12}>
+								<h2 className={s.subTitle}>Datos personales</h2>
 							</Col>
-
-							<Col lg={9}>
-								{/* <Form.Row>
-									<Form.Group as={Col}>
-										<Form.Label>Nombre</Form.Label>
-										<Form.Control className={`${s.input}`} type='text' placeholder='Nombre' id={`nombre`} required />
-									</Form.Group>
-
-									<Form.Group as={Col}>
-										<Form.Label>Apellido</Form.Label>
-										<Form.Control className={`${s.input}`} type='text' placeholder='Apellido' id={`apellido`} required />
-									</Form.Group>
-
-									<Form.Group as={Col}>
-										<Form.Label>DNI</Form.Label>
-										<Form.Control className={`${s.input}`} type='number' placeholder='DNI' id={`dni`} required />
-									</Form.Group>
-								</Form.Row> */}
+							<Col lg={12}>								
 								<Form.Row>
-									{/* <Col lg={4}>
-										<Form.Group>
-											<Form.Label>Numero de Telefono</Form.Label>
-											<Form.Control className={`${s.input}`} type={'tel'} placeholder='Numero de Telefono' id={`telefono`} required />
-										</Form.Group>
-									</Col> */}
-									<Col>
-										<Form.Group>
-											<Form.Label>Name</Form.Label>
-											<Form.Control className={`${s.input}`} type='name' placeholder='Name' id={`name`} required />
+									<Col xs={12} md={6} lg={6}>
+										<Form.Group  className={s.grupo}>											
+											<Form.Control className={`${s.input}`} type='name'  id={`name`} required />
+											<Form.Label className={s.label}>Nombre</Form.Label>
+											<span className={s.menssage}>Ingrese su nombre completo</span>
 										</Form.Group>
 									</Col>
-									<Col>
-										<Form.Group>
-											<Form.Label>Email</Form.Label>
-											<Form.Control className={`${s.input}`} type='email' placeholder='Email' id={`email`} required />
+									<Col xs={12} md={6} lg={6}>
+										<Form.Group  className={s.grupo}>											
+											<Form.Control className={`${s.input}`} type='email'  id={`email`} required />
+											<Form.Label className={s.label}>Email</Form.Label>
+											<span className={s.menssage}>Asegurate de tener acceso a este email</span>
 										</Form.Group>
 									</Col>
 								</Form.Row>
-
-								<Form.Row>{/* <Col lg={4}>
-										<Form.Group>
-											<Form.Label>Fecha de Nacimiento</Form.Label>
-											<Form.Control className={`${s.input}`} type='date' placeholder='' id={`fechaNacimiento`} required />
-										</Form.Group>
-									</Col> */}</Form.Row>
 							</Col>
 						</Row>
 						<hr></hr>
-						{/* <Row>
-							<Col lg={3}>
-								<h2>Domicilio</h2>
+						
+						<Row>
+							<Col lg={12}>
+								<h2 className={s.subTitle}>Datos de la cuenta</h2>
 							</Col>
-							<Col lg={9}>
+							<Col lg={12}>
 								<Form.Row>
-									<Col lg={7}>
-										<Form.Group>
-											<Form.Label>Direccion</Form.Label>
-											<Form.Control className={`${s.input}`} placeholder='1234 Main St' id={`direccion`} required />
-										</Form.Group>
+									<Col xs={12} md={6} lg={6}>
+									<Form.Group  className={s.grupo} >										
+										<Form.Control className={`${s.input}`} type='password'  id={`password`} required />
+										<Form.Label className={s.label}>Contraseña</Form.Label>
+										<span className={s.menssage}>La contraseña debe contener minimo 8 caracteres y 1 mayuscula</span>
+									</Form.Group>
+									
 									</Col>
-									<Col lg={5}>
-										<Form.Group>
-											<Form.Label>Pais</Form.Label>
-											<Form.Control className={`${s.input}`} type='text' placeholder='Pais' id={`pais`} required />
-										</Form.Group>
-									</Col>
-								</Form.Row>
-
-								<Form.Row>
-									<Col lg={4}>
-										<Form.Group>
-											<Form.Label>Ciudad</Form.Label>
-											<Form.Control className={`${s.input}`} type='text' placeholder='Ciudad' id={`ciudad`} required />
-										</Form.Group>
-									</Col>
-									<Col lg={4}>
-										<Form.Group>
-											<Form.Label>Estado o Provincia</Form.Label>
-											<Form.Control className={`${s.input}`} type='text' placeholder='Provincia' id={`provincia`} required></Form.Control>
-										</Form.Group>
-									</Col>
-									<Col lg={4}>
-										<Form.Group>
-											<Form.Label>Codigo Postal</Form.Label>
-											<Form.Control className={`${s.input}`} type='number' id={`codPostal`} required />
-										</Form.Group>
+									<Col xs={12} md={6} lg={6}>
+									<Form.Group xs={12} md={6} lg={6} className={s.grupo} >										
+										<Form.Control className={`${s.input}`} type='password'  id={`passwordConfirm`} required />
+										<Form.Label className={s.label}>Confirma tu contraseña</Form.Label>
+										<span className={s.menssage}>Confirme su contraseña</span>
+									</Form.Group>
 									</Col>
 								</Form.Row>
 							</Col>
 						</Row>
-						<hr></hr> */}
-						<Row>
-							<Col lg={3}>
-								<h2>Datos de la cuenta</h2>
-							</Col>
-							<Col lg={9}>
-								{/* <Form.Row>
-									<Form.Group as={Col}>
-										<Form.Label>Nombre de usuario</Form.Label>
-										<Form.Control className={`${s.input}`} type='text' placeholder='Enter email' id={`userName`} required />
-									</Form.Group>
-								</Form.Row> */}
 
-								<Form.Row>
-									<Form.Group as={Col}>
-										<Form.Label>Contraseña</Form.Label>
-										<Form.Control className={`${s.input}`} type='password' placeholder='Password' id={`password`} required />
-									</Form.Group>
-									<Form.Group as={Col}>
-										<Form.Label>Confirma tu contraseña</Form.Label>
-										<Form.Control className={`${s.input}`} type='password' placeholder='Password' id={`passwordConfirm`} required />
-									</Form.Group>
-								</Form.Row>
-							</Col>
-						</Row>
-
-						<Row>
-							<Col lg={3}></Col>
+						<Row className={s.terminos}>
 							<Col lg={9}>
-								<Form.Group as={Row}>
-									<Form.Check className={`ml-3 ${s.input}`} id={`terminos`} label='Acepto los terminos y condiciones' onClick={aceptarTerminos} />
-								</Form.Group>
+								<Form.Group  as={Row}>
+									<Form.Check className={`ml-3`} id={`terminos`} label='Acepto los Términos y Condiciones y autorizo el uso de mis datos de acuerdo a la Declaración de Privacidad.' onClick={aceptarTerminos} />
+								</Form.Group>								
 							</Col>
 						</Row>
-						<Row>
-							<Col lg={3}></Col>
-							<Col lg={9}>
-								<Button className={`${s.botonSubmit}`} id='submitButton' type='submit' disabled={true}>
-									Registrarme
-								</Button>
-							</Col>
-						</Row>
+						<Button className={`${s.botonSubmit}`} id='submitButton' type='submit' disabled={true}>
+							Registrarme
+						</Button>
 					</Form>
 				</Card>
+				<Row>
+					<Col className={s.content_buttom}>
+
+					</Col>
+				</Row>
 			</Container>
 		</div>
 	);
@@ -270,6 +199,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		createUserP: (data) => dispatch(createUser(data)),
+		getUsersP : () => dispatch(getUsers())
 	};
 }
 

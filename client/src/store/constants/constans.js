@@ -24,6 +24,7 @@ export const LOGIN = 'LOGIN';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT = 'LOGOUT'
 export const ADD_REVIEW = 'ADD_REVIEW';
+export const GET_USER_REVIEWS = 'GET_USER_REVIEWS';
 export const UPDATE_REVIEW = 'UPDATE_REVIEW';
 export const DELETE_REVIEW = 'DELETE_REVIEW';
 export const CREATE_ORDER = 'CREATE_ORDER';
@@ -32,3 +33,4 @@ export const UPDATE_ORDER_TO_PROCESS = 'UPDATE_ORDER_TO_PROCESS';
 export const CHECKOUT_END = 'CHECKOUT_END';
 export const UPDATE_ORDER_TO_FULL = 'UPDATE_ORDER_TO_FULL';
 export const UPDATE_ORDER_TO_REJECT = 'UPDATE_ORDER_TO_REJECT';
+

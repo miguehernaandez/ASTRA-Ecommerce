@@ -20,7 +20,9 @@ export default function Faqs() {
 							<h5>¿ Que es Discover ?</h5>
 						</Accordion.Toggle>
 						<Accordion.Collapse eventKey='1' className={s.Respuesta}>
-							<Card.Body>Donde por fin encontraras todos los Productos para tu celular que estabas buscando, ademas de algunas cosas para cuidarte de COVID</Card.Body>
+							<Card.Body>
+								<h6> Donde por fin encontraras todos los Productos para tu celular que estabas buscando, ademas de algunas cosas para cuidarte de COVID </h6>
+							</Card.Body>
 						</Accordion.Collapse>
 					</Card>
 					{/*pregunta 2*/}
@@ -40,7 +42,9 @@ export default function Faqs() {
 							<h5>¿ Puedo ver la tienda sin ser cliente?</h5>
 						</Accordion.Toggle>
 						<Accordion.Collapse eventKey='3' className={s.Respuesta}>
-							<Card.Body>Por supuesto, puedes ver los productos, agregarlos a tu carrito, borrarlos, pero cuando vayas a pagar te vamos a pedir loguearte, para asi brindarte un mejor servivcio</Card.Body>
+							<Card.Body>
+								<h6>Por supuesto, puedes ver los productos, agregarlos a tu carrito, borrarlos, pero cuando vayas a pagar te vamos a pedir loguearte, para asi brindarte un mejor servivcio</h6>
+							</Card.Body>
 						</Accordion.Collapse>
 					</Card>
 					{/*pregunta 4*/}
@@ -49,7 +53,9 @@ export default function Faqs() {
 							<h5> ¿ Que metodos de pago hay ?</h5>
 						</Accordion.Toggle>
 						<Accordion.Collapse eventKey='4' className={s.Respuesta}>
-							<Card.Body>Recibimos mercado pago, Paypal y cabezas de ganado a precio de mercado</Card.Body>
+							<Card.Body>
+								<h6>Recibimos mercado pago, Paypal y cabezas de ganado a precio de mercado</h6>
+							</Card.Body>
 						</Accordion.Collapse>
 					</Card>
 				</Accordion>
