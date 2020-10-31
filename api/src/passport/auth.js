@@ -4,6 +4,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const { User } = require('../db.js');
 const url = 'localhost:3001';
 //${url}/users/singin`
+const server = require('../routes/order.js');
 
 /*************************** Serializarion de User ****************************** */
 passport.serializeUser((user, done) => {
