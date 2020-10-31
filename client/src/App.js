@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import PrinciapalAdmin from './components/AdminForm/pageP';
 import Whatsapp from './components/Whatsapp/ws.js';
+import userList from './components/UserList/userList.js';
 import Product from './components/AdminForm/product';
 import Category from './components/AdminForm/Categorys';
 import Orders from './components/AdminForm/Orders';
@@ -84,6 +85,7 @@ function App() {
 				<Route path='/products/catalogo'>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<Catalogo products={products} onSearch={onSearch} />
+					<userList></userList>
 					<Whatsapp></Whatsapp>
 					<Footer></Footer>
 				</Route>
