@@ -5,7 +5,6 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
 }
-
 /* Toggle Styles */
 
 #viewport {
@@ -45,7 +44,6 @@ body {
   line-height: 52px;
   text-align: center;
 }
-
 #sidebar header a {
   color: #fff;
   display: block;

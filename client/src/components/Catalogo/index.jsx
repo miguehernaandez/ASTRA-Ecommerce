@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import ProductCard from '../ProductCard/index';
 import Navegacion from '../Navegacion/Navegacion';
-import Contact from '../contact/ws.js';
 import Filter from '../Filter/index';
 import Page from '../Pagination/index.jsx';
 import SideBar from '../SideBar/SideBar.jsx';
@@ -61,67 +60,62 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 
 	return (
 		<div className={`${s.contPrincipal}`}>
+			<Col className={s.barraC} xs={12} md={2} lg={2}>
+			<Filter ></Filter>
+			</Col>
+			<Col className={s.cont_cards} xs={12} md={10} lg={10}>
 			{/*<h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>*/}
 			{products.length == 0 ? (
 				productsP.length == 0 ? (
-					<div className={s.catEmpty}>
-                    <img src={catEmpty}></img>
-                    <h1>¡UPS! PARECE QUE NO HAY NADA CARGADO EN EL CATÁLOGO AÚN</h1> 
-                    <h6>Por favor, intenta de nuevo más tarde</h6>
-                    <Link className={s.link} to='/'>Seguir navegando</Link>
-                </div>
+					<>
+						<div className={s.catEmpty}>
+							<img src={catEmpty}></img>
+							<h1>¡UPS! PARECE QUE NO HAY NADA CARGADO EN EL CATÁLOGO AÚN</h1> 
+							<h6>Por favor, intenta de nuevo más tarde</h6>
+							<Link className={s.link} to='/'>Seguir navegando</Link>
+						</div>
+					</>
 				) : (
-					<div className={s.dplay}>
-					<Filter></Filter>
-					<Container>
-						{/* <h1 className={s.title1}>Resultados ({productsP.length})</h1> */}
-						<div className={s.cont_prin_card}>
-							<div className={s.cont_card}>
-								<Row>
+					<Container className={s.conteiner}>
+							
+								<Row className={s.cont_prin_card}>
 									{currentPostsCat.map((p) => {
 										return (
-											<Col lg='3'>
+											<Col sm={6} md={4} lg={3}>
+												<ProductCard id={p.id} name={p.name} description={p.description} img={p.image} price={p.price} stock={p.stock} reviews={p.reviews} />
+											</Col>
+										);
+									})}
+								</Row>					
+						<Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate} />
+					</Container>
+				)
+			) : (
+				<Container>
+					<Col className={s.barraC} xs={12} md={2} lg={2}>
+					<Filter></Filter>
+					</Col>
+					<Col className={s.cont_cards} xs={12} md={10} lg={10}>
+						<Container className={s.conteiner}>			
+								<Row className={s.cont_prin_card}>
+									{currentPostsSearch.map((p) => {
+										return (
+											<Col sm={6} md={4} lg={3}>
 												<ProductCard id={p.id} name={p.name} description={p.description} img={p.image} price={p.price} stock={p.stock} />
 											</Col>
 										);
 									})}
 								</Row>
-							</div>
-						</div>
-
-						<Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate} />
-						<Contact></Contact>
-					</Container>
-					</div>
-				)
-			) : (
-				<div className={s.dplay}>
-
-				<Filter></Filter>
-				<Container>
-					{/* <h1 className={s.title1}>Resultados ({products.length})</h1> */}
-					<div className={s.cont_prin_card}>
-						<div className={s.cont_card}>
-							<Row>
-								{currentPostsSearch.map((p) => {
-									return (
-										<Col lg='3'>
-											<ProductCard id={p.id} name={p.name} description={p.description} img={p.image} price={p.price} stock={p.stock} />
-										</Col>
-									);
-								})}
-							</Row>
-						</div>
-					</div>
+						</Container>	
+						
+					</Col>
 					<Page postsPerPage={postsPerPage} totalPosts={products.length} paginate={paginate} />
-					<Contact></Contact>
 				</Container>
-				</div>
 			)}
+			</Col>
 		</div>
 	);
 };
-
 function mapStateToProps(state) {
 	return {
 		categories: state.categories,
@@ -135,5 +129,4 @@ function mapDispatchToProps(dispatch) {
 		getProductByCategoryP: (catN) => dispatch(getProductByCategory(catN)),
 	};
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Catalogo);

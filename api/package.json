@@ -31,7 +31,8 @@
     "pg": "^8.4.1",
     "pg-hstore": "^2.3.3",
     "react-icons": "^3.11.0",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "stripe": "^8.119.0"
   },
   "devDependencies": {
     "supertest-session": "^4.0.0",

@@ -19,7 +19,7 @@ import s from '../../styles/Footer.module.css';
 
 export default function Footer() {
 	return (
-		<Navbar className={`${s.footer} justify-content-center pt-lg-5`}>
+		<Navbar className={`${s.footer} justify-content-center pt-lg-5 mt-auto`}>
 			<Container className={`d-flex flex-column`}>
 				<Row className={`${s.bordeRojo} justify-content-between align-items-center w-100`}>
 					<Col xs={12} lg={2} className={`${s.bordeVerde} d-flex order-3 order-lg-1 align-items-center justify-content-center  p-0 mt-5 mt-lg-0`}>

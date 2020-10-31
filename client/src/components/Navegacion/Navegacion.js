@@ -40,6 +40,7 @@ function Navegacion(props) {
 		window.location = '/';
 		props.loginActionP();
 		Cookie.remove('userLoad');
+		Cookie.remove('cartItems');
 		return;
 	};
 
@@ -58,7 +59,7 @@ function Navegacion(props) {
 	// / <--------------------------- RENDER --------------------------->
 
 	return (
-		<div>
+		<div className={``}>
 			<Navbar collapseOnSelect expand='md' className={props.showSearchbar ? `justify-content-center ${s.navbar} py-0 px-2` : `justify-content-center ${s.navbarAdmin} py-0 px-2`}>
 				<Container className={`${s.containerPrincipal} ${s.bordeVerde} d-flex m-0 p-0`}>
 					<Navbar.Brand as={Link} to='/' className={`${s.bordeVerde} mx-0 ml-1`}>
