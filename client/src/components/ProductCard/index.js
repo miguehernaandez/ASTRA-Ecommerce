@@ -1,5 +1,5 @@
 // Font Awesome (iconos)
-import { faShoppingCart as shopCart, faStar, faSearchPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus as shopCart, faStar, faSearchPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Hooks
 import { useState, useEffect } from 'react';
@@ -15,7 +15,7 @@ import { connect } from 'react-redux'
 import { addToCart } from '../../store/actions/cart_actions';
 import { FaDivide } from 'react-icons/fa';
 
-function ProductCard({ name, description, img, price, id, destacado, stock, reviews, addToCartP, userLoggedP}) {
+function ProductCard({ name, description, img, price, id, destacado, stock, reviews, addToCartP, userLoggedP, setShow}) {
 	// console.log('name: ' + name);
 	// console.log('description: ' + description);
 	// console.log('img: ' + img);
@@ -32,18 +32,26 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 
 	const getRate = (reviews) => {
 		let rate = 0;
-		if (reviews.length > 0){
+		if (reviews && reviews.length > 0){
 			reviews.forEach(review => {
 				rate += review.rate;
 			})
 			rate /= reviews.length;
 		}
+		return rate;
+	}
+	const rate = getRate(reviews);
+
+	const getStarWidth = (rate) =>{
 		if (rate > 2.5) rate*=18;
 		else if (rate <= 2.5) rate *= 18.2;
 		return rate;
 	}
-	if (reviews) var rate = getRate(reviews);
-	
+
+	const starWidth = getStarWidth(rate);
+
+	const roundedRate = Math.round(rate * 10)/10;
+	const fixedRate = roundedRate.toFixed(1);
 
 	//let rate = 18.2*rating;
 	return (
@@ -79,7 +87,7 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 						<FontAwesomeIcon icon={faStar} size={'1x'} />
 						<FontAwesomeIcon icon={faStar} size={'1x'} />
 					</div>
-					<div className={s.fullStarsRate} style={{width: rate + 'px'}}>
+					<div className={s.fullStarsRate} style={{width: starWidth + 'px'}}>
 						<div className={s.fullStars}>
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
@@ -88,7 +96,7 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 						</div>
 					</div>	
-				</div>
+				</div>	
 				{/* <Card.Text className={`my-1 ${s.productCardDescription}`}>{`${description}` || `Product Name`} </Card.Text> */}
 				<div className={s.contPI}>				
 				<Card.Text className={`my-1 ${s.productCardPrice}`}>
@@ -99,7 +107,7 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 					<div></div>
 					:
 				<>
-				<Button onClick={() => addToCartP(id, 1, userLoggedP ? userLoggedP.id : 1)} className={`mb-1 ${s.productCardButton2}`}>
+				<Button onClick={() => {addToCartP(id, 1, userLoggedP ? userLoggedP.id : 1); setShow(true)}} className={`mb-1 ${s.productCardButton2}`}>
 				 <div>
 				 <h6 className={s.h6}>Carrito</h6> 
 				 </div>
@@ -132,7 +140,8 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 						
 					}
 				</Row>
-			</Card.Body>	
+			</Card.Body>
+			<div className={s.fixedRate} ><h6>{fixedRate} ({reviews && reviews.length} opiniones)</h6></div>	
 		</Card>
 	);
 }
