@@ -6,15 +6,30 @@ import EditReview from '../Modals/EditReview';
 import { useState, useEffect } from 'react';
 import s from '../../styles/myReviews.module.css';
 
-const MyReviews = ({ show, setShow, product, user, userReviews, getUserReviews, deleteReviewP, closeMyReviews, handlerRate, editReviewForm })=>{
+const MyReviews = ({ 
+        show, 
+        setShow, 
+        product, 
+        user, 
+        userReviews, 
+        getUserReviews, 
+        deleteReviewP, 
+        closeMyReviews, 
+        editReview,
+        setEditReview,
+        handlerRate, 
+        editReviewForm,
+        handlerEditReview })=>{
 
     
 	useEffect(() => {
-		getUserReviews(product.id, user.id);
+        if (user){
+            getUserReviews(product.id, user.id);
+        }
     }, []);
 
     const [showEdit, setShowEdit] = useState(false);
-    const [review, setReview] = useState({});
+    
     
     const dltReview = async (productId, reviewId) => {
         
@@ -25,9 +40,9 @@ const MyReviews = ({ show, setShow, product, user, userReviews, getUserReviews, 
         return;
     }
 
-    const editReview = (review) => {
+    const updReview = (review) => {
 
-        setReview(review);
+        setEditReview(review);
         setShowEdit(true);
     }
  
@@ -66,7 +81,7 @@ const MyReviews = ({ show, setShow, product, user, userReviews, getUserReviews, 
                                             <h5>{review.title}</h5>
                                         </Col>
                                         <Col xs={4} className={s.reviewActions}>
-                                            <FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={s.iconUpdate} onClick={()=> editReview(review)} />
+                                            <FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={s.iconUpdate} onClick={()=> updReview(review)} />
                                             <FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={()=> dltReview(product.id, review.id)} />
                                         </Col>
                                     </Row>
@@ -83,12 +98,15 @@ const MyReviews = ({ show, setShow, product, user, userReviews, getUserReviews, 
         </Modal>
 
         <EditReview
+            user={user}
             show={showEdit}
             setShow={setShowEdit}
             product={product}
-            review={review}
+            review={editReview}
+            getUserReviews={getUserReviews}
             handlerRate={handlerRate}
             editReviewForm={editReviewForm}
+            handlerEditReview={handlerEditReview}
         />
       </>
     )

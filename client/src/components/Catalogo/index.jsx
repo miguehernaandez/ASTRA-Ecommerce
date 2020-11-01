@@ -9,11 +9,12 @@ import SideBar from '../SideBar/SideBar.jsx';
 import { connect } from 'react-redux';
 import { getCategories, getProductByCategory } from '../../store/actions/category_actions';
 import { getProducts } from '../../store/actions/product_actions';
-import { Container, Row, Col, Form, Pagination } from 'react-bootstrap';
+import { Container, Row, Col, Form, Pagination, Toast } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as faIcons from 'react-icons/fa';
 import catEmpty from '../../multimedia/empty.jpg';
 import s from '../../styles/catalogo.module.css';
+
 const url = 'localhost:3001';
 
 var enlacesUser = [
@@ -37,6 +38,7 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 	const currentPostsSearch = products.slice(indexOfFirstPost, indexOfLastPost);
 
 	const paginate = (pageNumber) => setCurrentPage(pageNumber);
+	const [show, setShow] = useState(false);
 
 	const handlerSelect = (e) => {
 		const catName = e.target.value;
@@ -82,16 +84,41 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 									{currentPostsCat.map((p) => {
 										return (
 											<Col sm={6} md={4} lg={3}>
-												<ProductCard id={p.id} name={p.name} description={p.description} img={p.image} price={p.price} stock={p.stock} reviews={p.reviews} />
+												<ProductCard 
+													id={p.id} 
+													name={p.name} 
+													description={p.description} 
+													img={p.image} 
+													price={p.price} 
+													stock={p.stock} 
+													reviews={p.reviews} 
+													setShow={setShow}
+												/>
 											</Col>
 										);
 									})}
 								</Row>					
-
 						<Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate} />
+						<Row>
+							<Col xs={6}>
+								<Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
+								<Toast.Header>
+									<img
+									src="holder.js/20x20?text=%20"
+									className="rounded mr-2"
+									alt=""
+									/>
+									<strong className="mr-auto">Bootstrap</strong>
+									<small>11 mins ago</small>
+								</Toast.Header>
+								<Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
+								</Toast>
+							</Col>
+						</Row>
 					</Container>
 				)
 			) : (
+				<>
 				<Container>
 					<Col className={s.barraC} xs={12} md={2} lg={2}>
 					<Filter></Filter>
@@ -102,16 +129,40 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 									{currentPostsSearch.map((p) => {
 										return (
 											<Col sm={6} md={4} lg={3}>
-												<ProductCard id={p.id} name={p.name} description={p.description} img={p.image} price={p.price} stock={p.stock} />
+												<ProductCard 
+													id={p.id} 
+													name={p.name} 
+													description={p.description} 
+													img={p.image} 
+													price={p.price} 
+													stock={p.stock} 
+													setShow={setShow}
+												/>
 											</Col>
 										);
 									})}
 								</Row>
 						</Container>	
-						
 					</Col>
 					<Page postsPerPage={postsPerPage} totalPosts={products.length} paginate={paginate} />
 				</Container>
+					<Row>
+					<Col xs={6}>
+						<Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
+						<Toast.Header>
+							<img
+							src="holder.js/20x20?text=%20"
+							className="rounded mr-2"
+							alt=""
+							/>
+							<strong className="mr-auto">Bootstrap</strong>
+							<small>11 mins ago</small>
+						</Toast.Header>
+						<Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
+						</Toast>
+					</Col>
+				</Row>
+				</>
 			)}
 			</Col>
 		</div>
