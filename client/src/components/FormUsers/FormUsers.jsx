@@ -57,23 +57,6 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 		return userData;
 	};
 
-	// personId: {
-	// 		type: DataTypes.INTEGER,
-	// 		allowNull: false,
-	// 	},
-	// 	email: {
-	// 		type: DataTypes.STRING,
-	// 		allowNull: false,
-	// 	},
-	// 	password: {
-	// 		type: DataTypes.STRING,
-	// 		allowNull: false,
-	// 	},
-	// 	role: {
-	// 		type: DataTypes.ENUM('client', 'admin'),
-	// 		allowNull: false,
-	// 	},
-
 	const createSuccess = function () {
 		if (createUserSuccessP) {
 			return history.push('/login');
@@ -107,16 +90,6 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 			document.getElementById('submitButton').disabled = true;
 		}
 	};
-
-	// <--------------------------------- Google Login --------------------------------->
-	const clientIdCode = '269758003483-2l6nugnundjtidqt2djkq7kt9jptsgh8.apps.googleusercontent.com';
-
-	const responseGoogle = (response) => {
-		// alert('mepa que vamos bien che');
-		console.log(response);
-	};
-
-	// <--------------------------------- Google Login --------------------------------->
 
 	return (
 		<div className={`${s.contPrincipal} my-4`}>

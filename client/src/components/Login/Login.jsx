@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Form, Container, Navbar } from 'react-bootstrap';
+import { Button, Form, Container, Navbar, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
@@ -9,16 +9,19 @@ import { loginAction } from '../../store/actions/loginActions';
 import logo from '../../multimedia/logo.png';
 import s from '../../styles/loggin.module.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import LoginModal from '../Modals/LoginModal';
+
 // Google Login
 import { GoogleLogin } from 'react-google-login';
 
-const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
+const Login = ({ userLoggedP, loginActionP, messageErrorP, checkForEmailP, loggedP }) => {
 	const [form, setForm] = useState({
 		email: '',
 		password: '',
 	});
 	const history = useHistory();
-
+	const [showModal, setShowModal] = useState(false);
 	console.log(loggedP);
 
 	const handlerInput = (e) => {
@@ -26,13 +29,31 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		loginActionP(form);
-		if (userLoggedP && userLoggedP.role === 'admin') {
-			console.log('Entre al if de ADmin');
-			return history.push('/admin');
-		} else {
-			return history.push('/');
-		}
+		// Comprobacion de si el usuario existe o no en la base de datos
+		var dontShowModal = true;
+		axios
+			.get(`http://${url}/users`)
+			.then((res) => {
+				console.log(res.data.data);
+				console.log(form);
+				res.data.data.forEach((user) => {
+					if (user.email == form.email) {
+						console.log('true');
+						// loginActionP(form);
+						dontShowModal = false;
+						loginActionP(form);
+						if (userLoggedP && userLoggedP.role === 'admin') {
+							console.log('Entre al if de ADmin');
+							return history.push('/admin');
+						} else {
+							return history.push('/');
+						}
+					}
+				});
+			})
+			.then((res) => {
+				if (dontShowModal) setShowModal(true);
+			});
 	};
 
 	useEffect(() => {
@@ -42,10 +63,10 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
 	}, [loggedP]);
 
 	// <-------------------------- Google Login -------------------------->
+	const url = 'localhost:3001';
 	const clientIdCode = '269758003483-2l6nugnundjtidqt2djkq7kt9jptsgh8.apps.googleusercontent.com';
 
 	const responseGoogleSuccess = (response) => {
-		// alert('mepa que vamos bien che');
 		console.log(response.profileObj.email);
 		console.log(response.profileObj.googleId);
 		var googleForm = {
@@ -53,7 +74,24 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
 			password: response.profileObj.googleId,
 		};
 		console.log(googleForm);
-		loginActionP(googleForm);
+		// Comprobacion de si el usuario existe o no en la base de datos
+		var dontShowModal = true;
+		axios
+			.get(`http://${url}/users`)
+			.then((res) => {
+				console.log(res.data.data);
+				res.data.data.forEach((user) => {
+					if (user.email == response.profileObj.email) {
+						console.log('true');
+						loginActionP(googleForm);
+						dontShowModal = false;
+						return;
+					}
+				});
+			})
+			.then((res) => {
+				if (dontShowModal) setShowModal(true);
+			});
 	};
 
 	const responseGoogleFailure = (response) => {
@@ -62,18 +100,13 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
 		// window.location.href = 'http://localhost:3000/login';
 	};
 	// <-------------------------- Google Login -------------------------->
-
-	// console.log(userLoggedP);
-
 	return (
 		<div className={s.cont_prin}>
+			<LoginModal showModal={showModal} setShowModal={setShowModal}></LoginModal>
 			<div className={s.opac}>
 				<Container className={s.cont} onSubmit={handleSubmit}>
 					<div className={s.img}>
 						<FontAwesomeIcon className={s.icon} icon={faUserCircle} size={'7x'} />
-						{/* google login */}
-						<GoogleLogin clientId={clientIdCode} buttonText='Ingresar' onSuccess={responseGoogleSuccess} onFailure={responseGoogleFailure} isSignedIn={false} cookiePolicy={'single_host_origin'} />
-						{/* google login */}
 					</div>
 					<Form className={s.cont_form}>
 						{messageErrorP === '' ? <div></div> : <div className={s.messageError}>{messageErrorP}</div>}
@@ -92,6 +125,14 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
 						<Button className={s.button} type='submit'>
 							SING IN
 						</Button>
+						<hr></hr>
+						<Row className={`justify-content-center`}>
+							<Col>
+								{/* google login */}
+								<GoogleLogin clientId={clientIdCode} buttonText='Ingresar con Google' onSuccess={responseGoogleSuccess} onFailure={responseGoogleFailure} isSignedIn={false} cookiePolicy={'single_host_origin'} className={`w-100 justify-content-center`} />
+								{/* google login */}
+							</Col>
+						</Row>
 						<Link to='/users'>
 							<div className={s.reg}>
 								<p>
