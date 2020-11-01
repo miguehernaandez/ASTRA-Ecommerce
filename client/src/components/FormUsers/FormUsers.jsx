@@ -80,7 +80,7 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 	const createSuccess = function () {
 		if (createUserSuccessP) {
 			return history.push('/login')
-		} 
+		}
 	};
 
 	// Funcion que se dispara al hacer submit
@@ -89,10 +89,11 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 		console.log('Hola')
 		var data = getUserData();
 
-		// // Comprobacion de que las contraseñas coincidan
-		// // if (data.password != data.passwordConfirm) {
-		// // 	return alert('las contras no coinciden');
-		// // }
+		// // Comprobacion  contraseñas
+		// if (data.password != data.passwordConfirm) {
+		// 	return alert('las contraseñas no coinciden');
+		// }
+		passValidate(data.password, data.passwordConfirm);
 
 		console.log('se estan por enviar los datos');
 		console.log(data);
@@ -100,6 +101,41 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 		console.log(createUserSuccessP);
 		createSuccess(); // Alert
 	};
+
+//password Confirme
+
+	//comprobar espacios
+const passValidate = ((pass, passConfirm) => {
+	var space = false;
+	var cont = 0;
+	const errorFail = document.getElementById('error').classList.add('mostrar');
+	const errorOk = document.getElementById('ok').classList.remove('ocultar')
+
+
+	while(!space && (cont < pass.length)){
+		if(pass.charAt(cont) == " "){
+			space = true;
+			cont++;
+		}
+
+	
+	if(pass.length === 0 || passConfirm.length === 0){
+		alert("Los compos de la contraseña no pueden quedar vacios");
+		return false;
+	}
+
+	if(pass !== passConfirm){
+		return errorFail;
+	}else{
+	return errorOk;
+}
+})
+
+
+
+
+
+
 
 	const aceptarTerminos = function () {
 		// Funcion para que el boton de submit solo este disponible si se aceptan terminos y condiciones
@@ -115,23 +151,23 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 		<div className={`my-4`}>
 			<Container>
 			 <h1 className={`${s.formTitle}`}>Completa tus datos</h1>
-				<Card className={`p-3 m-2 ${s.formCard}`}>					
+				<Card className={`p-3 m-2 ${s.formCard}`}>
 					<Form onSubmit={handleSubmit}>
 						<Row>
 							<Col lg={12}>
 								<h2 className={s.subTitle}>Datos personales</h2>
 							</Col>
-							<Col lg={12}>								
+							<Col lg={12}>
 								<Form.Row>
 									<Col xs={12} md={6} lg={6}>
-										<Form.Group  className={s.grupo}>											
+										<Form.Group  className={s.grupo}>
 											<Form.Control className={`${s.input}`} type='name'  id={`name`} required />
 											<Form.Label className={s.label}>Nombre</Form.Label>
 											<span className={s.menssage}>Ingrese su nombre completo</span>
 										</Form.Group>
 									</Col>
 									<Col xs={12} md={6} lg={6}>
-										<Form.Group  className={s.grupo}>											
+										<Form.Group  className={s.grupo}>
 											<Form.Control className={`${s.input}`} type='email'  id={`email`} required />
 											<Form.Label className={s.label}>Email</Form.Label>
 											<span className={s.menssage}>Asegurate de tener acceso a este email</span>
@@ -141,7 +177,7 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 							</Col>
 						</Row>
 						<hr></hr>
-						
+
 						<Row>
 							<Col lg={12}>
 								<h2 className={s.subTitle}>Datos de la cuenta</h2>
@@ -149,15 +185,15 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 							<Col lg={12}>
 								<Form.Row>
 									<Col xs={12} md={6} lg={6}>
-									<Form.Group  className={s.grupo} >										
+									<Form.Group  className={s.grupo} >
 										<Form.Control className={`${s.input}`} type='password'  id={`password`} required />
 										<Form.Label className={s.label}>Contraseña</Form.Label>
 										<span className={s.menssage}>La contraseña debe contener minimo 8 caracteres y 1 mayuscula</span>
 									</Form.Group>
-									
+
 									</Col>
 									<Col xs={12} md={6} lg={6}>
-									<Form.Group xs={12} md={6} lg={6} className={s.grupo} >										
+									<Form.Group xs={12} md={6} lg={6} className={s.grupo} >
 										<Form.Control className={`${s.input}`} type='password'  id={`passwordConfirm`} required />
 										<Form.Label className={s.label}>Confirma tu contraseña</Form.Label>
 										<span className={s.menssage}>Confirme su contraseña</span>
@@ -171,12 +207,25 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 							<Col lg={9}>
 								<Form.Group  as={Row}>
 									<Form.Check className={`ml-3`} id={`terminos`} label='Acepto los Términos y Condiciones y autorizo el uso de mis datos de acuerdo a la Declaración de Privacidad.' onClick={aceptarTerminos} />
-								</Form.Group>								
+								</Form.Group>
 							</Col>
 						</Row>
 						<Button className={`${s.botonSubmit}`} id='submitButton' type='submit' disabled={true}>
 							Registrarme
 						</Button>
+
+
+						<div id='msg'></div>
+									<div id='error' className={`alert alert-danger  ${s.ocultar}`}  role='alert'>
+											Las contraseñas no coinciden !!
+									</div>
+									<div id='ok' className={`alert alert-danger  ${s.ocultar}`} role='alert'>
+											Las contraseñas no coinciden !!
+									</div>
+
+
+
+
 					</Form>
 				</Card>
 				<Row>
