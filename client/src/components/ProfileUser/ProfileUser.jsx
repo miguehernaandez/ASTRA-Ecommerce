@@ -12,10 +12,10 @@ import s from '../../styles/profile.module.css';
 import placeholder from '../../multimedia/placeholder.png';
 
 
-const ProfileUser = ({userLoggedP, logoutP, loginActionP}) => {
+const ProfileUser = ({userLoggedP, logoutP, loginActionP, orders}) => {
 
     const history = useHistory();
-    console.log('ACAAAAAAAAAAAAAAAAAAAAAAAAAAA', userLoggedP)
+    console.log('ACAAAAAAAAAAAAAAAAAAAAAAAAAAA', orders)
     // useEffect(()=> {
     //     if(!userLoggedP){
     //         return history.push('/login')
@@ -53,10 +53,29 @@ const ProfileUser = ({userLoggedP, logoutP, loginActionP}) => {
             <Card.Body className={s.email}>{userLoggedP.email}</Card.Body>
         </Card>
         <Card className={`${s.cardStyle} ${s.compras}`}>
-            <Card.Body className={s.cardItem}>Tus compras</Card.Body>
+            <Card.Body className={s.cardItem}>
+                <h2>Ordenes</h2>
+                {orders && orders.map(x => {
+                    return (
+                        <div>
+                            Dirección: {x.adress}
+                            Ciudad: {x.city}
+                            
+                            Método de pago: {x.paymentMethod}
+                            Teléfono: {x.phone}
+                            Código postal: {x.postal}
+                            Estatus: {x.status}
+                            Subtotal: {x.subTotal}
+                            Total: {x.total}
+                        </div>
+                    )
+                })}
+            </Card.Body>
         </Card>
         <Card className={`${s.cardStyle}`}> 
-            <Card.Body className={s.cardItem}>Tus reviews</Card.Body>
+            <Card.Body className={s.cardItem}>
+                <h2>Medios de pago</h2>
+            </Card.Body>
         </Card>
         </div>
         </div>
@@ -66,7 +85,8 @@ const ProfileUser = ({userLoggedP, logoutP, loginActionP}) => {
 function mapStateToProps(state){
     return {
         userLoggedP : state.userLogged,
-        messageErrorP : state.messageError
+        messageErrorP : state.messageError,
+        orders: state.orders
     }
 }
 
@@ -78,3 +98,20 @@ function mapDispatchToProps(dispatch){
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileUser);
+
+//Productos: {x.products.map(p => {
+//    return (
+//        <div>
+//           {p.name}
+//         {p.image}
+//            {p.order_line.map(o => {
+//                return (
+//                    <div>
+//                        {o.quantity}
+//                        {o.price}
+//                    </div>
+//                )
+//            })}
+//        </div>
+//    )
+//})}
