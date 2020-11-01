@@ -1,5 +1,5 @@
 // Font Awesome (iconos)
-import { faShoppingCart as shopCart, faStar, faSearchPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus as shopCart, faStar, faSearchPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Hooks
 import { useState, useEffect } from 'react';
@@ -15,7 +15,7 @@ import { connect } from 'react-redux'
 import { addToCart } from '../../store/actions/cart_actions';
 import { FaDivide } from 'react-icons/fa';
 
-function ProductCard({ name, description, img, price, id, destacado, stock, reviews, addToCartP, userLoggedP}) {
+function ProductCard({ name, description, img, price, id, destacado, stock, reviews, addToCartP, userLoggedP, setShow}) {
 	// console.log('name: ' + name);
 	// console.log('description: ' + description);
 	// console.log('img: ' + img);
@@ -95,9 +95,8 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 							<FontAwesomeIcon icon={faStar} size={'1x'} />
 						</div>
-					</div>
-					<div><h6>{fixedRate} / 5.0 ({reviews && reviews.length} opiniones)</h6></div>	
-				</div>
+					</div>	
+				</div>	
 				{/* <Card.Text className={`my-1 ${s.productCardDescription}`}>{`${description}` || `Product Name`} </Card.Text> */}
 				<div className={s.contPI}>				
 				<Card.Text className={`my-1 ${s.productCardPrice}`}>
@@ -108,7 +107,7 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 					<div></div>
 					:
 				<>
-				<Button onClick={() => addToCartP(id, 1, userLoggedP ? userLoggedP.id : 1)} className={`mb-1 ${s.productCardButton2}`}>
+				<Button onClick={() => {addToCartP(id, 1, userLoggedP ? userLoggedP.id : 1); setShow(true)}} className={`mb-1 ${s.productCardButton2}`}>
 				 <div>
 				 <h6 className={s.h6}>Carrito</h6> 
 				 </div>
@@ -141,7 +140,8 @@ function ProductCard({ name, description, img, price, id, destacado, stock, revi
 						
 					}
 				</Row>
-			</Card.Body>	
+			</Card.Body>
+			<div className={s.fixedRate} ><h6>{fixedRate} ({reviews && reviews.length} opiniones)</h6></div>	
 		</Card>
 	);
 }

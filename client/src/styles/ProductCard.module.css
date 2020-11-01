@@ -184,12 +184,13 @@ Colores personalizados */
 	color:#F19953;
 }
 
-.icon div:nth-child(3){
-	margin-left: 25px;
-	padding-top: 8px;
+.productCard .fixedRate{
+	position: absolute;
+	top: 77.5%;
+	right: 13%;
 }
 
-.icon div:nth-child(3) h6{
+.productCard .fixedRate h6{
 	font-size: 0.7rem;
 }
 

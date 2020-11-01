@@ -1,13 +1,26 @@
 const server = require('express').Router(); //Import router from express module.
 const { Order, Order_line, Product, User } = require('../db.js'); // Import Categories model.
 const { OK, CREATED, ERROR, ERROR_SERVER } = require('../constants/index'); // Import Status constants.
+const { MAILGUN_API_KEY, MAILGUN_DOMAIN } = process.env;
 const Stripe = require('stripe');
-const mailgunLoader = requiere('mailgun-js');
+const mailgunLoader = require('mailgun-js');
+const juice = require('juice');
+const fs = require('fs');
+const path = require('path');
 
-// Start Routes
+const mailgun = mailgunLoader({ apiKey: `${MAILGUN_API_KEY}`, domain: `${MAILGUN_DOMAIN}` });
+const emailHtml = fs.readFileSync(path.join(__dirname + '../../../assets/email/email.html')).toString()
+const emailCss = fs.readFileSync(path.join(__dirname + '../../../assets/email/email.css')).toString()
+const inlineHtml = juice.inlineContent(emailHtml, emailCss);
+console.log(inlineHtml);
+mailgun.post(`/${MAILGUN_DOMAIN}/templates`, {
+	"template": inlineHtml,
+	"name": "template.astra",
+	"description": "Astra template"}, (error, body) =>  console.log(body) );
 
 const stripe = new Stripe('sk_test_51HhisyJCzko8yllsxOIAH4PuIS3N1PWGAUw1viuWg14gzpQPzJLJi7guXSecwRnf2gpdXiRWISJXQJc3N7ChjvQw00qiH74sAF')
 
+// Start Routes
 //// 'Get Orders' route in '/'
 server.get('/', function (req, res) {
 
@@ -32,7 +45,7 @@ server.post('/shopping/:userId', function (req, res) {
 	 const  qty  = req.body.order_line.quantity
 	 console.log(req.body)
 
-	const newOrder = Order.findOrCreate({ where: { userId } });
+	const newOrder = Order.findOrCreate({ where: { userId, status: 'cart' } });
 	const newProduct = Product.findOne({ where: {id: id} });
 	Promise.all([ newOrder,  newProduct])
 	.then((data) => {
@@ -195,28 +208,35 @@ server.put('/checkoutReject/:id', (req, res)=>{
 		});
 })
 
-server.post('/checkout/:id', (req, res)=>{
-	
-	//  const { statuCheckout } = req.body;
+server.post('/checkout/:id', async (req, res)=>{
 	const { id } = req.params;
-	console.log('fulled', id)
-	return Order.findOne({ where: {id: id}, include:{model: Product}})
-	 	.then(order => {
-			order.status = 'rejected';
-			order.save();
+	const { email, name } = req.body;
+	try {
+		console.log('ENTRE AL PRIMER PASO DE MAILGUN')
+		const order = await Order.findOne({ where: {id: id}, include:{model: Product}})
+		const subject = `Astra - Detalles de tu compra!`;
+		const data = {
+			from: "Astra Team <info@astra.com>",
+			to: email,
+			subject: subject,
+			template: 'template.astra',
+			'h:X-Mailgun-Variables': JSON.stringify({
+				name: name,
+				reference: order.id
+			})
+		}
+		await mailgun.messages().send(data)
 		return res.status(OK).json({
-			message:`La Orden fue Rechazada`,
+			message:`Email sent!`,
 			data: order
 		});
-		 })
-		.catch( err => {
-			return res.status(ERROR).json({
-				message: 'Error en el proceso de la orden',
-				data: err
-			})
-		});
+	} 
+	catch (err) {
+		console.log(err);
+		res.status(500);
+	}
+	return 
 })
-
 
 //End routes
 module.exports = server;
