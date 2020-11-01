@@ -1,0 +1,48 @@
+.all{
+    
+}
+
+.background{
+    background-color: #3b8ea5 !important;
+    height: 300px;
+    border-radius: 0px 0px 15px 15px;
+}
+
+.contPrincipal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.cardStyle{
+    margin-top:100px;
+    width: 70% !important;
+    align-items: center !important;
+}
+
+.prueba{
+    position: absolute;
+    top: 0px;
+    margin-top: 150px;
+}
+
+.size{
+    margin-top: 30px;
+    width: 150px;
+    height: 150px;
+}
+
+.cardItemUser{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+.compras{
+    margin-top: 200px;
+}
+
+.email{
+    padding-top: 0px;
+}
