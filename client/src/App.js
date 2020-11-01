@@ -15,6 +15,7 @@ import FormUsers from './components/FormUsers/FormUsers.jsx';
 import UsersData from './components/AdminForm/UsersData';
 import UserDetail from './components/AdminForm/DetailUser.jsx';
 import Faqs from './components/FAQs/Faqs.jsx';
+import Contacto from './components/Contacto/Contacto.jsx';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
@@ -26,7 +27,7 @@ import PrivateAdmin from './components/Routes/PrivateAdmin';
 import PrivateRoute from './components/Routes/PrivateRoute';
 import { enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from './constans/constans';
 
-const url = 'development.c4vdw28snupv.sa-east-1.rds.amazonaws.com:5432';
+const url = 'development.c4vdw28snupv.sa-east-1.rds.amazonaws.com';
 
 function App() {
 	const [products, setProduct] = useState([]);
@@ -61,6 +62,14 @@ function App() {
 				</Route>
 
 				{/* FAQS */}
+
+				{/*Contacto*/}
+				<Route path='/contacto' exact>
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
+					<Contacto></Contacto>
+					<Footer></Footer>
+				</Route>
+				{/*Contacto*/}
 
 				{/* ADMIN */}
 				<Route path='/admin'>
