@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import PrinciapalAdmin from './components/AdminForm/pageP';
 import Whatsapp from './components/Whatsapp/ws.js';
-import userList from './components/UserList/userList.js';
+// import UserList from './components/UserList/UserList.js';
 import Product from './components/AdminForm/product';
 import Category from './components/AdminForm/Categorys';
 import Orders from './components/AdminForm/Orders';
@@ -33,7 +33,7 @@ import PaymentMethod from './components/ckeckout/paymentMethod'
 import { enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from './constans/constans';
 import s from './styles/app.module.css';
 
-const url = 'localhost:3001';
+const url = 'development.c4vdw28snupv.sa-east-1.rds.amazonaws.com';
 
 function App() {
 	const [products, setProduct] = useState([]);
@@ -85,8 +85,8 @@ function App() {
 				<Route path='/products/catalogo'>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<Catalogo products={products} onSearch={onSearch} />
-					<userList></userList>
 					<Whatsapp></Whatsapp>
+					{/* <UserList></UserList> */}
 					<Footer></Footer>
 				</Route>
 
