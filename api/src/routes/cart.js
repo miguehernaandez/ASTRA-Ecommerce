@@ -30,6 +30,7 @@ server.put('/:userId/cart', function (req, res) {
 
 	const { userId } = req.params;
 	const { id, qty } = req.body;
+
 	Promise.all([Product.findOne({ where: { id }}), Order.findOne({where: { userId }})])
 	.then(data => {
 		data[0].setOrders(data[1], { through: { quantity: qty }})

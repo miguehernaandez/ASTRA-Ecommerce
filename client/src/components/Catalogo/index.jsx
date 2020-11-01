@@ -12,6 +12,7 @@ import { getProducts } from '../../store/actions/product_actions';
 import { Container, Row, Col, Form, Pagination } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as faIcons from 'react-icons/fa';
+import catEmpty from '../../multimedia/empty.jpg';
 import s from '../../styles/catalogo.module.css';
 const url = 'localhost:3001';
 
@@ -59,60 +60,60 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 
 	return (
 		<div className={`${s.contPrincipal}`}>
+			<Col className={s.barraC} xs={12} md={2} lg={2}>
+			<Filter ></Filter>
+			</Col>
+			<Col className={s.cont_cards} xs={12} md={10} lg={10}>
 			{/*<h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>*/}
 			{products.length == 0 ? (
 				productsP.length == 0 ? (
-					<h1 className={s.title2}>No hay registros en la base de datos</h1>
+					<>
+						<div className={s.catEmpty}>
+							<img src={catEmpty}></img>
+							<h1>¡UPS! PARECE QUE NO HAY NADA CARGADO EN EL CATÁLOGO AÚN</h1> 
+							<h6>Por favor, intenta de nuevo más tarde</h6>
+							<Link className={s.link} to='/'>Seguir navegando</Link>
+						</div>
+					</>
 				) : (
-					<Container>
-						{/* <SideBar> </SideBar> */}
-						<h1 className={s.title1}>Registros encontrados: {productsP.length}</h1>
-						<div className={s.cont_prin_card}>
-							<div className={s.cont_filter}>
-								{/*<div><p>Categorias</p></div>*/}
-								{/*<Filter categories={categories} handlerSelect={handlerSelect}/>*/}
-							</div>
-							<div className={s.cont_card}>
-								<Row>
+					<Container className={s.conteiner}>
+							
+								<Row className={s.cont_prin_card}>
 									{currentPostsCat.map((p) => {
 										return (
-											<Col lg='3'>
-												<ProductCard id={p.id} name={p.name} description={p.description} img={p.image} price={p.price} stock={p.stock} />
+											<Col sm={6} md={4} lg={3}>
+												<ProductCard id={p.id} name={p.name} description={p.description} img={p.image} price={p.price} stock={p.stock} reviews={p.reviews} />
 											</Col>
 										);
 									})}
-								</Row>
-							</div>
-						</div>
+								</Row>					
 
 						<Page postsPerPage={postsPerPage} totalPosts={productsP.length} paginate={paginate} />
 					</Container>
 				)
 			) : (
 				<Container>
-					<h1 className={s.title1}>Registros encontrados: {products.length}</h1>
-					<div className={s.cont_prin_card}>
-						<div className={s.cont_filter}>
-							<div>
-								<p>Categorias</p>
-							</div>
-							{/*< Filter categories={categories} handlerSelect={handlerSelect}/>*/}
-						</div>
-						<div className={s.cont_card}>
-							<Row>
-								{currentPostsSearch.map((p) => {
-									return (
-										<Col lg='3'>
-											<ProductCard id={p.id} name={p.name} description={p.description} img={p.image} price={p.price} stock={p.stock} />
-										</Col>
-									);
-								})}
-							</Row>
-						</div>
-					</div>
+					<Col className={s.barraC} xs={12} md={2} lg={2}>
+					<Filter></Filter>
+					</Col>
+					<Col className={s.cont_cards} xs={12} md={10} lg={10}>
+						<Container className={s.conteiner}>			
+								<Row className={s.cont_prin_card}>
+									{currentPostsSearch.map((p) => {
+										return (
+											<Col sm={6} md={4} lg={3}>
+												<ProductCard id={p.id} name={p.name} description={p.description} img={p.image} price={p.price} stock={p.stock} />
+											</Col>
+										);
+									})}
+								</Row>
+						</Container>	
+						
+					</Col>
 					<Page postsPerPage={postsPerPage} totalPosts={products.length} paginate={paginate} />
 				</Container>
 			)}
+			</Col>
 		</div>
 	);
 };

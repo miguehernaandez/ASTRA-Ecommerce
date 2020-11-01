@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CreateOrder, deleteOrderCart } from '../../store/actions/checkout_actions';
+import { CreateOrder, deleteOrderCart, UpdateOrderToCreateStatus } from '../../store/actions/checkout_actions';
 import { connect } from 'react-redux';
 import { addToCart, removeFromCart, updateFromCart, deleteCart } from '../../store/actions/cart_actions';
 import { getOrders } from '../../store/actions/order_actions';
@@ -14,37 +14,33 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookie from 'js-cookie';
 
-const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateFromCartP, deleteCartP, getOrdersP, deleteOrderCartP, orderP, userLogin, CreateOrderP }) => {
+const CartShop = ({ addToCartP, cartP, removeFromCartP, updateFromCartP, UpdateOrderToCreateStatusP, deleteCartP, orderCreatedP, getOrdersP, orderP, userLogin, CreateOrderP }) => {
 	const [quantity, setQuantity] = useState(0);
 	// const {idUser} = match.params
-	console.log(cartP);
+	console.log(Cookie.getJSON('cartItems'));
+	console.log(orderCreatedP);
+	console.log(orderP);
+	let cartCookie = Cookie.getJSON('cartItems');
 	let cartP2 = cartP.length < 1 ? [] : cartP[0].products;
-	let orderP2 = orderP.length < 1 ? [] : orderP[0].products;
+	let orderP2 = orderCreatedP ? orderCreatedP.products : [];
 	// const  qty = location.search.split('=')[1]
-	var enlacesUserConAdmin = [
-		{ text: 'Catalogo', to: '/products/catalogo' },
-		{ text: 'FAQs', to: '/' },
-		{ text: 'Contacto', to: '/' },
-		{ text: 'Ayuda', to: '/' },
-		// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
-		{ text: 'ADMIN', to: '/admin' },
-	];
-	var enlacesUserSinAdmin = [
-		{ text: 'Catalogo', to: '/products/catalogo' },
-		{ text: 'FAQs', to: '/' },
-		{ text: 'Contacto', to: '/' },
-		{ text: 'Ayuda', to: '/' },
-		// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
-	];
+	var arrayOrderBd = orderP.filter((x) => {
+		return x.id == orderCreatedP.id;
+	});
+	console.log(arrayOrderBd);
+	let obj = arrayOrderBd[0] && arrayOrderBd[0].products;
+	console.log(obj);
 
 	/********** USEEFECT *********** */
-	// useEffect(()=> {
-	//     getOrdersP();
-	//     if(userLogin){
-	//         cartP2 = orderP[0].products
-	//     }
-
-	// },[])
+	useEffect(() => {
+		if (userLogin && cartCookie !== undefined) {
+			getOrdersP();
+			CreateOrderP(cartCookie[0], userLogin.id);
+			cartP2 = obj;
+			return;
+		}
+		getOrdersP();
+	}, []);
 	/********** USEEFECT *********** */
 	console.log('*****ORDER******');
 	console.log(userLogin);
@@ -54,13 +50,39 @@ const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateF
 		if (!userLogin) {
 			history.push('/login');
 		} else {
-			alert('Estas Logueado' + userLogin.name);
+			//alert('Estas Logueado' + userLogin.name)
 			CreateOrderP(cart, id);
 			//deleteOrderCartP(cartP[0].id, cartP[0].status)
-			Cookie.remove('cartItems');
+			history.push('/shopping');
+			// deleteCartP()
 			//window.location = '/users/cart'
 			return;
 		}
+	};
+	const UpdateOrderToCreate = (id, cart) => {
+		//
+		let objOrder = {
+			subTotal: subTotal(cart),
+			iva: vIva(cart),
+			total: vTotal(cart),
+		};
+		if (!userLogin) {
+			return history.push('/login');
+		} else {
+			console.log(objOrder);
+			history.push('/shopping');
+			UpdateOrderToCreateStatusP(id, objOrder);
+			return;
+		}
+	};
+	const subTotal = (cart) => {
+		return cart.reduce((a, c) => a + c.order_line.quantity * c.price, 0);
+	};
+	const vIva = (cart) => {
+		return Math.trunc(cart.reduce((a, c) => a + c.order_line.quantity * c.price, 0) * 0.19);
+	};
+	const vTotal = (cart) => {
+		return Math.trunc(cart.reduce((a, c) => a + c.order_line.quantity * c.price, 0) * 0.19) + cart.reduce((a, c) => a + c.order_line.quantity * c.price, 0);
 	};
 
 	return (
@@ -128,7 +150,7 @@ const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateF
 														{/* <div className={s.button1} onClick={() => increment(product)}>-</div>  */}
 														{/* <input className={s.input} type="number" name="name" value={product.qty}  onChange={(e)=> addToCartP(product.id, e.target.value)}/> */}
 														{/* {<div className={s.button2} onClick={() => decrement(product)}>+</div> } */}
-														<select name='Cantidad' id='Cantidad' value={product.order_line.quantity} onChange={(e) => updateFromCartP(product.id, e.target.value)}>
+														<select name='Cantidad' id='Cantidad' value={product.order_line.quantity} onChange={(e) => updateFromCartP(product.id, e.target.value, userLogin ? userLogin.id : 1)}>
 															{[...Array(product.stock).keys()].map((x) => {
 																return <option value={x + 1}>{x + 1}</option>;
 															})}
@@ -137,7 +159,7 @@ const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateF
 													{/* </div> */}
 													<td className={s.PreCant}>$ {product.order_line.quantity * product.price}</td>
 													<td className={s.icon}>
-														<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={() => removeFromCartP(product.id)} />
+														<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={() => removeFromCartP(product.id, userLogin ? userLogin.id : 1)} />
 													</td>
 												</tr>
 											);
@@ -151,22 +173,22 @@ const CartShop = ({ match, location, addToCartP, cartP, removeFromCartP, updateF
 										<tbody className={s.tabletotal}>
 											<tr>
 												<td className={s.subinfo1}>Subtotal</td>
-												<td className={s.subPrecio}>$ {cartP2.reduce((a, c) => a + c.order_line.quantity * c.price, 0)}</td>
+												<td className={s.subPrecio}>$ {subTotal(cartP2)}</td>
 											</tr>
 											<tr>
 												<td className={s.subinfo1}>Iva</td>
-												<td className={s.subPrecio}>$ {Math.trunc(cartP2.reduce((a, c) => a + c.order_line.quantity * c.price, 0) * 0.19)}</td>
+												<td className={s.subPrecio}>$ {vIva(cartP2)}</td>
 											</tr>
 											<tr>
 												<td className={s.subinfo2}>Total</td>
-												<td className={s.subPrecio}>$ {Math.trunc(cartP2.reduce((a, c) => a + c.order_line.quantity * c.price, 0) * 0.19) + cartP2.reduce((a, c) => a + c.order_line.quantity * c.price, 0)}</td>
+												<td className={s.subPrecio}>$ {vTotal(cartP2)}</td>
 											</tr>
 										</tbody>
 									</Table>
 								</div>
 							</div>
 							<div className={s.cont_button1}>
-								<Button className={s.buttonF} onClick={() => createOrder(cartP2, userLogin && userLogin.id)}>
+								<Button className={s.buttonF} onClick={() => UpdateOrderToCreate(orderCreatedP.id, cartP2)}>
 									Finalizar compra
 								</Button>
 								{'    '}
@@ -187,17 +209,19 @@ function mapStateToProps(state) {
 		cartP: state.cart,
 		orderP: state.orders,
 		userLogin: state.userLogged,
+		orderCreatedP: state.orderCreated,
 	};
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
 		addToCartP: (id, qty) => dispatch(addToCart(id, qty)),
-		removeFromCartP: (id) => dispatch(removeFromCart(id)),
-		updateFromCartP: (id, qty) => dispatch(updateFromCart(id, qty)),
+		removeFromCartP: (id, idUser) => dispatch(removeFromCart(id, idUser)),
+		updateFromCartP: (id, qty, idUser) => dispatch(updateFromCart(id, qty, idUser)),
 		deleteCartP: () => dispatch(deleteCart()),
 		getOrdersP: () => dispatch(getOrders()),
 		CreateOrderP: (cartP2, userId) => dispatch(CreateOrder(cartP2, userId)),
+		UpdateOrderToCreateStatusP: (id, objCart) => dispatch(UpdateOrderToCreateStatus(id, objCart)),
 		//deleteOrderCartP : (id, status) => dispatch(deleteOrderCart(id, status))
 	};
 }

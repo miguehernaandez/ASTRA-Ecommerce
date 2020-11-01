@@ -14,6 +14,8 @@ import Catalogo from './components/Catalogo/index';
 import FormUsers from './components/FormUsers/FormUsers.jsx';
 import UsersData from './components/AdminForm/UsersData';
 import UserDetail from './components/AdminForm/DetailUser.jsx';
+import CheckoutFailded from './components/ckeckout/checkoutReject';
+import CheckoutSucess from './components/ckeckout/checkoutSucess';
 import Faqs from './components/FAQs/Faqs.jsx';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,6 +26,8 @@ import Login from './components/Login/Login';
 import ProfileUser from './components/ProfileUser/ProfileUser';
 import PrivateAdmin from './components/Routes/PrivateAdmin';
 import PrivateRoute from './components/Routes/PrivateRoute';
+import DataUserShopping from './components/ckeckout/dataUser';
+import PaymentMethod from './components/ckeckout/paymentMethod'
 import { enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from './constans/constans';
 
 const url = 'localhost:3001';
@@ -103,6 +107,10 @@ function App() {
 
 				{/* PROFILE */}
 				<PrivateRoute path='/profile' component={ProfileUser} />
+				<PrivateRoute path='/shopping' component={DataUserShopping} />
+				<PrivateRoute path='/paymethod' exact component={PaymentMethod} />
+				<PrivateRoute path='/paymethod/failed' component={CheckoutFailded} />
+				<PrivateRoute path='/paymethod/sucess' component={CheckoutSucess} />
 				{/* PROFILE */}
 
 				{/* LOGIN */}
