@@ -45,7 +45,7 @@ server.post('/shopping/:userId', function (req, res) {
 	 const  qty  = req.body.order_line.quantity
 	 console.log(req.body)
 
-	const newOrder = Order.findOrCreate({ where: { userId, status: 'cart' } });
+	const newOrder = Order.findOrCreate({ where: { userId} });
 	const newProduct = Product.findOne({ where: {id: id} });
 	Promise.all([ newOrder,  newProduct])
 	.then((data) => {
@@ -211,6 +211,7 @@ server.put('/checkoutReject/:id', (req, res)=>{
 server.post('/checkout/:id', async (req, res)=>{
 	const { id } = req.params;
 	const { email, name } = req.body;
+	console.log(email, name)
 	try {
 		console.log('ENTRE AL PRIMER PASO DE MAILGUN')
 		const order = await Order.findOne({ where: {id: id}, include:{model: Product}})

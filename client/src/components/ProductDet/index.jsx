@@ -81,8 +81,8 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 	const roundedRate = Math.round(rate * 10)/10;
 	const fixedRate = roundedRate.toFixed(1);
 
-	const handlerAddToCart = (id, qty) => {
-		addToCartP(id, qty);
+	const handlerAddToCart = (id, qty, idUser) => {
+		addToCartP(id, qty, idUser);
 		history.push(`/users/cart`);
 	};
 	const handlerReview = () => {
@@ -225,7 +225,7 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 							{objP.stock > 0 && (
 								<div className={s.cont_button}>
 									<Button className={s.buttonCom}>Comprar ahora</Button>
-									<Button className={s.buttonCar} onClick={() => handlerAddToCart(objP.id, qty)}>
+									<Button className={s.buttonCar} onClick={() => handlerAddToCart(objP.id, qty, userLoggedP && userLoggedP.id )}>
 										Agregar al carrito
 									</Button>
 								</div>
@@ -266,7 +266,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		getProductP: () => dispatch(getProducts()),
-		addToCartP: (id, qty) => dispatch(addToCart(id, qty)),
+		addToCartP: (id, qty, idUser) => dispatch(addToCart(id, qty, idUser)),
 		addReviewP: (review, productId) => dispatch(addReview(review, productId)),
 		getUserReviewsP: (productId, userId) => dispatch(getUserReviews(productId, userId)),
 		editUserReviewP: (productId, review) => dispatch(editUserReview(productId, review)),
