@@ -12,7 +12,7 @@ const mailgun = mailgunLoader({ apiKey: `${MAILGUN_API_KEY}`, domain: `${MAILGUN
 const emailHtml = fs.readFileSync(path.join(__dirname + '../../../assets/email/email.html')).toString()
 const emailCss = fs.readFileSync(path.join(__dirname + '../../../assets/email/email.css')).toString()
 const inlineHtml = juice.inlineContent(emailHtml, emailCss);
-console.log(inlineHtml);
+
 mailgun.post(`/${MAILGUN_DOMAIN}/templates`, {
 	"template": inlineHtml,
 	"name": "template.astra",
@@ -25,6 +25,27 @@ const stripe = new Stripe('sk_test_51HhisyJCzko8yllsxOIAH4PuIS3N1PWGAUw1viuWg14g
 server.get('/', function (req, res) {
 
 	Order.findAll({ include: [ { model: User}, {model: Product}  ] })	
+	.then(orders => {
+		return res.json({
+			message: 'Sucess',
+			data: orders
+		})
+	})
+	.catch((err) => {
+		console.log(err)
+	});
+});
+
+server.get('/filter', function (req, res) {
+
+	const {status} = req.query;
+	let queryParameters;
+	console.log('EL ESTADO DE LA ORDEN ES ', status);
+
+	if (status === 'all') queryParameters = {include: [ { model: User}, {model: Product}  ]}
+	else queryParameters = { where: { status }, include: [ { model: User}, {model: Product}  ] }
+
+	Order.findAll(queryParameters)	
 	.then(orders => {
 		return res.json({
 			message: 'Sucess',
@@ -58,7 +79,6 @@ server.post('/shopping/:userId', function (req, res) {
 		res.send({errro: 'Error POST'})
 	});
 });
-
 
 server.put('/shopping/:id', (req, res)=>{
 	//  console.log(req.params.id)
@@ -119,15 +139,17 @@ server.delete('/shopping/:id', (req, res)=>{
 	console.log(req.params.id)
 	const { id } = req.params
 
-	Order.findAll({ where: id })
-		.then(res => {
-			resdestroy();
+	Order.findOne({ where: {id} })
+		.then(order => {
+			console.log('THEN DEL DELETE ORDER')
+			order.destroy();
 			return res.status(OK).json({
-				message: 'Orden Cancelada!!',
-				data: deletedCart
+				message: 'Orden eliminada!!',
+				data: order
 			});
 		})
 		.catch(err => {
+			console.log(err);
 			return res.status(ERROR_SERVER).json({
 				message: 'Error al eliminar Orden',
 				data: err
@@ -212,7 +234,6 @@ server.post('/checkout/:id', async (req, res)=>{
 	const { id } = req.params;
 	const { email, name } = req.body;
 	try {
-		console.log('ENTRE AL PRIMER PASO DE MAILGUN')
 		const order = await Order.findOne({ where: {id: id}, include:{model: Product}})
 		const subject = `Astra - Detalles de tu compra!`;
 		const data = {
@@ -238,5 +259,14 @@ server.post('/checkout/:id', async (req, res)=>{
 	return 
 })
 
+server.post('/test', function (req, res) {
+
+    // return res.send(req.body)
+	 const { status, userId } = req.body;
+	 Order.create({ status, userId })
+	 	.then(order=>{
+			return res.json(order)
+		 })
+});
 //End routes
 module.exports = server;
