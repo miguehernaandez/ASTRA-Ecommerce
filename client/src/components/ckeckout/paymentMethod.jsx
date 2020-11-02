@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import { CreateOrder, UpdateOrderToProcessStatus, deleteOrderCart, confirmOrder, UpdateOrderToFullfilled, UpdateOrderToreject} from '../../store/actions/checkout_actions';
+import { CreateOrder, UpdateOrderToProcessStatus, deleteOrderCart, sendEmail, confirmOrder, UpdateOrderToFullfilled, UpdateOrderToreject} from '../../store/actions/checkout_actions';
 import { connect } from 'react-redux';
 import { addToCart, removeFromCart, updateFromCart, deleteCart } from '../../store/actions/cart_actions';
-import { getOrders } from '../../store/actions/order_actions';
+import { getOrders, deleteOrder } from '../../store/actions/order_actions';
 import { Link } from 'react-router-dom';
 import s from '../../styles/carrito.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,13 +24,13 @@ const stripePromise = loadStripe('pk_test_51HhisyJCzko8yllshTIdDvi4wXchIr9Qldywm
 
 
 /********************************************* Form Pay ***************************************************** */
-function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, user, order})  {
+function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, user, order, sendEm, deleteOrderModal})  {
     const [loading, setLoading] = useState(false)
     const stripe = useStripe();
     const elements = useElements();
     let history = useHistory();
-    console.log(total)
-    console.log(checkoutEndProps)
+    console.log(user)
+    console.log(sendEm)
     let statuCheckout = checkoutEndProps && checkoutEndProps;
     // if(checkoutEndProps){
     //     setLoading(true)
@@ -39,7 +39,12 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, use
     // if(loading){
     //     console.log('terminado')
     // }
-    
+    const handlerDeleteOrder = (idOrder) => {
+		deleteOrderModal(idOrder)
+		Cookie.remove('cartItems')
+		window.location = '/'
+		return
+	}
 
     const handlerSubmit = async (e) => {
         e.preventDefault();
@@ -53,7 +58,8 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, use
             confirOrderProps(paymentMethod.id, total, objenderProps.id  )
             let orderId = order.id;
             history.push('/paymethod/sucess')
-            //await sendStatusOrder(checkoutEndProps)
+            //sendEm(orderId, user)
+            //sendStatusOrder(checkoutEndProps)
            // UpdateOrderToCreateFullorRejectProps(objenderProps.id, statuCheckout)
            //setLoading(false)
         }else{
@@ -62,28 +68,6 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, use
         setLoading(false)
     }
 
-    // let StatusOrder = checkoutEndProps || ""
-    // console.log('final', StatusOrder)
-   
-
-    // const sendStatusOrder = (StatusOrder) => {
-
-    //             return history.push('/paymethod/sucess?status='+StatusOrder)
-
-    // }
-
-    
-
-    // if(statuCheckout){
-    //     console.log('aqui true')
-    //     //UpdateOrderToSucess(objenderProps.id)
-        
-    //     return
-    //    //return history.push('/paymethod/sucess')
-    // }else{
-    //     console.log('aqui False')
-    //    //return history.push('/paymethod/failed')
-    // }
    
 
     return (
@@ -109,7 +93,7 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, use
         <Button type="submit" className={s.button1}>
             {loading ? "Pagando" : "Finalizar compra"}
         </Button>
-        <Button className={s.button2} >Cancelar compra</Button>
+        <Button className={s.button2} onClick={() => handlerDeleteOrder(objenderProps.id)}>Cancelar compra</Button>
         </div>
         </Form>
     );
@@ -119,7 +103,7 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, use
 
 
 
-const PaymentMethod = ({cartP, UpdateOrderToProcessStatusP, checkoutP, UpdateOrderTorejectP, UpdateOrderToFullfilledP, confirmOrderP, orderCreatedP, getOrdersP, orderP,userLogin,}) => {
+const PaymentMethod = ({sendEmailP, UpdateOrderToProcessStatusP, checkoutP, UpdateOrderTorejectP, deleteOrderP, UpdateOrderToFullfilledP, confirmOrderP, orderCreatedP, getOrdersP, orderP,userLogin,}) => {
     const [form, setForm] = useState({
         city:"",
         adress:"",
@@ -144,7 +128,7 @@ const PaymentMethod = ({cartP, UpdateOrderToProcessStatusP, checkoutP, UpdateOrd
     // const  qty = location.search.split('=')[1]
 
     console.log('Orden para renderizar')
-    console.log(products)
+    console.log(objender)
 
     /********** USEEFECT *********** */
     useEffect(()=> {
@@ -162,17 +146,7 @@ const PaymentMethod = ({cartP, UpdateOrderToProcessStatusP, checkoutP, UpdateOrd
     let history = useHistory()
 
 
-    const handlerInput = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    }
 
-    const handlerSubmit = (e) => {
-        e.preventDefault();
-        console.log(form)
-        UpdateOrderToProcessStatusP(orderCreatedP.id, form)
-    }
-
-    
 
 
     return(
@@ -254,6 +228,8 @@ const PaymentMethod = ({cartP, UpdateOrderToProcessStatusP, checkoutP, UpdateOrd
                         UpdateOrderToSucess={UpdateOrderToFullfilledP}
                         user={userLogin}
                         order={orderCreatedP}
+                        sendEm = {sendEmailP}
+                        deleteOrderModal = {deleteOrderP}
                         />
                     </Elements>
                     
@@ -305,8 +281,10 @@ function mapDispatchToProps(dispatch){
         deleteOrderCartP : (id) => dispatch(deleteOrderCart(id)),
         confirmOrderP : (id, total, OrderId) => dispatch(confirmOrder(id, total, OrderId)),
         UpdateOrderToFullfilledP : (id) => dispatch(UpdateOrderToFullfilled(id)),
-        UpdateOrderTorejectP : (id) => dispatch(UpdateOrderToreject(id))
- 
+        UpdateOrderTorejectP : (id) => dispatch(UpdateOrderToreject(id)),
+        sendEmailP : (idOrder, user) => dispatch(sendEmail(idOrder, user)),
+        deleteOrderP : (id) => dispatch(deleteOrder(id))
+
     }
 }
 

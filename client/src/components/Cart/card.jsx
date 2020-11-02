@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { CreateOrder, deleteOrderCart, UpdateOrderToCreateStatus } from '../../store/actions/checkout_actions';
 import { connect } from 'react-redux';
 import { addToCart, removeFromCart, updateFromCart, deleteCart } from '../../store/actions/cart_actions';
-import { getOrders } from '../../store/actions/order_actions';
+import { getOrders, deleteOrder } from '../../store/actions/order_actions';
 import { Link } from 'react-router-dom';
 import s from '../../styles/carrito.module.css';
 import { Table, Button } from 'react-bootstrap';
@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookie from 'js-cookie';
 
-const CartShop = ({ addToCartP, cartP, removeFromCartP, updateFromCartP, UpdateOrderToCreateStatusP, deleteCartP, orderCreatedP, getOrdersP, orderP, userLogin, CreateOrderP }) => {
+const CartShop = ({ addToCartP, cartP, removeFromCartP, updateFromCartP, deleteOrderP, UpdateOrderToCreateStatusP, deleteCartP, orderCreatedP, getOrdersP, orderP, userLogin, CreateOrderP }) => {
 	const [quantity, setQuantity] = useState(0);
 	// const {idUser} = match.params
 	console.log(Cookie.getJSON('cartItems'));
@@ -84,6 +84,13 @@ const CartShop = ({ addToCartP, cartP, removeFromCartP, updateFromCartP, UpdateO
 	const vTotal = (cart) => {
 		return Math.trunc(cart.reduce((a, c) => a + c.order_line.quantity * c.price, 0) * 0.19) + cart.reduce((a, c) => a + c.order_line.quantity * c.price, 0);
 	};
+
+	const handlerDeleteOrder = (idOrder) => {
+		deleteOrderP(idOrder)
+		Cookie.remove('cartItems')
+		window.location = '/'
+		return
+	}
 
 	return (
 		<div>
@@ -192,7 +199,7 @@ const CartShop = ({ addToCartP, cartP, removeFromCartP, updateFromCartP, UpdateO
 									Finalizar compra
 								</Button>
 								{'    '}
-								<Button className={s.buttonFC} onClick={deleteCartP}>
+								<Button className={s.buttonFC} onClick={() => handlerDeleteOrder(orderCreatedP.id)}>
 									Cancelar compra
 								</Button>
 							</div>
@@ -222,6 +229,7 @@ function mapDispatchToProps(dispatch) {
 		getOrdersP: () => dispatch(getOrders()),
 		CreateOrderP: (cartP2, userId) => dispatch(CreateOrder(cartP2, userId)),
 		UpdateOrderToCreateStatusP: (id, objCart) => dispatch(UpdateOrderToCreateStatus(id, objCart)),
+		deleteOrderP : (id) => dispatch(deleteOrder(id))
 		//deleteOrderCartP : (id, status) => dispatch(deleteOrderCart(id, status))
 	};
 }

@@ -12,7 +12,7 @@ function Contact(){
 
    return (
         <Col xs={'auto'} className={`${s.contenedorWs}`}>
-            <a href={`https://api.whatsapp.com/send?phone=${cod}${cel}`}>
+            <a href={`https://api.whatsapp.com/send?phone=${cod}${cel}`} target="_blank">
                     <Image className={s.size} src={ws} roundedCircle/>
             </a>
         </Col>

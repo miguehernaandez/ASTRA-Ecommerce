@@ -15,7 +15,7 @@ const inlineHtml = juice.inlineContent(emailHtml, emailCss);
 
 mailgun.post(`/${MAILGUN_DOMAIN}/templates`, {
 	"template": inlineHtml,
-	"name": "template.final10",
+	"name": "template.astra",
 	"description": "Astra template"}, (error, body) =>  console.log(body) );
 
 const stripe = new Stripe('sk_test_51HhisyJCzko8yllsxOIAH4PuIS3N1PWGAUw1viuWg14gzpQPzJLJi7guXSecwRnf2gpdXiRWISJXQJc3N7ChjvQw00qiH74sAF')
@@ -66,7 +66,7 @@ server.post('/shopping/:userId', function (req, res) {
 	 const  qty  = req.body.order_line.quantity
 	 console.log(req.body)
 
-	const newOrder = Order.findOrCreate({ where: { userId, status: 'cart' } });
+	const newOrder = Order.findOrCreate({ where: { userId} });
 	const newProduct = Product.findOne({ where: {id: id} });
 	Promise.all([ newOrder,  newProduct])
 	.then((data) => {
@@ -85,7 +85,7 @@ server.put('/shopping/:id', (req, res)=>{
 	//  console.log(req.body)
 	 const { id } = req.params;
 	 const { total, subTotal, iva } = req.body;
-	 return Order.findOne({ where: { status:'cart'}})
+	 return Order.findOne({ where: {id: id}})
 	 	.then(order => {
 
 			order.status = 'created';
@@ -112,7 +112,7 @@ server.put('/shopping/:id', (req, res)=>{
 	//  console.log(req.body)
 	 const { id } = req.params;
 	 const { adress, city, phone, postal } = req.body;
-	 return Order.findOne({ where: { status:'created'}, include:{model: Product}})
+	 return Order.findOne({ where: {id: id}, include:{model: Product}})
 	 	.then(order => {
 
 			order.status = 'in_process';
@@ -233,26 +233,18 @@ server.put('/checkoutReject/:id', (req, res)=>{
 server.post('/checkout/:id', async (req, res)=>{
 	const { id } = req.params;
 	const { email, name } = req.body;
+	console.log(email, name)
 	try {
 		const order = await Order.findOne({ where: {id: id}, include:{model: Product}})
 		const subject = `Astra - Detalles de tu compra!`;
-		const url = 'https://i.ibb.co/FK5hsvx/astra-logo-opaco.png';
-		let totalProducts = order.products;
-		for (let i=0; i<totalProducts.length; i++){
-			totalProducts[i].order_line.price *= totalProducts[i].order_line.quantity;
-		}
 		const data = {
 			from: "Astra Team <info@astra.com>",
 			to: email,
 			subject: subject,
-			template: 'template.final10',
+			template: 'template.astra',
 			'h:X-Mailgun-Variables': JSON.stringify({
 				name: name,
-				total: order.total,
-				reference: order.id,
-				products: totalProducts,
-				email: email,
-				url: url
+				reference: order.id
 			})
 		}
 		await mailgun.messages().send(data)

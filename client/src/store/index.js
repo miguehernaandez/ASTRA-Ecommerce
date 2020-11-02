@@ -1,9 +1,8 @@
 import store from 'redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import Reducer from './reducer/reducerCategorys';
+import Reducer from './reducer/reducer';
 import thunk from 'redux-thunk';
-import rootReducer from './reducer/index';
 
 
 
