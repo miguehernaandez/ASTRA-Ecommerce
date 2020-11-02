@@ -90,7 +90,7 @@ const Categorys = ({categories, getCategoryP, addCategoryP, updCategoryP, delete
             <div className={s.table_prin}>
                 {/* <Menu/> */}
                 <div>
-                <Table striped bordered hover size="sm">
+                <Table striped bordered hover size="sm" responsive="md">
                         <thead className={s.tableTitle}>
                             <tr>
                             <th>Name</th>

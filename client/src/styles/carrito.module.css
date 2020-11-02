@@ -500,3 +500,49 @@ h1 {
     background-color: #EDF7F6;
     color: #3B8EA5;
 }
+
+@media (max-width: 780px) {
+
+	.tableTitle .envio{
+	   font-size: 0px;
+	   width: 0px;
+       
+	}
+	.tableDescrip .pronto{
+		font-size: 0px;
+	}
+	
+}
+@media (max-width: 780px) {
+
+	.tableTitle .envio{
+	   font-size: 0px;
+	   width: 0px;
+       
+	}
+	.tableDescrip .pronto{
+		font-size: 0px;
+	}
+	
+}
+@media (max-width: 574px) {
+
+	.cont1 ul li i {
+		font-size: 15px;
+		
+	}
+	.cont1 ul li span {
+		font-size: 10px;
+		
+	}
+}
+@media (max-width: 480px) {
+
+	.cont_img > img {
+		
+		width: 0px!important;
+		height: 0px !important;
+		
+	}
+
+}

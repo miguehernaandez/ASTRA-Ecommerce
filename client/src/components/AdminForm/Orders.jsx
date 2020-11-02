@@ -65,7 +65,7 @@ const Orders = ({ ordersP, getOrdersP }) => {
             <div className={s.table_prin}>
                 {/* <Menu/> */}
                 <div>
-                <Table striped bordered hover size="sm">
+                <Table striped bordered hover size="sm" responsive="lg">
                         <thead className={s.tableTitle}>
                             <tr>
                             <th>Reference</th>

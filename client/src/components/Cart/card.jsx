@@ -124,7 +124,7 @@ const CartShop = ({ addToCartP, cartP, removeFromCartP, updateFromCartP, UpdateO
 									<thead className={s.tableTitle}>
 										<tr>
 											<th>Producto</th>
-											<th>Envio</th>
+											<th className={s.envio}>Envio</th>
 											<th>Precio</th>
 											<th className={s.cantidadTitle}>Cantidad</th>
 											<th>Total</th>
@@ -143,7 +143,7 @@ const CartShop = ({ addToCartP, cartP, removeFromCartP, updateFromCartP, UpdateO
 															<a>{product.name}</a>
 														</td>
 													</Link>
-													<td>Se enviara Pronto</td>
+													<td className={s.pronto}>Se enviara Pronto</td>
 													<td className={s.PreCant}>$ {product.price}</td>
 													{/* <div className={s.cont_cant}> */}
 													<td className={s.cantidad}>
