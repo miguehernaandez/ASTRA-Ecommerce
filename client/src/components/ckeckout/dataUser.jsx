@@ -78,47 +78,56 @@ const DataUserShopping = ({cartP, UpdateOrderToProcessStatusP,  orderCreatedP, g
         <div>
 
             {/* < Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={false}/> */}
-            <div className={`${s.cont_prin} my-3`}>
+            <div className={`${s.cont_prin1} my-3`}>
                 <div className={s.cont1}>
                     <img className={`${s.logo}`} src={logo}></img>
                     <ul>
                         <li><i>1</i><span>Resumen de compra</span></li>
-                        <li><i>2</i><span>Datos de envio</span></li>
+                        <li><i className={s.i}>2</i><span className={s.span}>Datos de envio</span></li>
                         <li><i>3</i><span>Forma de pago</span></li>
 
                     </ul>
                 </div>
+            </div>
+            <div className={s.cont_form}>
                 <Container className={s.contForm}>
+                    <h1>Datos de envio</h1>
+                    <h6>Indica la ciudad y la direccion donde resiviras los productos</h6>
                 <Form onSubmit={handlerSubmit}>
                         <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Ciudad</Form.Label>
+                            <Form.Label className={s.label}>Ciudad</Form.Label>
                             <Form.Control type="text" placeholder="Ingrese la ciudad" required name="city" onChange={handlerInput}/>
                         </Form.Group>
                         <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Direccion</Form.Label>
+                            <Form.Label className={s.label}>Direccion</Form.Label>
                             <Form.Control type="text" placeholder="Ingrese la direccion" required name="adress" onChange={handlerInput}/>
                         </Form.Group>
                         <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Telefono</Form.Label>
+                            <Form.Label className={s.label}>Telefono</Form.Label>
                             <Form.Control type="number" placeholder="Ingrese el telefono" required name="phone"  onChange={handlerInput}/>
                         </Form.Group>
                         <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Codigo postal</Form.Label>
+                            <Form.Label className={s.label}>Codigo postal</Form.Label>
                             <Form.Control type="text" placeholder="Ingrese el codigo postal" required name="postal" onChange={handlerInput} />
                         </Form.Group>
+                        < div className={s.cont_button2}>
                         <Button variant="primary" type="submit" className={s.submitDate}>
                             Continuar
                         </Button>
+                        <Button className={s.submitCancel} onClick={() => handlerDeleteOrder(orderCreatedP.id)} >Cancelar compra</Button>
+                        </div>
+                        
                 </Form>
                 </Container>
                 
-                    <div className={s.cont_button1}>
-                        {/* <Button className={s.buttonF} >Finalizar compra</Button>{"    "} */}
-                        <Button className={s.buttonFC} onClick={() => handlerDeleteOrder(orderCreatedP.id)}>Cancelar compra</Button>
+                    {/* <div className={s.cont_button1}>
+                        <Button className={s.buttonF} >Finalizar compra</Button>{"    "}
+                        <Button className={s.buttonFC} >Cancelar compra</Button>
 
-                    </div>
+                    </div> */}
+             </div>
 
-            </div>
+            
              
 
 

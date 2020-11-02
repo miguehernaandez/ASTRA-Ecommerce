@@ -104,10 +104,14 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, use
                   },
                 },
               }}
+              
         />
-        <Button type="submit" className={s.buttonFormPay}>
+        <div className={s.button}>
+        <Button type="submit" className={s.button1}>
             {loading ? "Pagando" : "Finalizar compra"}
         </Button>
+        <Button className={s.button2} >Cancelar compra</Button>
+        </div>
         </Form>
     );
   };
@@ -172,56 +176,72 @@ const PaymentMethod = ({sendEmailP, UpdateOrderToProcessStatusP, checkoutP, Upda
         <div>
 
             {/* < Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={false}/> */}
-            <div className={`${s.cont_prin} my-3`}>
+            <div className={`${s.cont_prin1} my-3`}>
                 <div className={s.cont1}>
                     <img className={`${s.logo}`} src={logo}></img>
                     <ul>
                         <li><i>1</i><span>Resumen de compra</span></li>
                         <li><i>2</i><span>Datos de envio</span></li>
-                        <li><i>3</i><span>Forma de pago</span></li>
+                        <li><i className={s.i}>3</i><span className={s.span}>Forma de pago</span></li>
 
                     </ul>
                 </div>
+            </div>
+            <div className={s.cont_form}>
                 <Container className={s.contFormPay}>
-                    <div>
-                        <h1>Resumen de la Orden</h1>
+                    <div className={s.resCompra}>
+                        <div className={s.titleOrden}>
+                        <h1>Resumen de la compra</h1>
+                        </div>
                         <div>
                             {!products || products.length < 1 ? <h3>Empty...</h3> : 
                             <div>
-                                <Table  size="sm">
+                                <Table  borderless size="sm">
                                 <thead className={s.tableTitle}>
                                 <tr>
                                     <th>Producto</th>
-                                    <th>Cant</th>
+                                    <th>Cantidad</th>
                                     <th>Precio</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {products.map(x => {
                                     return (
-                                        <tr>
+                                        <tr className={s.tableDescrip}>
                                             <td>{x.name}</td>
                                             <td>{x.order_line.quantity}</td>
-                                            <td>{x.price}</td>
+                                            <td>$ {x.price}</td>
                                         </tr>
                                     )
                                 })}
                             </tbody>
                                 </Table>
-                                <Table>
+                                <div className={s.cont_total1}>
+                                <Table className={s.total}  size="sm">
                                     <tr>
-                                        <td>
-                                            <h1>Total: $ {objender && objender.total}</h1>
-                                        </td>
-                                    </tr>
+										<td className={s.subinfo1}>SubToltal</td>
+										<td className={s.subPrecio}>$ {objender && objender.subTotal}</td>
+									</tr>
+                                    <tr>
+										<td className={s.subinfo1}>Iva</td>
+										<td className={s.subPrecio}>$ {objender && objender.iva}</td>
+									</tr>
+                                    <tr>
+										<td className={s.subinfo1}>Total</td>
+										<td className={s.subPrecio}>$ {objender && objender.total}</td>
+									</tr>
                                 </Table>
+                                </div>
                              
                             </div>
                              }
                         </div>
                     </div>
                     <div className={s.contFormCardPay}>
-                    <Elements stripe={stripePromise}>
+                    <div className={s.titleOrden}> 
+                        <h1>Metodo de pago</h1>
+                    </div>
+                    <Elements className={s.pago} stripe={stripePromise}>
                         <CardForm 
                         total={objender.total}
                         confirOrderProps={orderConfirmFunction}
@@ -233,17 +253,20 @@ const PaymentMethod = ({sendEmailP, UpdateOrderToProcessStatusP, checkoutP, Upda
                         sendEm = {sendEmailP}
                         />
                     </Elements>
+                    
                     </div>
                 </Container>
+                {/* <div className={s.cont_button1}>
+                        <Button className={s.buttonF} >Finalizar compra</Button>{"    "}
+                        <Button className={s.buttonFC} >Cancelar compra</Button>
+
+                    </div> */}
                 
                 
-                    <div className={s.cont_button1}>
-                        {/* <Button className={s.buttonF} >Finalizar compra</Button>{"    "} */}
-                        <Button className={s.buttonFC} onClick={() => handlerDeleteOrder(orderCreatedP.id)}>Cancelar compra</Button>
+                    
+                </div>
 
-                    </div>
-
-            </div>
+           
              
 
 

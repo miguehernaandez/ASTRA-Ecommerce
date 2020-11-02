@@ -9,22 +9,28 @@ import { getUsers, deleteUser, updateUser, getUserDetail } from '../../store/act
 import { Link } from 'react-router-dom';
 import { enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from '../../constans/constans';
 import Navegacion from '../Navegacion/Navegacion';
+import Confirm from '../Modals/Confirm'
 
 const url = 'localhost:3001';
 
 const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getUserDetailP }) => {
+	const tipo = 'users'
+
 	// console.log(usersP);
 	// console.log(successP);
 	/*********************** Local States ************************* */
 	// const [users, setUsers] = useState(usersP);
+	const [showUser, setShowUser] = useState(false)
+	const [userSelected, setUserSelected] = useState({})
+
 
 	/*********************** Functions **************************** */
 
-	const handleDelete = function (id, email) {
-		var confirmDelete = window.confirm(`Estas a punto de eliminar el usuario:\n${email}\nDeseas continuar?`);
-		if (confirmDelete) {
-			deleteUserP(id);
-		}
+	const handleDelete = function (usuario) {
+		// var confirmDelete = window.confirm(`Estas a punto de eliminar el usuario:\n${email}\nDeseas continuar?`);
+		    setShowUser(true)
+			setUserSelected(usuario)
+		
 	};
 
 	const handleUpdatePassword = function (email, id, role, resetPassword) {
@@ -114,7 +120,7 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 											</Button>
 										</td>
 										<td className={s.icons}>
-											<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={`mx-3 ${s.iconDelete}`} onClick={() => handleDelete(usuario.id, usuario.email)} />
+											<FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={`mx-3 ${s.iconDelete}`} onClick={() => handleDelete(usuario)} />
 										</td>
 									</tr>
 								) : (
@@ -136,6 +142,13 @@ const UsersData = ({ usersP, successP, getUsersP, deleteUserP, updateUserP, getU
 							})}
 						</tbody>
 					</Table>
+					<Confirm
+					tipo={'user'}
+					show={showUser}
+					setShow={setShowUser}
+					deleted={deleteUserP}
+					selected={userSelected}
+					/>
 				</div>
 			</div>
 		</div>

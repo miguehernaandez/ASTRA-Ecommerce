@@ -66,7 +66,7 @@ server.post('/shopping/:userId', function (req, res) {
 	 const  qty  = req.body.order_line.quantity
 	 console.log(req.body)
 
-	const newOrder = Order.findOrCreate({ where: { userId, status: 'fullfilled'} });
+	const newOrder = Order.findOrCreate({ where: { userId, status: 'cart'} });
 	const newProduct = Product.findOne({ where: {id: id} });
 	Promise.all([ newOrder,  newProduct])
 	.then((data) => {

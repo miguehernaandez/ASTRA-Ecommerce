@@ -265,26 +265,148 @@ h1 {
 }
 
 /********************************Seccion Shopping************************************/
+.cont1 ul li .i {
+	font-size: 20px;
+	font-weight: bold;
+	color: #3b8ea5;
+	margin-right: 10px;
+	margin-left: 15px;
+}
+.cont1 ul li .span {
+	font-size: 13px;
+	font-weight: bold;
+	font-family: 'Open Sans', sans-serif;
+	color: #3b8ea5;
+}
+.cont_prin1{
+	width: 90%;
+	margin: auto;
+	padding: 0px;
+
+}
+.cont_form{
+	background-color: #ededed;
+	padding-top: 1%;
+	padding-bottom: 1%;
+}
 .contForm {
-	box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+	background-color: white;
 	padding: 25px;
-	border-radius: 20px;
-	width: 50%;
+	width: 40%;
+}
+.contForm h1{
+	font-weight: bold;
+	color: var(--azul);
+	font-size: 1.5em;
+	font-family: 'Open Sans', sans-serif;
+}
+.contForm h6{
+	color: var(--azul);
+	font-size: 0.9em;
+	font-style: normal;
+	font-family: 'Open Sans', sans-serif;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.contForm .label{
+	color: var(--azul);
+	font-size: 0.9em;
+	font-weight: bold;
+	font-family: 'Open Sans', sans-serif;
+
+}
+.cont_button2 {
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 .submitDate {
-	display: block;
-	width: 100% !important;
-	box-shadow: 20px !important;
+	width: 40% !important;
+	border: 1px solid #3B8EA5;
+	background-color: #3B8EA5;
+	font-size: 0.9em;
+    color: #1F2333;
+    font-family: 'Open Sans', sans-serif !important;
+    font-weight: bold !important;
 }
+.submitDate:hover{
+	border: 1px solid #1F2335;
+    background-color: #1F2335;
+    color: white;
+}
+
+.submitCancel{
+	width: 40% !important;
+	margin-left: 3%;
+	border: 1px solid white;
+    background-color: white;
+	color: #3B8EA5;
+	font-size: 0.9em;
+    font-family: 'Open Sans', sans-serif !important;
+    font-weight: bold !important;
+
+}
+.submitCancel:hover{
+	border: 1px solid #EDF7F6;
+    background-color: #EDF7F6;
+    color: #3B8EA5;
+}
+
 
 /*************************************** Seccion Metodo de Pago **************************************************/
 .contFormPay {
-	display: flex;
-	justify-content: space-between;
+	/* background-color: red; */
+	/* display: flex;
+	justify-content: center; */
 	width: 100%;
 	margin: 0 auto;
 	padding: 25px;
+}
+.contFormPay .resCompra {
+	width: 50%;
+	margin: auto;
+	background-color: white;
+	margin-bottom: 30px;
+}
+.contFormPay .resCompra .titleOrden{
+	display: flex;
+	justify-content: flex-start;
+	padding: 10px;
+	color: #1F2333;
+	font-weight: bold;
+	font-size: 0.9em;
+    font-family: 'Open Sans', sans-serif !important;
+}
+.tableTitle{
+    font-size: 0.9em !important;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+}
+.tableDescrip{
+    font-size: 0.8em !important;
+    font-weight: normal;
+    font-family: 'Open Sans', sans-serif;
+
+}
+.cont_total1{
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+.total{
+    width: 50%;
+}
+
+.subinfo1{
+    font-size: 0.8em !important;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+}
+.subPrecio{
+    font-size: 0.8em !important;
+    font-family: 'Open Sans', sans-serif;
+
 }
 
 .formPa {
@@ -296,6 +418,7 @@ h1 {
 	text-align: center;
 	width: 100%;
 }
+
 
 .contProd {
 	display: flex;
@@ -318,4 +441,62 @@ h1 {
 
 .buttonFormPay {
 	margin-top: 20px;
+}
+.contFormCardPay{
+	margin-top: 30px;
+	max-width: 50% !important;
+	height: 200px;
+	margin: auto;
+	padding: 10px;
+	background-color: white
+}
+.contFormCardPay .titleOrden{
+	display: flex;
+	justify-content: flex-start;
+	padding: 10px;
+	color: #1F2333;
+	font-weight: bold;
+	font-size: 0.9em;
+    font-family: 'Open Sans', sans-serif !important;
+}
+.button{
+	display: flex;
+	/* background-color: violet; */
+	height: 20%;
+	margin-top: 40px;
+	/* margin-bottom: 40px; */
+	justify-content: center;
+    /* flex-direction: column;
+    align-items: center; */
+}
+.button .button1{
+    border: 1px solid #3B8EA5;
+    background-color: #3B8EA5;
+    color: #1F2333;
+    font-family: 'Open Sans', sans-serif !important;
+	font-weight: bold !important;
+	height: 100%;
+	width: 30%;
+	
+    /* margin-bottom: 20px !important; */
+}.button .button1:hover{
+    border: 1px solid #1F2335;
+    background-color: #1F2335;
+    color: white;
+}
+
+.button .button2{
+    border: 1px solid white;
+    background-color: white;
+    color: #3B8EA5;
+    font-family: 'Open Sans', sans-serif !important;
+	font-weight: bold !important;
+	height: 100%;
+	width: 30%;
+	margin-left: 5%;
+}
+.button .button2:hover{
+    border: 1px solid #EDF7F6;
+    background-color: #EDF7F6;
+    color: #3B8EA5;
 }

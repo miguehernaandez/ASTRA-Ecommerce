@@ -101,8 +101,8 @@ const CartShop = ({ addToCartP, cartP, removeFromCartP, updateFromCartP, deleteO
 						<img className={`${s.logo}`} src={logo}></img>
 						<ul>
 							<li>
-								<i>1</i>
-								<span>Resumen de compra</span>
+								<i className={s.i}>1</i>
+								<span className={s.span}>Resumen de compra</span>
 							</li>
 							<li>
 								<i>2</i>
