@@ -15,7 +15,7 @@ const inlineHtml = juice.inlineContent(emailHtml, emailCss);
 
 mailgun.post(`/${MAILGUN_DOMAIN}/templates`, {
 	"template": inlineHtml,
-	"name": "template.astra",
+	"name": "template.final10",
 	"description": "Astra template"}, (error, body) =>  console.log(body) );
 
 const stripe = new Stripe('sk_test_51HhisyJCzko8yllsxOIAH4PuIS3N1PWGAUw1viuWg14gzpQPzJLJi7guXSecwRnf2gpdXiRWISJXQJc3N7ChjvQw00qiH74sAF')
@@ -233,18 +233,26 @@ server.put('/checkoutReject/:id', (req, res)=>{
 server.post('/checkout/:id', async (req, res)=>{
 	const { id } = req.params;
 	const { email, name } = req.body;
-	console.log(email, name)
 	try {
 		const order = await Order.findOne({ where: {id: id}, include:{model: Product}})
 		const subject = `Astra - Detalles de tu compra!`;
+		const url = 'https://i.ibb.co/FK5hsvx/astra-logo-opaco.png';
+		let totalProducts = order.products;
+		for (let i=0; i<totalProducts.length; i++){
+			totalProducts[i].order_line.price *= totalProducts[i].order_line.quantity;
+		}
 		const data = {
 			from: "Astra Team <info@astra.com>",
 			to: email,
 			subject: subject,
-			template: 'template.astra',
+			template: 'template.final10',
 			'h:X-Mailgun-Variables': JSON.stringify({
 				name: name,
-				reference: order.id
+				total: order.total,
+				reference: order.id,
+				products: totalProducts,
+				email: email,
+				url: url
 			})
 		}
 		await mailgun.messages().send(data)

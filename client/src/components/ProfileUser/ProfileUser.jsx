@@ -29,6 +29,8 @@ const ProfileUser = ({userLoggedP, logoutP, loginActionP, orders, getOrdersP}) =
     }
 
     const ordersFiltered = orders.filter(x => x.user.id === userLoggedP.id);
+    
+    console.log(ordersFiltered)
 
     return (
         <div className={s.all}>
