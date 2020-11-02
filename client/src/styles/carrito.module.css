@@ -9,78 +9,75 @@
 .contPrincipal {
 	min-height: 400px;
 }
-.cont1 .logo{
-    height: 60px;
+.cont1 .logo {
+	height: 60px;
 }
-.cont1 ul li{
-    display: inline-block;
+.cont1 ul li {
+	display: inline-block;
 }
-.cont1 ul li i{
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 100px;
-    margin-right: 10px;
-    margin-left: 15px;   
+.cont1 ul li i {
+	font-size: 20px;
+	font-weight: bold;
+	border-radius: 100px;
+	margin-right: 10px;
+	margin-left: 15px;
 }
-.cont1 ul li span{
-    font-size: 13px;
-    font-weight: lighter;
-    font-family:'Open Sans', sans-serif;
+.cont1 ul li span {
+	font-size: 13px;
+	font-weight: lighter;
+	font-family: 'Open Sans', sans-serif;
 }
-h1{
-    font-size: 25px;
-    font-family:'Open Sans', sans-serif;
+h1 {
+	font-size: 25px;
+	font-family: 'Open Sans', sans-serif;
 }
-.cardVacio{
-    box-shadow: -1px 10px 18px 2px rgba(0,0,0,0.75);
-    width: 50%;
-    /* height: 200px; */
-    margin: auto;
-    text-align: center;
-    border-radius: 30px;
-   padding: 1%;
+.cardVacio {
+	box-shadow: -1px 10px 18px 2px rgba(0, 0, 0, 0.75);
+	width: 50%;
+	/* height: 200px; */
+	margin: auto;
+	text-align: center;
+	border-radius: 30px;
+	padding: 1%;
 }
-.cardVacio h1{
-    margin-top: 10px;
-    font-weight: bold;
-    color: var(--celeste);
-    font-size: 1em;
-    font-family:'Open Sans', sans-serif; 
-
+.cardVacio h1 {
+	margin-top: 10px;
+	font-weight: bold;
+	color: var(--celeste);
+	font-size: 1em;
+	font-family: 'Open Sans', sans-serif;
 }
-.cardVacio h6{
-    font-weight: bold;
-    font-size: 0.7em;
-    font-family:'Open Sans', sans-serif; 
-
-} 
-.cardVacio .link{
-    font-weight: bold;
-    color: var(--celeste);
-    font-size: 0.8em;
-    font-family:'Open Sans', sans-serif;
+.cardVacio h6 {
+	font-weight: bold;
+	font-size: 0.7em;
+	font-family: 'Open Sans', sans-serif;
 }
-.cont2 .cont_table{
-    width: 100%;
-    margin-top: 25px;
-    /* border: 1px solid red; */
+.cardVacio .link {
+	font-weight: bold;
+	color: var(--celeste);
+	font-size: 0.8em;
+	font-family: 'Open Sans', sans-serif;
 }
-.cont2 .cont_table .tableTitle{
-    font-size: 13px;
-    color: var(--azul);
-    font-family:'Open Sans', sans-serif;
-    background-color: #f5f5f5;
+.cont2 .cont_table {
+	width: 100%;
+	margin-top: 25px;
+	/* border: 1px solid red; */
 }
-.product{
-    display: flex;
-    border: none;
-    
+.cont2 .cont_table .tableTitle {
+	font-size: 13px;
+	color: var(--azul);
+	font-family: 'Open Sans', sans-serif;
+	background-color: #f5f5f5;
 }
-.cont_img > img{
-    background-color: violet;
-    max-width: 5rem !important;
-    max-height: 5rem    !important;
-    margin-right: 15px;
+.product {
+	display: flex;
+	border: none;
+}
+.cont_img > img {
+	background-color: violet;
+	max-width: 5rem !important;
+	max-height: 5rem !important;
+	margin-right: 15px;
 }
 .cont_prin {
 	/* border: 1px solid blue; */
@@ -166,18 +163,6 @@ h1{
 }
 .cantidadTitle {
 	width: 15%;
-}
-.cont_cant {
-	/* background-color: royalblue; */
-	/* position: absolute;
-    top: 40px; */
-}
-.cantidad {
-	/* width: 100%; */
-	/* display: flex;
-    /* background-color: red; */
-	/* position: relative; */
-	/* bottom: 35px; */
 }
 
 .cont_button {
@@ -270,41 +255,39 @@ h1{
 	background-color: var(--celeste);
 }
 
-.buttonFC{
-    background-color: var(--naranja);
-    color: white;
-    font-weight: bold;
-    font-family:'Open Sans', sans-serif; 
-    border: none;
-    margin: 0 10px;
+.buttonFC {
+	background-color: var(--naranja);
+	color: white;
+	font-weight: bold;
+	font-family: 'Open Sans', sans-serif;
+	border: none;
+	margin: 0 10px;
 }
 
-
 /********************************Seccion Shopping************************************/
-.contForm{
+.contForm {
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 	padding: 25px;
 	border-radius: 20px;
 	width: 50%;
 }
 
-.submitDate{
+.submitDate {
 	display: block;
 	width: 100% !important;
 	box-shadow: 20px !important;
 }
 
 /*************************************** Seccion Metodo de Pago **************************************************/
-.contFormPay{
+.contFormPay {
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
 	margin: 0 auto;
 	padding: 25px;
-
 }
 
-.formPa{
+.formPa {
 	width: 100%;
 }
 
@@ -314,19 +297,18 @@ h1{
 	width: 100%;
 }
 
-.contProd{
+.contProd {
 	display: flex;
 	justify-content: space-around;
 	border-bottom: 2px solid black;
 }
 
-.contProdHead{
+.contProdHead {
 	display: flex;
 	width: 100%;
 	justify-content: space-around;
-	
 }
-.contProdHead > div{
+.contProdHead > div {
 	border: 1px solid black;
 	background-color: var(--celeste);
 	color: white;
@@ -334,6 +316,6 @@ h1{
 	padding: 5px;
 }
 
-.buttonFormPay{
+.buttonFormPay {
 	margin-top: 20px;
 }

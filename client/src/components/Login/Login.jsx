@@ -1,48 +1,116 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Form, Container, Navbar } from 'react-bootstrap';
+import { Button, Form, Container, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { loginAction } from '../../store/actions/loginActions';
-import logo from '../../multimedia/logo.png';
 import s from '../../styles/loggin.module.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { LoginModalNoUser, LoginModalAuthError } from '../Modals/LoginModals';
 
-const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
+// Google Login
+import { GoogleLogin } from 'react-google-login';
+
+const Login = ({ userLoggedP, loginActionP, messageErrorP, checkForEmailP, loggedP, usersP }) => {
+	// <-------------------- CONSTANTES Y ESTADOS -------------------->
 	const [form, setForm] = useState({
 		email: '',
 		password: '',
 	});
 	const history = useHistory();
+	const [showModalNoUser, setShowModalNoUser] = useState(false);
+	const [showModalAuthError, setShowModalAuthError] = useState(false);
+	// useEffect
+	useEffect(() => {
+		if (loggedP == true) {
+			window.location.href = 'http://localhost:3000/';
+		}
+	}, [loggedP]);
+	// console.log(loggedP);
+	const url = 'localhost:3001';
+	const clientIdCode = '269758003483-2l6nugnundjtidqt2djkq7kt9jptsgh8.apps.googleusercontent.com'; // Google
+	// <-------------------- CONSTANTES Y ESTADOS -------------------->
 
-	console.log(loggedP);
-
+	// <-------------------- FUNCIONES -------------------->
+	// Capturar los valores de los inputs
 	const handlerInput = (e) => {
 		setForm({ ...form, [e.target.name]: e.target.value });
 	};
+
+	// Funcion para manejar el submit del formulario
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		loginActionP(form);
-		if (userLoggedP && userLoggedP.role === 'admin') {
-			console.log('Entre al if de ADmin');
-			return history.push('/admin');
-		} else {
-			return history.push('/');
-		}
+		// Comprobacion de si el usuario existe o no en la base de datos
+		var dontShowModal = true;
+		axios
+			.get(`http://${url}/users`)
+			.then((res) => {
+				console.log(res.data.data);
+				console.log(form);
+				res.data.data.forEach((user) => {
+					if (user.email == form.email) {
+						console.log('true');
+						// loginActionP(form);
+						dontShowModal = false;
+						loginActionP(form);
+						if (userLoggedP && userLoggedP.role === 'admin') {
+							console.log('Entre al if de ADmin');
+							return history.push('/admin');
+						} else {
+							return history.push('/');
+						}
+					}
+				});
+			})
+			.then((res) => {
+				if (dontShowModal) setShowModalNoUser(true);
+			});
+	};
+	// <-------------------------- Google Login -------------------------->
+
+	// Si la autenticacion de Google sale bien
+	const responseGoogleSuccess = (response) => {
+		console.log(response.profileObj.email);
+		console.log(response.profileObj.googleId);
+		var googleForm = {
+			email: response.profileObj.email,
+			password: response.profileObj.googleId,
+		};
+		console.log(googleForm);
+		// Comprobacion de si el usuario existe o no en la base de datos
+		var dontShowModal = true;
+		axios
+			.get(`http://${url}/users`)
+			.then((res) => {
+				console.log(res.data.data);
+				res.data.data.forEach((user) => {
+					if (user.email == response.profileObj.email) {
+						console.log('true');
+						loginActionP(googleForm);
+						dontShowModal = false;
+						return;
+					}
+				});
+			})
+			.then((res) => {
+				if (dontShowModal) setShowModalNoUser(true);
+			});
 	};
 
-	// useEffect(() => {
-	//     if( loggedP === false ){
-	//         return history.push('/login')
-	//     }
-	// },[])
-
-	console.log(userLoggedP);
+	// Si la autenticacion de Google sale mal
+	const responseGoogleFailure = (response) => {
+		setShowModalAuthError(true);
+	};
+	// <-------------------------- Google Login -------------------------->
+	// <-------------------- FUNCIONES -------------------->
 
 	return (
 		<div className={s.cont_prin}>
+			<LoginModalNoUser showModalNoUser={showModalNoUser} setShowModalNoUser={setShowModalNoUser}></LoginModalNoUser>
+			<LoginModalAuthError showModalAuthError={showModalAuthError} setShowModalAuthError={setShowModalAuthError}></LoginModalAuthError>
 			<div className={s.opac}>
 				<Container className={s.cont} onSubmit={handleSubmit}>
 					<div className={s.img}>
@@ -65,6 +133,14 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, loggedP }) => {
 						<Button className={s.button} type='submit'>
 							SING IN
 						</Button>
+						<hr></hr>
+						<Row className={`justify-content-center`}>
+							<Col>
+								{/* google login */}
+								<GoogleLogin clientId={clientIdCode} buttonText='Ingresar con Google' onSuccess={responseGoogleSuccess} onFailure={responseGoogleFailure} isSignedIn={false} cookiePolicy={'single_host_origin'} className={`w-100 justify-content-center`} />
+								{/* google login */}
+							</Col>
+						</Row>
 						<Link to='/users'>
 							<div className={s.reg}>
 								<p>
@@ -84,6 +160,7 @@ function mapStateToProps(state) {
 		userLoggedP: state.userLogged,
 		messageErrorP: state.messageError,
 		loggedP: state.logged,
+		usersP: state.users,
 	};
 }
 

@@ -102,7 +102,7 @@ function App() {
 					<Footer></Footer>
 				</Route>
 
-				<Route path='/users/:id' component={UserDetail} />
+				<Route path='/users/:id' exact component={UserDetail} />
 				{/* USERS */}
 
 				{/* PROFILE */}

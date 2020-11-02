@@ -12,7 +12,7 @@ const ChackoutSucces = ({showSuccess, UpdateOrderToFullfilledP, orderModal, send
   let order = orderModal
   let ordeID = order.id
   let user = userModal
-  const arrayOrder = order.fulter(x => x.user.id === userlogued.id)
+
   console.log(order)
 
 

@@ -4,19 +4,16 @@ import { useHistory } from 'react-router-dom';
 
 // Bootstrap
 import { Container, Card, Form, Button, Col, Row } from 'react-bootstrap';
-
 // CSS
 import s from '../../styles/FormUsers.module.css';
-
 // Redux
 import { connect } from 'react-redux';
-
 // Actions
 import { createUser, getUsers } from '../../store/actions/userActions.js';
 // <-------------------------------------------------------------->
 const url = 'localhost:3001';
 
-const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP}) {
+const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP }) {
 	const history = useHistory();
 	console.log(createUserP);
 	console.log(usersP);
@@ -60,33 +57,16 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 		return userData;
 	};
 
-	// personId: {
-	// 		type: DataTypes.INTEGER,
-	// 		allowNull: false,
-	// 	},
-	// 	email: {
-	// 		type: DataTypes.STRING,
-	// 		allowNull: false,
-	// 	},
-	// 	password: {
-	// 		type: DataTypes.STRING,
-	// 		allowNull: false,
-	// 	},
-	// 	role: {
-	// 		type: DataTypes.ENUM('client', 'admin'),
-	// 		allowNull: false,
-	// 	},
-
 	const createSuccess = function () {
 		if (createUserSuccessP) {
-			return history.push('/login')
-		} 
+			return history.push('/login');
+		}
 	};
 
 	// Funcion que se dispara al hacer submit
 	const handleSubmit = function (e) {
 		e.preventDefault();
-		console.log('Hola')
+		console.log('Hola');
 		var data = getUserData();
 
 		// // Comprobacion de que las contraseñas coincidan
@@ -112,27 +92,27 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 	};
 
 	return (
-		<div className={`my-4`}>
+		<div className={`${s.contPrincipal} my-4`}>
 			<Container>
-			 <h1 className={`${s.formTitle}`}>Completa tus datos</h1>
-				<Card className={`p-3 m-2 ${s.formCard}`}>					
+				<h1 className={`${s.formTitle}`}>Completa tus datos</h1>
+				<Card className={`p-3 m-2 ${s.formCard}`}>
 					<Form onSubmit={handleSubmit}>
 						<Row>
 							<Col lg={12}>
 								<h2 className={s.subTitle}>Datos personales</h2>
 							</Col>
-							<Col lg={12}>								
+							<Col lg={12}>
 								<Form.Row>
 									<Col xs={12} md={6} lg={6}>
-										<Form.Group  className={s.grupo}>											
-											<Form.Control className={`${s.input}`} type='name'  id={`name`} required />
+										<Form.Group className={s.grupo}>
+											<Form.Control className={`${s.input}`} type='name' id={`name`} required />
 											<Form.Label className={s.label}>Nombre</Form.Label>
 											<span className={s.menssage}>Ingrese su nombre completo</span>
 										</Form.Group>
 									</Col>
 									<Col xs={12} md={6} lg={6}>
-										<Form.Group  className={s.grupo}>											
-											<Form.Control className={`${s.input}`} type='email'  id={`email`} required />
+										<Form.Group className={s.grupo}>
+											<Form.Control className={`${s.input}`} type='email' id={`email`} required />
 											<Form.Label className={s.label}>Email</Form.Label>
 											<span className={s.menssage}>Asegurate de tener acceso a este email</span>
 										</Form.Group>
@@ -141,7 +121,7 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 							</Col>
 						</Row>
 						<hr></hr>
-						
+
 						<Row>
 							<Col lg={12}>
 								<h2 className={s.subTitle}>Datos de la cuenta</h2>
@@ -149,19 +129,18 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 							<Col lg={12}>
 								<Form.Row>
 									<Col xs={12} md={6} lg={6}>
-									<Form.Group  className={s.grupo} >										
-										<Form.Control className={`${s.input}`} type='password'  id={`password`} required />
-										<Form.Label className={s.label}>Contraseña</Form.Label>
-										<span className={s.menssage}>La contraseña debe contener minimo 8 caracteres y 1 mayuscula</span>
-									</Form.Group>
-									
+										<Form.Group className={s.grupo}>
+											<Form.Control className={`${s.input}`} type='password' id={`password`} required />
+											<Form.Label className={s.label}>Contraseña</Form.Label>
+											<span className={s.menssage}>La contraseña debe contener minimo 8 caracteres y 1 mayuscula</span>
+										</Form.Group>
 									</Col>
 									<Col xs={12} md={6} lg={6}>
-									<Form.Group xs={12} md={6} lg={6} className={s.grupo} >										
-										<Form.Control className={`${s.input}`} type='password'  id={`passwordConfirm`} required />
-										<Form.Label className={s.label}>Confirma tu contraseña</Form.Label>
-										<span className={s.menssage}>Confirme su contraseña</span>
-									</Form.Group>
+										<Form.Group xs={12} md={6} lg={6} className={s.grupo}>
+											<Form.Control className={`${s.input}`} type='password' id={`passwordConfirm`} required />
+											<Form.Label className={s.label}>Confirma tu contraseña</Form.Label>
+											<span className={s.menssage}>Confirme su contraseña</span>
+										</Form.Group>
 									</Col>
 								</Form.Row>
 							</Col>
@@ -169,9 +148,9 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 
 						<Row className={s.terminos}>
 							<Col lg={9}>
-								<Form.Group  as={Row}>
+								<Form.Group as={Row}>
 									<Form.Check className={`ml-3`} id={`terminos`} label='Acepto los Términos y Condiciones y autorizo el uso de mis datos de acuerdo a la Declaración de Privacidad.' onClick={aceptarTerminos} />
-								</Form.Group>								
+								</Form.Group>
 							</Col>
 						</Row>
 						<Row>
@@ -182,6 +161,16 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 							</Col>
 						</Row>
 					</Form>
+					<hr></hr>
+					<Row>
+						<Col xs={12}>
+							<h2>O ingresa con una cuenta de Google</h2>
+						</Col>
+						<Col xs={12} className={`d-flex justify-content-center mt-3`}>
+							{/* Ingreso por passport */}
+							<a href='http://localhost:3001/users/auth/google'>Sign In with Google</a>
+						</Col>
+					</Row>
 				</Card>
 			</Container>
 		</div>
@@ -198,7 +187,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		createUserP: (data) => dispatch(createUser(data)),
-		getUsersP : () => dispatch(getUsers())
+		getUsersP: () => dispatch(getUsers()),
 	};
 }
 

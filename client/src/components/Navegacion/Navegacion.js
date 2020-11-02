@@ -40,7 +40,6 @@ function Navegacion(props) {
 		window.location = '/';
 		props.loginActionP();
 		Cookie.remove('userLoad');
-		Cookie.remove('cartItems');
 		return;
 	};
 
@@ -51,6 +50,15 @@ function Navegacion(props) {
 		// console.log(botonHamburguesa);
 		botonHamburguesa.classList.toggle('d-none');
 		botonHamburguesa2.classList.toggle('d-none');
+		console.log(document.getElementById('navbarCompleto'));
+	};
+
+	const initialStateHamburgerIcons = function () {
+		// Cambia el estado del icono de desplegar cada vez que se selecciona un link
+		var botonHamburguesa = document.getElementById('hamburgerButton');
+		var botonHamburguesa2 = document.getElementById('hamburgerButton2');
+		botonHamburguesa.classList.remove('d-none');
+		botonHamburguesa2.classList.add('d-none');
 	};
 	// <--------------------------- FUNCIONES --------------------------->
 
@@ -60,7 +68,7 @@ function Navegacion(props) {
 
 	return (
 		<div>
-			<Navbar collapseOnSelect expand='md' className={props.showSearchbar ? `justify-content-center ${s.navbar} py-0 px-2` : `justify-content-center ${s.navbarAdmin} py-0 px-2`}>
+			<Navbar id='navbarCompleto' collapseOnSelect expand='md' onSelect={initialStateHamburgerIcons} className={props.showSearchbar ? `justify-content-center ${s.navbar} py-0 px-2` : `justify-content-center ${s.navbarAdmin} py-0 px-2`}>
 				<Container className={`${s.containerPrincipal} ${s.bordeVerde} d-flex m-0 p-0`}>
 					<Navbar.Brand as={Link} to='/' className={`${s.bordeVerde} mx-0 ml-1`}>
 						{/* Logo */}
