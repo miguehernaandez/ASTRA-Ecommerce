@@ -234,3 +234,13 @@ button:focus {
 	color: white !important;
 }
 
+.btnAdmin{
+	background-color: transparent !important;
+	color: #3B8EA5 !important;
+}
+
+.btnAdmin:hover{
+	background-color: #3B8EA5 !important;
+	color: white !important;
+}
+

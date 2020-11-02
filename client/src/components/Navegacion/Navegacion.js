@@ -165,7 +165,14 @@ function Navegacion(props) {
 										) : (
 											<div></div>
 										)}
-										<UserList showSearchbar={props.showSearchbar} userLogin={props.userLogin} handlerClick={handlerClick}></UserList>
+										<UserList 
+										linksU={props.linksU}
+										linksA={props.linksA}
+										showSearchbar={props.showSearchbar} 
+										userLogin={props.userLogin} 
+										handlerClick={handlerClick}>
+
+										</UserList>
 										{!!props.showSearchbar && (
 											<div className={s.contCart}>
 												<Link to='/users/cart'>

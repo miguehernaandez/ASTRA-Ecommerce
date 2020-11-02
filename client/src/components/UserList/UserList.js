@@ -9,6 +9,7 @@ import { faUser as userLogin, faSignInAlt as signIn, faShoppingCart as shopCart,
 
 
 function UserList (props) {
+    console.log('Acaaaaaaaa', props.userLogin);
     if(!props.userLogin) {
         return ( 
             <div className={s.list}>
@@ -28,10 +29,11 @@ function UserList (props) {
             </div>
         )
     } else {
+        console.log('Acaaaaaaaa', props.linksA, props.linksU);
         return (
             <div className={s.list}>
             <Dropdown>
-                <Dropdown.Toggle variant="Info" id="dropdown-basic" className={s.btn}>
+                <Dropdown.Toggle variant="Info" id="dropdown-basic" className={props.userLogin.role === 'admin' ? s.btnAdmin : s.btn} >
                     {props.userLogin.name}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

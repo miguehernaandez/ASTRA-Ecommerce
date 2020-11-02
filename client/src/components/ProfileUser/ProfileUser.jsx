@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import {connect} from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Nav, Navbar, Form, Button, FormControl, Jumbotron, Card, Image } from 'react-bootstrap';
+import { Nav, Navbar, Form, Button, Col, Row, Card, Image } from 'react-bootstrap';
 import {Redirect, Link} from 'react-router-dom'
 import {logout,  loginActiontest} from '../../store/actions/loginActions'
 import Cookie from 'js-cookie';
@@ -10,19 +10,16 @@ import {enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } fr
 import Navegacion from '../Navegacion/Navegacion'
 import s from '../../styles/profile.module.css';
 import placeholder from '../../multimedia/placeholder.png';
+import { getOrders } from '../../store/actions/order_actions';
 
 
-const ProfileUser = ({userLoggedP, logoutP, loginActionP, orders}) => {
+const ProfileUser = ({userLoggedP, logoutP, loginActionP, orders, getOrdersP}) => {
 
     const history = useHistory();
-    console.log('ACAAAAAAAAAAAAAAAAAAAAAAAAAAA', orders)
-    // useEffect(()=> {
-    //     if(!userLoggedP){
-    //         return history.push('/login')
-    //     }else{
-    //         setModal(true)
-    //     }
-    // },[])
+    console.log('ACA ESTAN LAS ORDENES Y LOS PRODUCTOS', orders)
+    useEffect(()=> {
+        getOrdersP()
+    },[])
 
     const handlerClick = () => {
     //    history.push('/')
@@ -31,51 +28,62 @@ const ProfileUser = ({userLoggedP, logoutP, loginActionP, orders}) => {
     //    return
     }
 
+    const ordersFiltered = orders.filter(x => x.user.id === userLoggedP.id);
 
     return (
         <div className={s.all}>
         <Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} />
-        <div className={s.background}>
-        </div>
+        <div className={s.background}></div>
         <div className={s.contPrincipal}>
-        {/* <Jumbotron className={s.prueba}>
-                    <h1> Wellcome {userLoggedP.name} </h1>
-                    <p>
-                        Logged Success !!
-                    </p>
-                    <p>
-                          <Button variant="primary">Learn more</Button> 
-                    </p>
-        </Jumbotron> */}
-        <Card className={`${s.cardStyle} ${s.prueba}`}>
+        <Card className={`${s.cardStyle1} ${s.prueba}`}>
             <Image className={s.size} src={placeholder} roundedCircle/>
             <Card.Body className={s.cardItemUser}>{userLoggedP.name}</Card.Body>
             <Card.Body className={s.email}>{userLoggedP.email}</Card.Body>
         </Card>
-        <Card className={`${s.cardStyle} ${s.compras}`}>
-            <Card.Body className={s.cardItem}>
-                <h2>Ordenes</h2>
-                {orders && orders.map(x => {
-                    return (
-                        <div>
-                            Dirección: {x.adress}
-                            Ciudad: {x.city}
-                            
-                            Método de pago: {x.paymentMethod}
-                            Teléfono: {x.phone}
-                            Código postal: {x.postal}
-                            Estatus: {x.status}
-                            Subtotal: {x.subTotal}
-                            Total: {x.total}
-                        </div>
-                    )
+        <Card className={`${s.cardStyle} ${s.compras} ${s.cardStyleOrd}`}>
+            <Card.Header className={`${s.cardStyleOrd} text-center`}>
+                <h2 className={s.otro}>Historial de compras</h2>
+            </Card.Header>
+                {ordersFiltered && ordersFiltered.map(x => {
+                    if(x.status === "fullfilled"){
+                        return (
+                            <div>
+                            {/* <Card.Body className={`${s.cardItem} w-100`}> */}
+                            <Row  className={`${s.cardItem}`}>
+                                <Col xs={12} lg={3} className={`text-center text-lg-left`}>
+                                    <h2>{x.products[0].name}</h2>
+                                    {/* <p>Celular Lg k10 texto largooooo</p> */}
+                                    <img src={x.products[0].image} alt="imagen-producto" className={s.image}/>
+                                </Col>
+                                
+                                <Col xs={12} lg={3} className={`text-center text-lg-left ${s.columna}`}>
+                                <p>Dirección: {x.adress}</p>
+                                <p>Ciudad: {x.city}</p>
+                                <p>Método de pago: {x.paymentMethod}</p>
+                                </Col>
+    
+                                <Col xs={12} lg={3} className={`text-center text-lg-left ${s.columna}`}>
+                                <p>Teléfono: {x.phone}</p>
+                                <p>Código postal: CP{x.postal}</p>
+                                <p>Estatus: {x.status}</p>
+                                </Col>
+    
+                                <Col xs={12} lg={3} className={`text-center text-lg-left ${s.columna}`}>
+                                <p>Precio: ${x.products[0].order_line.price}</p>
+                                <p>Cantidad: {x.products[0].order_line.quantity} U</p>
+                                <p>Subtotal: ${x.subTotal}</p>
+                                <p className={s.total}>Total: ${x.total}</p>
+                                </Col>
+                            </Row>
+                            {/* </Card.Body> */}
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div>No hay ninguna compra en el historial</div>
+                        )
+                    }
                 })}
-            </Card.Body>
-        </Card>
-        <Card className={`${s.cardStyle}`}> 
-            <Card.Body className={s.cardItem}>
-                <h2>Medios de pago</h2>
-            </Card.Body>
         </Card>
         </div>
         </div>
@@ -92,7 +100,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return {
-        // loginActionP : () => dispatch(loginActiontest())
+        getOrdersP : () => dispatch(getOrders()),
     }
 }
 
