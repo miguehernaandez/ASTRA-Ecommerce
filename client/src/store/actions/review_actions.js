@@ -82,9 +82,10 @@ export function deleteUserReview(productId, reviewId){
     }
 }
 
-export function editUserReview(productId, reviewId){
+export function editUserReview(productId, editReview){
+    let reviewId = editReview.id;
     return (dispatch)=>{
-        axios.put(`http://${url}/product/${productId}/review/${reviewId}`)
+        axios.put(`http://${url}/product/${productId}/review/${reviewId}`, editReview)
         .then(res => {
             console.log('REVIEWS DE USUARIO EN EL ACTION');
             console.log(res.data.data);

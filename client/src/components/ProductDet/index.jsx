@@ -16,7 +16,7 @@ import Navegacion from '../Navegacion/Navegacion';
 import Footer from '../Footer/Footer';
 import Slider from '../Slider/Slider';
 import AddReview from '../Modals/AddReview';
-import AvisoLoggin from '../Modals/AvisoLoggin'
+import AvisoLoggin from '../Modals/AvisoLoggin';
 import Reviews from './Reviews';
 
 // Iconos
@@ -29,12 +29,12 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { getProducts } from '../../store/actions/product_actions';
 import { addToCart } from '../../store/actions/cart_actions';
-import { addReview, deleteUserReview, getUserReviews } from '../../store/actions/review_actions';
+import { addReview, deleteUserReview, getUserReviews, editUserReview } from '../../store/actions/review_actions';
 
 const url = 'localhost:3001';
 
 // <---------------------------Componente--------------------------->
-const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, userLoggedP, getUserReviewsP, deleteReviewP }) => {
+const Product = ({ productsP, userReviewsP, getProductP, addToCartP, addReviewP, userLoggedP, getUserReviewsP, editUserReviewP, deleteReviewP }) => {
 	const [qty, setQty] = useState(1);
 	const [show, setShow] = useState(false);
 	const [showLoggin, setShowLoggin] = useState(false);
@@ -56,32 +56,32 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 
 	console.log(objP);
 
-	
 	const getRate = (reviews) => {
 		let rate = 0;
-		if (reviews.length > 0){
-			reviews.forEach(review => {
+		if (reviews.length > 0) {
+			reviews.forEach((review) => {
 				rate += review.rate;
-			})
+			});
 			rate /= reviews.length;
 		}
-		return rate
-	}
+		return rate;
+	};
 	if (objP.reviews) var rate = getRate(objP.reviews);
 
-	const colorStars = (rate)=>{
-		if(!rate){
+	const colorStars = (rate) => {
+		if (!rate) {
 			var rate = 0;
 		}
-		if (rate > 2.5) rate*=27;
-		else if (rate <= 2.5) rate *=27.2;
+		if (rate > 2.5) rate *= 27;
+		else if (rate <= 2.5) rate *= 27.2;
 		return rate;
-	}
-    var startWidth = colorStars(rate)
+	};
+	var startWidth = colorStars(rate);
+	const roundedRate = Math.round(rate * 10) / 10;
+	const fixedRate = roundedRate.toFixed(1);
 
-
-	const handlerAddToCart = (id, qty) => {
-		addToCartP(id, qty);
+	const handlerAddToCart = (id, qty, idUser) => {
+		addToCartP(id, qty, idUser);
 		history.push(`/users/cart`);
 	};
 	const handlerReview = () => {
@@ -98,8 +98,8 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 			...review,
 			userId: userLoggedP.id,
 		};
-		console.log(newReview)
-		console.log(productId)
+		console.log(newReview);
+		console.log(productId);
 		addReviewP(newReview, productId);
 		setShow(false);
 		setReview({});
@@ -121,6 +121,7 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 		};
 		setReview(newReview);
 	};
+
 	const handlerEditRate = (e) => {
 		if (e.target.checked) {
 			setEditReview({
@@ -128,6 +129,8 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 				rate: parseInt(e.target.value),
 			});
 		}
+		console.log('SOY EL NUEVO RATE EDITADO');
+		console.log(editReview);
 	};
 
 	const editReviewForm = (e) => {
@@ -136,18 +139,15 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 			[e.target.name]: e.target.value,
 		};
 		setEditReview(newReview);
+		console.log('SOY EL ESTADO CAMBIADO DE LA EDIT REVIEW');
+		console.log(editReview);
 	};
 
-	const handlerEditReview = (editReview, productId) =>{
-		let newReview = {
-			...review,
-			userId: userLoggedP.id,
-		};
-		addReviewP(newReview, productId);
+	const handlerEditReview = (productId, editReview) => {
+		editUserReviewP(productId, editReview);
 		getUserReviewsP(objP.id, userLoggedP.id);
-		setShow(false);
-		setReview({});
-	}
+		setEditReview({});
+	};
 
 	console.log(objP.reviews);
 	useEffect(() => {
@@ -164,86 +164,79 @@ const Product = ({productsP, userReviewsP, getProductP, addToCartP, addReviewP, 
 						</Col>
 						<Col xs={12} md={12} lg={4} className={s.cont_info}>
 							<div className={s.infog}>
-							<h3>{`${objP.name}` || `Product Name Here`}</h3>
-							<h4>$ {`${objP.price}` || `00000`}</h4>
-							<h6>Referencia: {`${objP.sku}` || `codReferencia`}</h6>
-							<div className={s.contReviw}>
-						<div className={s.icon}>
-							<div className={s.emptyStars}>
-								<FontAwesomeIcon icon={faStar} />
-								<FontAwesomeIcon icon={faStar} />
-								<FontAwesomeIcon icon={faStar}  />
-								<FontAwesomeIcon icon={faStar}  />
-								<FontAwesomeIcon icon={faStar}  />
-							</div>
-							<div className={s.fullStarsRate} style={{width: startWidth + 'px'}}>
-								<div className={s.fullStars}>
-									<FontAwesomeIcon icon={faStar}  />
-									<FontAwesomeIcon icon={faStar}  />
-									<FontAwesomeIcon icon={faStar}  />
-									<FontAwesomeIcon icon={faStar}  />
-									<FontAwesomeIcon icon={faStar}  />
-								</div>
-							</div>
-						</div>
- 						<div className={s.addReview}>
-							<p onClick={() => handlerReview()}>Escribir comentario</p>
-						</div>
-							</div>
-
-							<p>{`${objP.description}` || `Descripcion no disponible`}</p>
-							<p>
-								<span className={s.dim}>Dimensiones:</span> {`${objP.dimentions}` || `noDisponible`}
-							</p>
-							<div className={s.cont_cant}>
-								{objP.stock > 0 ? (
-									<div className={s.cont_cant2}>
-										<label for='Cantidad'>Candidad:</label>
-										<select
-											name='Cantidad'
-											id='Cantidad'
-											className={s.select}
-											value={qty}
-											onChange={(e) => {
-												setQty(e.target.value);
-											}}
-										>
-											{[...Array(objP.stock).keys()].map((x) => {
-												return <option value={x + 1}>{x + 1}</option>;
-											})}
-										</select>
-										<h6> {objP.stock} Unidades Disponibles</h6>
+								<h3>{`${objP.name}` || `Product Name Here`}</h3>
+								<h4>$ {`${objP.price}` || `00000`}</h4>
+								<h6>Referencia: {`${objP.sku}` || `codReferencia`}</h6>
+								<div className={s.contReviw}>
+									<div className={s.icon}>
+										<div className={s.emptyStarsCont}>
+											<div className={s.emptyStars}>
+												<FontAwesomeIcon icon={faStar} />
+												<FontAwesomeIcon icon={faStar} />
+												<FontAwesomeIcon icon={faStar} />
+												<FontAwesomeIcon icon={faStar} />
+												<FontAwesomeIcon icon={faStar} />
+											</div>
+										</div>
+										<div className={s.fullStarsRate} style={{ width: startWidth + 'px' }}>
+											<div className={s.fullStars}>
+												<FontAwesomeIcon icon={faStar} />
+												<FontAwesomeIcon icon={faStar} />
+												<FontAwesomeIcon icon={faStar} />
+												<FontAwesomeIcon icon={faStar} />
+												<FontAwesomeIcon icon={faStar} />
+											</div>
+										</div>
 									</div>
-								) : (
-									<h4 className={s.agotadoProct}> Producto Agotado</h4>
-								)}
-							</div>
-							{objP.stock > 0 && (
-								<div className={s.cont_button}>
-									<Button className={s.buttonCom}>Comprar ahora</Button>
-									<Button className={s.buttonCar} onClick={() => handlerAddToCart(objP.id, qty)}>
-										Agregar al carrito
-									</Button>
+									<div className={s.addReview}>
+										<p onClick={() => handlerReview()}>Escribir comentario</p>
+									</div>
 								</div>
-							)}
+								<h5>
+									{fixedRate}/ 5.0 ({objP.reviews && objP.reviews.length} opiniones)
+								</h5>
+								<p>{`${objP.description}` || `Descripcion no disponible`}</p>
+								<p>
+									<span className={s.dim}>Dimensiones:</span> {`${objP.dimentions}` || `noDisponible`}
+								</p>
+								<div className={s.cont_cant}>
+									{objP.stock > 0 ? (
+										<div className={s.cont_cant2}>
+											<label for='Cantidad'>Candidad:</label>
+											<select
+												name='Cantidad'
+												id='Cantidad'
+												className={s.select}
+												value={qty}
+												onChange={(e) => {
+													setQty(e.target.value);
+												}}
+											>
+												{[...Array(objP.stock).keys()].map((x) => {
+													return <option value={x + 1}>{x + 1}</option>;
+												})}
+											</select>
+											<h6> {objP.stock} Unidades Disponibles</h6>
+										</div>
+									) : (
+										<h4 className={s.agotadoProct}> Producto Agotado</h4>
+									)}
+								</div>
+								{objP.stock > 0 && (
+									<div className={s.cont_button}>
+										<Button className={s.buttonCom}>Comprar ahora</Button>
+										<Button className={s.buttonCar} onClick={() => handlerAddToCart(objP.id, qty, userLoggedP && userLoggedP.id)}>
+											Agregar al carrito
+										</Button>
+									</div>
+								)}
 							</div>
 						</Col>
 					</Row>
 				</div>
 				<AddReview show={show} setShow={setShow} product={objP} handlerAddReview={handlerAddReview} reviewForm={reviewForm} review={review} handlerRate={handlerRate} />
-				<AvisoLoggin showLoggin={showLoggin} setShowLoggin={setShowLoggin}/>
-				<Reviews 
-					product={objP} 
-					getProductP={getProductP} 
-					userReviews={userReviewsP} 
-					getUserReviews={getUserReviewsP} 
-					deleteReviewP={deleteReviewP} 
-					userLoggedP={userLoggedP}
-					handlerRate={handlerEditRate}
-					editReviewForm={editReviewForm}
-					handlerEditReview={handlerEditReview}
-					rating={rate}
-				/>
+				<AvisoLoggin showLoggin={showLoggin} setShowLoggin={setShowLoggin} />
+				<Reviews product={objP} getProductP={getProductP} userReviews={userReviewsP} getUserReviews={getUserReviewsP} deleteReviewP={deleteReviewP} userLoggedP={userLoggedP} editReview={editReview} setEditReview={setEditReview} handlerRate={handlerEditRate} editReviewForm={editReviewForm} handlerEditReview={handlerEditReview} rating={rate} />
 			</Container>
 			<Footer />
 		</div>
@@ -260,9 +253,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		getProductP: () => dispatch(getProducts()),
-		addToCartP: (id, qty) => dispatch(addToCart(id, qty)),
+		addToCartP: (id, qty, idUser) => dispatch(addToCart(id, qty, idUser)),
 		addReviewP: (review, productId) => dispatch(addReview(review, productId)),
 		getUserReviewsP: (productId, userId) => dispatch(getUserReviews(productId, userId)),
+		editUserReviewP: (productId, review) => dispatch(editUserReview(productId, review)),
 		deleteReviewP: (productId, reviewId) => dispatch(deleteUserReview(productId, reviewId)),
 	};
 }

@@ -27,8 +27,11 @@ export default function Reviews({
 	getUserReviews, 
 	deleteReviewP, 
 	userLoggedP,
+	editReview,
+	setEditReview,
 	handlerRate,
 	editReviewForm,
+	handlerEditReview,
 	rating }) {
 		const arrayReviews = product.reviews;
 		console.log(arrayReviews);
@@ -39,7 +42,8 @@ export default function Reviews({
 
 	// <-----------------------------FUNCIONES----------------------------->
 	// Promeio general del producto
-	
+	const roundedRate = Math.round(rating * 10)/10;
+	const fixedRate = roundedRate.toFixed(1);
 	// Opinion general (puede ser 'malo', 'regular', 'bueno', 'muy bueno' o 'excelente')
 	const opinionGeneral = function (numEstrellas) {
 		var opciones = ['malo', 'regular', 'bueno', 'muy bueno', 'excelente'];
@@ -129,7 +133,7 @@ export default function Reviews({
 						<Col xs={12} md={4} lg={3} className={`${s.bordeRojo} ${s.colResumenReviews} p-0 d-flex flex-column justify-content-around`}>
 							<Row className={`justify-content-md-end justify-content-center p-0 m-0 mt-0`}>
 								{/* Promedio general que tiene el producto */}
-								<p className={`${s.productPromedio} ${s.bordeRojo} p-0 m-0`}>{rating}</p>
+								<p className={`${s.productPromedio} ${s.bordeRojo} p-0 m-0`}>{ fixedRate }</p>
 							</Row>
 							<Row className={`${s.bordeRojo} `}>
 								{/* Cantidad de estrellas en promedio que tiene el producto */}
@@ -222,17 +226,20 @@ export default function Reviews({
 				</div>
 			</Card>
 			<MyReviews 
-			show={show} 
-			setShow={setShow} 
-			product={product} 
-			user={userLoggedP} 
-			userReviews={userReviews} 
-			getUserReviews={getUserReviews}
-			deleteReviewP={deleteReviewP}
-			closeMyReviews={closeMyReviews}
-			handlerRate={handlerRate}
-			editReviewForm={editReviewForm} 
-		/>
+				show={show} 
+				setShow={setShow} 
+				product={product} 
+				user={userLoggedP} 
+				userReviews={userReviews} 
+				getUserReviews={getUserReviews}
+				deleteReviewP={deleteReviewP}
+				closeMyReviews={closeMyReviews}
+				editReview={editReview}
+				setEditReview={setEditReview}
+				handlerRate={handlerRate}
+				editReviewForm={editReviewForm}
+				handlerEditReview={handlerEditReview}
+			/>
 		</>
 		);
 	}

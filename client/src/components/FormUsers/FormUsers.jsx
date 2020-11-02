@@ -10,18 +10,14 @@ import swal from 'sweetalert';
 
 // CSS
 import s from '../../styles/FormUsers.module.css';
-
 // Redux
 import { connect } from 'react-redux';
-
 // Actions
 import { createUser, getUsers } from '../../store/actions/userActions.js';
 // <-------------------------------------------------------------->
 const url = 'localhost:3001';
 
-
-
-const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP}) {
+const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP }) {
 	const history = useHistory();
 
 const [errors, setErrors] = useState({});
@@ -166,7 +162,7 @@ const [values, setValues] = useState({
 
 
 	return (
-		<div className={`my-4`}>
+		<div className={`${s.contPrincipal} my-4`}>
 			<Container>
 			 <h1 className={`${s.formTitle}`}>Completa tus datos</h1>
 				<Card className={`p-3 m-2 ${s.formCard}`}>
@@ -240,12 +236,17 @@ const [values, setValues] = useState({
 							<Alert variant="danger" show={show}>Las contraseñas no coiciden</Alert>
 
 					</Form>
+					<hr></hr>
+					<Row>
+						<Col xs={12}>
+							<h2>O ingresa con una cuenta de Google</h2>
+						</Col>
+						<Col xs={12} className={`d-flex justify-content-center mt-3`}>
+							{/* Ingreso por passport */}
+							<a href='http://localhost:3001/users/auth/google'>Sign In with Google</a>
+						</Col>
+					</Row>
 				</Card>
-				<Row>
-					<Col className={s.content_buttom}>
-
-					</Col>
-				</Row>
 			</Container>
 		</div>
 	);
@@ -261,7 +262,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		createUserP: (data) => dispatch(createUser(data)),
-		getUsersP : () => dispatch(getUsers())
+		getUsersP: () => dispatch(getUsers()),
 	};
 }
 
