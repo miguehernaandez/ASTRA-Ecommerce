@@ -7,110 +7,83 @@ import s from '../../styles/carrito.module.css';
 import logo from '../../multimedia/logo.png';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Form, Container, Navbar, Table} from 'react-bootstrap';
+import { Button, Form, Container, Navbar, Table, Modal} from 'react-bootstrap';
 import { Link } from 'react-router-dom'
-import Checkout from '../Modals/Checkout';
+import ChackoutSucces from '../Modals/McheckoutSucces'
 
 
 
 
-const CheckoutSucess = ({cartP, UpdateOrderTorejectP, checkoutP, UpdateOrderToFullfilledP, orderCreatedP, getOrdersP, orderP, userLogin}) => {
-
-    // const {idUser} = match.params
-    console.log('Orden Creada...')
-    console.log(orderCreatedP)
-    console.log('Ordenes...')
-    console.log(orderP)
-    console.log('estado de la Orden')
-    console.log(checkoutP)
+const CheckoutSucess = ({cartP, UpdateOrderTorejectP, checkoutP, UpdateOrderToFullfilledP, orderCreatedP, getOrdersP, orderP,userLogin}) => {
+    const [reject, setReject] = useState(false)
     //let product = orderCreatedP ? orderCreated.products : []
     let checkoutEnd = checkoutP;
     let orderRender =  orderP && orderP.filter(x => x.id === orderCreatedP.id)
     let objender =  orderRender[0];
     let products = objender && objender.products
     let orderP2 =  orderP.length < 1? [] :  orderP[0].products
-
-    const [showCheckout, setShowCheckout] = useState(true);
     // const  qty = location.search.split('=')[1]
-    
-    console.log('Orden para renderizar')
-    console.log(products)
-  
+
+    console.log(userLogin)
 
     /********** USEEFECT *********** */
     useEffect(()=> {
         getOrdersP();
+        setTimeout(() => {
+            setReject(true)
+        },3000)
     },[])
      /********** USEEFECT *********** */
-    console.log('*****ORDER******')
-    console.log(userLogin)
     let history = useHistory()
-
-
+    console.log(reject)
+   // console.log(reject)
     const handlerClick = () => {
+        alert('Enviamos un correo de confirmacion a tu email!!!')
         UpdateOrderToFullfilledP(orderCreatedP.id)
-        setShowCheckout(false)
+        window.location = '/'
         return
     }
 
     const handlerClickReject = () => {
-        console.log('Recahzar Order', orderCreatedP.id)
         UpdateOrderTorejectP(orderCreatedP.id)
         //history.push('/paymethod')
         return
     }
 
+
     return(
-        <>
+        
         <div>
-            {checkoutEnd ? 
-                    <div className={`${s.cont_prin} my-3`}>
-                        <div className={s.cont1}>
-                            <img className={`${s.logo}`} src={logo}></img>
-                            <ul>
-                                <h1>Compra exitosa!!</h1>
-                            </ul>
-                        </div>
-                        <Container className={s.contFormPay}>
-                           <h1>Compra succes</h1>
-                        </Container>
-                        
-                        
-                            <div className={s.cont_button1}>
-                                {/* <Button className={s.buttonF} >Finalizar compra</Button>{"    "} */}
-                                <Button className={s.buttonFC} as={Link} to={'/'}>Terminar</Button>
-        
-                            </div>
-        
-                    </div> :
+            {reject ? 
+                <div className={`${s.cont_prin} my-3`}>
+                             <div className={s.cont1}>
+                                 <img className={`${s.logo}`} src={logo}></img>
+                                 <ul>
+                                     <h1>{checkoutEnd ? "Compra ok !!" : "Ah ocurrido un error al enviar el pago.!"}</h1>
+                                 </ul>
+                             </div>
+                             <Container className={s.contFormPay}>
+                                <h1>{checkoutEnd ? "" : "Compra fallida"}</h1>
+                             </Container>
+                                 <div className={s.cont_button1}>
+                                     {/* <Button className={s.buttonF} >Finalizar compra</Button>{"    "} */}
+                                     {checkoutEnd ? <div></div> : <Button className={s.buttonFC}  as={Link} to={'/paymethod'}>intentar nuevamente</Button>}
+                                     
+                                 </div>
+                 </div> :
                              <div className={`${s.cont_prin} my-3`}>
-                                <div className={s.cont1}>
-                                    <img className={`${s.logo}`} src={logo}></img>
-                                    <ul>
-                                        <h1>Ah ocurrido un error al enviar el pago.!</h1>
-                                    </ul>
-                                </div>
-                                <Container className={s.contFormPay}>
-                                    <h1>Compra fallida</h1>
-                                </Container>
-                                <div className={s.cont_button1}>
-                                    {/* <Button className={s.buttonF} >Finalizar compra</Button>{"    "} */}
-                                    <Button className={s.buttonFC}  as={Link} to={'/paymethod'}>intentar nuevamente</Button>
-                                </div>
+                                 <h1>Procesando ....</h1>
                             </div>
+
                     }
             {/* < Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={false}/> */}
-         
+            <ChackoutSucces
+                showSuccess={checkoutEnd}
+                orderModal = {orderCreatedP}
+                userModal = {userLogin}
+            />
+
         </div>
-        <Checkout 
-            checkoutEnd={checkoutEnd}
-            showCheckout={showCheckout}
-            setShowCheckout={setShowCheckout}
-            handlerClick={handlerClick}
-            user={userLogin}
-            order={orderCreatedP}
-        />
-        </>
     )
 
 }
@@ -143,6 +116,10 @@ function mapDispatchToProps(dispatch){
  
     }
 }
+
+
+
+
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckoutSucess);

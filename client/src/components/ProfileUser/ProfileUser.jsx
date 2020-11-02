@@ -36,7 +36,7 @@ const ProfileUser = ({userLoggedP, logoutP, loginActionP, orders, getOrdersP}) =
         <div className={s.background}></div>
         <div className={s.contPrincipal}>
         <Card className={`${s.cardStyle1} ${s.prueba}`}>
-            <Image className={s.size} src={placeholder} roundedCircle/>
+            {/* <Image className={s.size} src={placeholder} roundedCircle/> */}
             <Card.Body className={s.cardItemUser}>{userLoggedP.name}</Card.Body>
             <Card.Body className={s.email}>{userLoggedP.email}</Card.Body>
         </Card>

@@ -7,12 +7,12 @@ import s from '../../styles/whatsapp.module.css';
 
 function Contact(){
 
-    const cod = '+' + 549;  // Código de país
-    const cel = 110000000;  // Número telefónico
+    const cod = '+' + 57;  // Código de país
+    const cel = 3125299459;  // Número telefónico
 
    return (
         <Col xs={'auto'} className={`${s.contenedorWs}`}>
-            <a href={`https://api.whatsapp.com/send?phone=${cod}${cel}`}>
+            <a href={`https://api.whatsapp.com/send?phone=${cod}${cel}`} target="_blank">
                     <Image className={s.size} src={ws} roundedCircle/>
             </a>
         </Col>

@@ -115,3 +115,13 @@ export const UpdateOrderToreject = (idOrder) => {
             })
     }
 }
+
+export const sendEmail = (idOrder, user) => {
+    console.log(idOrder, user)
+    return (dispatch) => {
+        axios.post(`http://${url}/orders//checkout/${idOrder}`, user)
+            .then(res => {
+                console.log('Email Enviado correctamente.')
+            })
+    }
+}

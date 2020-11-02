@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import { CreateOrder, UpdateOrderToProcessStatus, deleteOrderCart} from '../../store/actions/checkout_actions';
+import { CreateOrder, UpdateOrderToProcessStatus, deleteOrderCar} from '../../store/actions/checkout_actions';
 import { connect } from 'react-redux';
 import { addToCart, removeFromCart, updateFromCart, deleteCart } from '../../store/actions/cart_actions';
-import { getOrders } from '../../store/actions/order_actions';
+import { getOrders, deleteOrder } from '../../store/actions/order_actions';
 import { Link } from 'react-router-dom';
 import s from '../../styles/carrito.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,7 +17,7 @@ import { Button, Form, Container, Navbar } from 'react-bootstrap';
 
 
 
-const DataUserShopping = ({cartP, UpdateOrderToProcessStatusP,  orderCreatedP, getOrdersP, orderP,userLogin,}) => {
+const DataUserShopping = ({cartP, UpdateOrderToProcessStatusP,  orderCreatedP, getOrdersP, orderP,userLogin,deleteOrderP}) => {
     const [form, setForm] = useState({
         city:"",
         adress:"",
@@ -65,6 +65,12 @@ const DataUserShopping = ({cartP, UpdateOrderToProcessStatusP,  orderCreatedP, g
     }
 
     console.log(form)
+    const handlerDeleteOrder = (idOrder) => {
+		deleteOrderP(idOrder)
+		Cookie.remove('cartItems')
+		window.location = '/'
+		return
+	}
 
 
     return(
@@ -108,7 +114,7 @@ const DataUserShopping = ({cartP, UpdateOrderToProcessStatusP,  orderCreatedP, g
                         <Button variant="primary" type="submit" className={s.submitDate}>
                             Continuar
                         </Button>
-                        <Button className={s.submitCancel} >Cancelar compra</Button>
+                        <Button className={s.submitCancel} onClick={() => handlerDeleteOrder(orderCreatedP.id)} >Cancelar compra</Button>
                         </div>
                         
                 </Form>
@@ -153,7 +159,7 @@ function mapDispatchToProps(dispatch){
         getOrdersP : () => dispatch(getOrders()),
         CreateOrderP : (cartP2, userId) => dispatch(CreateOrder(cartP2, userId)),
         UpdateOrderToProcessStatusP : (id, data) => dispatch(UpdateOrderToProcessStatus(id, data)),
-        deleteOrderCartP : (id) => dispatch(deleteOrderCart(id))
+        deleteOrderP : (id) => dispatch(deleteOrder(id))
         //deleteOrderCartP : (id, status) => dispatch(deleteOrderCart(id, status))
  
     }
