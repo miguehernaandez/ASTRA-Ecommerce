@@ -30,6 +30,7 @@ export const loginAction = (data) => {
 			});
 	};
 };
+
 export const logout = (data) => {
 	return (dispatch, getState) => {
 		console.log('HPPPP');

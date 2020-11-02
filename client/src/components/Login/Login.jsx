@@ -1,32 +1,46 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Form, Container, Navbar, Col, Row } from 'react-bootstrap';
+import { Button, Form, Container, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { loginAction } from '../../store/actions/loginActions';
-import logo from '../../multimedia/logo.png';
 import s from '../../styles/loggin.module.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import LoginModal from '../Modals/LoginModal';
+import { LoginModalNoUser, LoginModalAuthError } from '../Modals/LoginModals';
 
 // Google Login
 import { GoogleLogin } from 'react-google-login';
 
-const Login = ({ userLoggedP, loginActionP, messageErrorP, checkForEmailP, loggedP }) => {
+const Login = ({ userLoggedP, loginActionP, messageErrorP, checkForEmailP, loggedP, usersP }) => {
+	// <-------------------- CONSTANTES Y ESTADOS -------------------->
 	const [form, setForm] = useState({
 		email: '',
 		password: '',
 	});
 	const history = useHistory();
-	const [showModal, setShowModal] = useState(false);
-	console.log(loggedP);
+	const [showModalNoUser, setShowModalNoUser] = useState(false);
+	const [showModalAuthError, setShowModalAuthError] = useState(false);
+	// useEffect
+	useEffect(() => {
+		if (loggedP == true) {
+			window.location.href = 'http://localhost:3000/';
+		}
+	}, [loggedP]);
+	// console.log(loggedP);
+	const url = 'localhost:3001';
+	const clientIdCode = '269758003483-2l6nugnundjtidqt2djkq7kt9jptsgh8.apps.googleusercontent.com'; // Google
+	// <-------------------- CONSTANTES Y ESTADOS -------------------->
 
+	// <-------------------- FUNCIONES -------------------->
+	// Capturar los valores de los inputs
 	const handlerInput = (e) => {
 		setForm({ ...form, [e.target.name]: e.target.value });
 	};
+
+	// Funcion para manejar el submit del formulario
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		// Comprobacion de si el usuario existe o no en la base de datos
@@ -52,20 +66,12 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, checkForEmailP, logge
 				});
 			})
 			.then((res) => {
-				if (dontShowModal) setShowModal(true);
+				if (dontShowModal) setShowModalNoUser(true);
 			});
 	};
-
-	useEffect(() => {
-		if (loggedP == true) {
-			window.location.href = 'http://localhost:3000/';
-		}
-	}, [loggedP]);
-
 	// <-------------------------- Google Login -------------------------->
-	const url = 'localhost:3001';
-	const clientIdCode = '269758003483-2l6nugnundjtidqt2djkq7kt9jptsgh8.apps.googleusercontent.com';
 
+	// Si la autenticacion de Google sale bien
 	const responseGoogleSuccess = (response) => {
 		console.log(response.profileObj.email);
 		console.log(response.profileObj.googleId);
@@ -90,19 +96,21 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, checkForEmailP, logge
 				});
 			})
 			.then((res) => {
-				if (dontShowModal) setShowModal(true);
+				if (dontShowModal) setShowModalNoUser(true);
 			});
 	};
 
+	// Si la autenticacion de Google sale mal
 	const responseGoogleFailure = (response) => {
-		// alert('mepa que vamos bien che');
-		alert('Hubo un problema con la autenticacion, vuelve a intentarlo');
-		// window.location.href = 'http://localhost:3000/login';
+		setShowModalAuthError(true);
 	};
 	// <-------------------------- Google Login -------------------------->
+	// <-------------------- FUNCIONES -------------------->
+
 	return (
 		<div className={s.cont_prin}>
-			<LoginModal showModal={showModal} setShowModal={setShowModal}></LoginModal>
+			<LoginModalNoUser showModalNoUser={showModalNoUser} setShowModalNoUser={setShowModalNoUser}></LoginModalNoUser>
+			<LoginModalAuthError showModalAuthError={showModalAuthError} setShowModalAuthError={setShowModalAuthError}></LoginModalAuthError>
 			<div className={s.opac}>
 				<Container className={s.cont} onSubmit={handleSubmit}>
 					<div className={s.img}>
@@ -152,6 +160,7 @@ function mapStateToProps(state) {
 		userLoggedP: state.userLogged,
 		messageErrorP: state.messageError,
 		loggedP: state.logged,
+		usersP: state.users,
 	};
 }
 
