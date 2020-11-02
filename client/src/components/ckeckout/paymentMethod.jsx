@@ -24,7 +24,7 @@ const stripePromise = loadStripe('pk_test_51HhisyJCzko8yllshTIdDvi4wXchIr9Qldywm
 
 
 /********************************************* Form Pay ***************************************************** */
-function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, user, order, sendEm})  {
+function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, user, order, sendEm, deleteOrderModal})  {
     const [loading, setLoading] = useState(false)
     const stripe = useStripe();
     const elements = useElements();
@@ -39,7 +39,12 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, use
     // if(loading){
     //     console.log('terminado')
     // }
-    
+    const handlerDeleteOrder = (idOrder) => {
+		deleteOrderModal(idOrder)
+		Cookie.remove('cartItems')
+		window.location = '/'
+		return
+	}
 
     const handlerSubmit = async (e) => {
         e.preventDefault();
@@ -63,28 +68,6 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, use
         setLoading(false)
     }
 
-    // let StatusOrder = checkoutEndProps || ""
-    // console.log('final', StatusOrder)
-   
-
-    // const sendStatusOrder = (StatusOrder) => {
-
-    //             return history.push('/paymethod/sucess?status='+StatusOrder)
-
-    // }
-
-    
-
-    // if(statuCheckout){
-    //     console.log('aqui true')
-    //     //UpdateOrderToSucess(objenderProps.id)
-        
-    //     return
-    //    //return history.push('/paymethod/sucess')
-    // }else{
-    //     console.log('aqui False')
-    //    //return history.push('/paymethod/failed')
-    // }
    
 
     return (
@@ -110,7 +93,7 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, use
         <Button type="submit" className={s.button1}>
             {loading ? "Pagando" : "Finalizar compra"}
         </Button>
-        <Button className={s.button2} >Cancelar compra</Button>
+        <Button className={s.button2} onClick={() => handlerDeleteOrder(objenderProps.id)}>Cancelar compra</Button>
         </div>
         </Form>
     );
@@ -145,7 +128,7 @@ const PaymentMethod = ({sendEmailP, UpdateOrderToProcessStatusP, checkoutP, Upda
     // const  qty = location.search.split('=')[1]
 
     console.log('Orden para renderizar')
-    console.log(products)
+    console.log(objender)
 
     /********** USEEFECT *********** */
     useEffect(()=> {
@@ -163,12 +146,7 @@ const PaymentMethod = ({sendEmailP, UpdateOrderToProcessStatusP, checkoutP, Upda
     let history = useHistory()
 
 
-    const handlerDeleteOrder = (idOrder) => {
-		deleteOrderP(idOrder)
-		Cookie.remove('cartItems')
-		window.location = '/'
-		return
-	}
+
 
 
     return(
@@ -251,6 +229,7 @@ const PaymentMethod = ({sendEmailP, UpdateOrderToProcessStatusP, checkoutP, Upda
                         user={userLogin}
                         order={orderCreatedP}
                         sendEm = {sendEmailP}
+                        deleteOrderModal = {deleteOrderP}
                         />
                     </Elements>
                     
