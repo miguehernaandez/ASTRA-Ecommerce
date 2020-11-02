@@ -172,7 +172,6 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 		</div>
 	);
 };
-
 function mapStateToProps(state) {
 	return {
 		categories: state.categories,
@@ -186,5 +185,4 @@ function mapDispatchToProps(dispatch) {
 		getProductByCategoryP: (catN) => dispatch(getProductByCategory(catN)),
 	};
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Catalogo);

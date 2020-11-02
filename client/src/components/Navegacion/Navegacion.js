@@ -14,6 +14,7 @@ import s from '../../styles/Navbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser as userLogin, faSignInAlt as signIn, faShoppingCart as shopCart, faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from '../SearchBar/SearchBar';
+import UserList from '../UserList/UserList.js';
 import { connect } from 'react-redux';
 
 // React -Routes
@@ -138,10 +139,11 @@ function Navegacion(props) {
 						<div id='impostor' className={`${s.bordeAmarillo} order-1 order-md-3 mr-md-3`}>
 							{props.showSearchbar && (
 								<Col xs={`auto`} className={`${s.bordeVerde} order-1 order-md-3 d-flex justify-content-between justify-content-lg-around`}>
+									<UserList showSearchbar={props.showSearchbar} userLogin={props.userLogin}></UserList>
 									{/* Users */}
-									<Link to='/users'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mr-3`} icon={userLogin} size={'1x'} />}</Link>
+									{/* <Link to='/users'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mr-3`} icon={userLogin} size={'1x'} />}</Link> */}
 									{/* Login */}
-									<Link to='/login'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mx-2`} icon={signIn} size={'1x'} />}</Link>
+									{/* <Link to='/login'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mx-2`} icon={signIn} size={'1x'} />}</Link> */}
 									{!!props.showSearchbar && (
 										<div className={`${s.contCart} flex-fill mr-2`}>
 											<Link to='/users/cart'>
@@ -168,16 +170,18 @@ function Navegacion(props) {
 										{props.userLogin.role === 'admin' ? (
 											<Col className={`d-flex flex-column px-0 mx-0`}>
 												<span className={`${s.textProfile} text-center`}>Admin </span>
-												<span className={`${s.textProfile} text-center`}>{props.userLogin.name}</span>
 											</Col>
 										) : (
-											<Link to='/profile'>
-												<span className={s.textProfile}>{props.userLogin.name}</span>
-											</Link>
+											<div></div>
 										)}
-										<Nav.Link href='#' as={Link} to={'/'} className={`${s.navbarLinks}`} onClick={handlerClick}>
-											Logout
-										</Nav.Link>
+										<UserList 
+										linksU={props.linksU}
+										linksA={props.linksA}
+										showSearchbar={props.showSearchbar} 
+										userLogin={props.userLogin} 
+										handlerClick={handlerClick}>
+
+										</UserList>
 										{!!props.showSearchbar && (
 											<div className={s.contCart}>
 												<Link to='/users/cart'>
@@ -191,6 +195,8 @@ function Navegacion(props) {
 							</Col>
 						</div>
 					)}
+					
+					
 
 					{/* Mio */}
 					{/* Iconos de carrito y login */}
