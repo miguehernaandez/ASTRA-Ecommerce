@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import PrinciapalAdmin from './components/AdminForm/pageP';
+import Whatsapp from './components/Whatsapp/ws.js';
+// import UserList from './components/UserList/UserList.js';
 import Product from './components/AdminForm/product';
 import Category from './components/AdminForm/Categorys';
 import Orders from './components/AdminForm/Orders';
@@ -29,8 +31,9 @@ import PrivateRoute from './components/Routes/PrivateRoute';
 import DataUserShopping from './components/ckeckout/dataUser';
 import PaymentMethod from './components/ckeckout/paymentMethod'
 import { enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from './constans/constans';
+import s from './styles/app.module.css';
 
-const url = 'localhost:3001';
+const url = 'development.c4vdw28snupv.sa-east-1.rds.amazonaws.com';
 
 function App() {
 	const [products, setProduct] = useState([]);
@@ -47,12 +50,13 @@ function App() {
 	};
 
 	return (
-		<div>
+		<div className={`${s.all} d-flex flex-column`}>  {/* Estilos para que el footer quede fijo al final */}
 			<Switch>
 				{/* HOME */}
 				<Route path='/' exact>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<Slider />
+					<Whatsapp></Whatsapp>
 					<Footer></Footer>
 				</Route>
 				{/* HOME */}
@@ -61,6 +65,7 @@ function App() {
 				<Route path='/faqs' exact>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<Faqs></Faqs>
+					<Whatsapp></Whatsapp>
 					<Footer></Footer>
 				</Route>
 
@@ -80,11 +85,14 @@ function App() {
 				<Route path='/products/catalogo'>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<Catalogo products={products} onSearch={onSearch} />
+					<Whatsapp></Whatsapp>
+					{/* <UserList></UserList> */}
 					<Footer></Footer>
 				</Route>
 
 				<Route path='/products/product/:id'>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} />
+					<Whatsapp></Whatsapp>
 					<ProductDet />
 				</Route>
 				{/* PRODUCTS */}
@@ -93,12 +101,14 @@ function App() {
 				<Route path='/users' exact>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<FormUsers></FormUsers>
+					<Whatsapp></Whatsapp>
 					<Footer></Footer>
 				</Route>
 
 				<Route path='/users/cart'>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<CartShop></CartShop>
+					<Whatsapp></Whatsapp>
 					<Footer></Footer>
 				</Route>
 
@@ -117,6 +127,7 @@ function App() {
 				<Route path='/login' exact>
 					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
 					<Login></Login>
+					<Whatsapp></Whatsapp>
 					<Footer></Footer>
 				</Route>
 				{/* LOGIN */}

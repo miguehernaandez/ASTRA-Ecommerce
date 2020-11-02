@@ -11,7 +11,7 @@ import s from '../../styles/faqs.module.css';
 export default function Faqs() {
 	return (
 		<div>
-			<Container className={`my-5`}>
+			<Container className={`my-5 ${s.contPrincipal}`}>
 				<h1 className={`my-4`}>Preguntas Frecuentes</h1>
 				<Accordion defaultActiveKey='0'>
 					{/*pregunta 1*/}
