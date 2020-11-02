@@ -62,9 +62,13 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 
 	return (
 		<div className={`${s.contPrincipal}`}>
+			{productsP.length == 0 ?
+			  <div></div>
+			:
 			<Col className={s.barraC} xs={12} md={2} lg={2}>
 			<Filter ></Filter>
 			</Col>
+			}			
 			<Col className={s.cont_cards} xs={12} md={10} lg={10}>
 			{/*<h5><a href="/products/catalogo" className={s.title5}>Mostrar todos</a></h5>*/}
 			{products.length == 0 ? (
@@ -120,10 +124,10 @@ const Catalogo = ({ products, productsP, categories, getCategoryP, getProductP, 
 			) : (
 				<>
 				<Container>
-					<Col className={s.barraC} xs={12} md={2} lg={2}>
+					{/* <Col className={s.barraC} xs={12} md={2} lg={2}>
 					<Filter></Filter>
-					</Col>
-					<Col className={s.cont_cards} xs={12} md={10} lg={10}>
+					</Col> */}
+					<Col className={s.cont_cards} xs={12} md={12} lg={12}>
 						<Container className={s.conteiner}>			
 								<Row className={s.cont_prin_card}>
 									{currentPostsSearch.map((p) => {
