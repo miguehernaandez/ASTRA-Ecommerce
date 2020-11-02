@@ -1,7 +1,7 @@
 export const enlacesUser = [
 	{ text: 'Catalogo', to: '/products/catalogo' },
 	{ text: 'FAQs', to: '/faqs' },
-	// { text: 'Contacto', to: '/' },
+	{ text: 'Contacto', to: '/contacto' },
 	// { text: 'Ayuda', to: '/' },
 	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
 	{ text: 'ADMIN', to: '/admin' },
@@ -10,7 +10,7 @@ export const enlacesUser = [
 export const enlacesUserConAdmin = [
 	{ text: 'Catalogo', to: '/products/catalogo' },
 	{ text: 'FAQs', to: '/faqs' },
-	// { text: 'Contacto', to: '/' },
+ 	{ text: 'Contacto', to: '/contacto' },
 	// { text: 'Ayuda', to: '/' },
 	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
 	{ text: 'ADMIN', to: '/admin' },
@@ -18,7 +18,7 @@ export const enlacesUserConAdmin = [
 export const enlacesUserSinAdmin = [
 	{ text: 'Catalogo', to: '/products/catalogo' },
 	{ text: 'FAQs', to: '/faqs' },
-	// { text: 'Contacto', to: '/' },
+  { text: 'Contacto', to: '/contacto' },
 	// { text: 'Ayuda', to: '/' },
 	// { text: 'Registro', to: '/users' }, // Por ahora para probar nomas
 ];
