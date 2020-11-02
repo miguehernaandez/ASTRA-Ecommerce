@@ -1,41 +1,50 @@
 /* Import de fonts */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-.cont_prin{
-    width: 100%;    
-    margin: auto;
+.container{
+    padding: 0px !important;
     margin-top: 30px;
     margin-bottom: 30px;
-    padding: 20px 10px;
-    box-shadow: 0px 0px 15px  rgba(0,0,0,0.51);
-    border-radius: 7px;
-    
+    box-shadow: 0px 0px 5px 3px rgba(221,220,220,1);
+    border-radius: 4px;
 }
-.cont{
-    display: flex;
-    border-radius: 7px;
+.cont_prin{
+    width: 100%;
+    margin: auto;
+    border-bottom: 1px solid #dddcdc;
+
+}
+.infog{
+    width: 100%;
+    padding: 15px;
 }
 .cont_img{
-    width: 62%;
-    padding: 10px;
-    border-radius:7px 0px 0px 7px;
-    overflow: scroll;
+    height: 500px;
+    border-radius:4px 0px 0px 4px;
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .cont_img > img {
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
 }
 .cont_info{
-    width: 38%;
-    padding-top: 5px;  
+    /* background-color: fuchsia; */
+    border-top: none;
+    border-bottom: none;
+    border-left: 1px solid #dddcdc;
+    border-right: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
+
 .cont_info h3{
     color: #1F2333;
     font-size: 1.5em;
-    margin-left: 8%;
     font-weight: bold;
     font-family: 'Open Sans', sans-serif;
     margin-top: 5px;
@@ -45,7 +54,6 @@
     font-weight: normal;
     font-size: 1.4em;
     font-family: 'Open Sans', sans-serif;
-    margin-left: 8%;
     margin-top: 15px;
 }
 .cont_info h6{
@@ -53,7 +61,6 @@
     font-weight: bolder;
     font-size: 0.65em;
     font-family: 'Open Sans', sans-serif;
-    margin-left: 8%;
     margin-top: 15px;
 }
 .cont_info p{
@@ -61,20 +68,20 @@
     font-weight: normal;
     font-size: 0.8em;
     font-family: 'Open Sans', sans-serif;
-    margin-left: 8% ;
+
     margin-right: 5%;
     margin-top: 15px;
     text-align: justify;
-    
+
 }
 .cont_info p .dim{
     font-weight: bold;
 }
 .cont_cant{
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
-    
+
 }
 .cont_cant .select{
     width: 40px;
@@ -85,7 +92,7 @@
     font-weight: bold;
     font-size: 0.8em;
     font-family: 'Open Sans', sans-serif;
-    margin-left: 8%;
+
 
 }
 .cont_cant h6{
@@ -95,7 +102,7 @@
     font-family: 'Open Sans', sans-serif;
     margin-left: 5%;
     padding-bottom: 11px;
-       
+
 }
 .cont_button{
     display: flex;
@@ -131,38 +138,70 @@
 .contReviw{
     display: flex;
     align-items: center;
+
 }
-.contReviw p{
-    padding-left: 2px;
+.contReviw .addReview{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.contReviw .addReview p{
+    padding-top: 3%;
+    padding-left: 1%;
     font-family: 'Open Sans', sans-serif;
     font-size: 0.8em;
-    color: #1F2333 !important; 
+    color: #3B8EA5 !important;
+    font-weight: bold;
     cursor: pointer;
 }
 .contReviw p:hover{
-    color:#3B8EA5 ;
     text-decoration-line: underline;
 }
 
 
 .icon{
-    font-size: 1.3em;
-    padding-left: 8%;
+	width: 50%;
+	padding-top: 1%;
+	font-size: 1rem;
+    position: relative;
 }
 
-.icon .estrellaColor {
-    color: #F19953;
-	margin: 2px;
+.icon .emptyStarsCont{
+    position: absolute;
+	width: 100%;
+    top: -500%;
+    left: 0%;
+    z-index: 1;
+    overflow: hidden;
 }
 
-.icon .estrellaInactiva {
-    color: lightgrey;
-	margin: 2px;
+.icon .emptyStarsCont .emptyStars {
+    
+    width: 500%;
+    font-size: 1.5em;
+    color: lightgray;
 }
 
+.icon .fullStarsRate {
+    /* margin-left: -94px; */
+    overflow: hidden;
+    position: absolute;
+    top: -500%;
+    left: 0%;
+    z-index:2
+}
+
+.icon .fullStarsRate .fullStars {
+    width: 500%;
+    font-size: 1.5em;
+	/* width: 0%; */
+	color:#F19953;
+}
 .cont_cant2{
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
 }
 
@@ -178,6 +217,8 @@
 .productCardOutStock{
     background-color: rgb(247, 7, 7) !important;
 }
+
+
 
 
 

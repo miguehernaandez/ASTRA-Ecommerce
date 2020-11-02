@@ -14,6 +14,7 @@ import s from '../../styles/Navbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser as userLogin, faSignInAlt as signIn, faShoppingCart as shopCart, faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from '../SearchBar/SearchBar';
+import UserList from '../UserList/UserList.js';
 import { connect } from 'react-redux';
 
 // React -Routes
@@ -40,6 +41,7 @@ function Navegacion(props) {
 		window.location = '/';
 		props.loginActionP();
 		Cookie.remove('userLoad');
+		Cookie.remove('cartItems');
 		return;
 	};
 
@@ -50,6 +52,15 @@ function Navegacion(props) {
 		// console.log(botonHamburguesa);
 		botonHamburguesa.classList.toggle('d-none');
 		botonHamburguesa2.classList.toggle('d-none');
+		console.log(document.getElementById('navbarCompleto'));
+	};
+
+	const initialStateHamburgerIcons = function () {
+		// Cambia el estado del icono de desplegar cada vez que se selecciona un link
+		var botonHamburguesa = document.getElementById('hamburgerButton');
+		var botonHamburguesa2 = document.getElementById('hamburgerButton2');
+		botonHamburguesa.classList.remove('d-none');
+		botonHamburguesa2.classList.add('d-none');
 	};
 	// <--------------------------- FUNCIONES --------------------------->
 
@@ -59,7 +70,7 @@ function Navegacion(props) {
 
 	return (
 		<div>
-			<Navbar collapseOnSelect expand='md' className={props.showSearchbar ? `justify-content-center ${s.navbar} py-0 px-2` : `justify-content-center ${s.navbarAdmin} py-0 px-2`}>
+			<Navbar id='navbarCompleto' collapseOnSelect expand='md' onSelect={initialStateHamburgerIcons} className={props.showSearchbar ? `justify-content-center ${s.navbar} py-0 px-2` : `justify-content-center ${s.navbarAdmin} py-0 px-2`}>
 				<Container className={`${s.containerPrincipal} ${s.bordeVerde} d-flex m-0 p-0`}>
 					<Navbar.Brand as={Link} to='/' className={`${s.bordeVerde} mx-0 ml-1`}>
 						{/* Logo */}
@@ -128,10 +139,11 @@ function Navegacion(props) {
 						<div id='impostor' className={`${s.bordeAmarillo} order-1 order-md-3 mr-md-3`}>
 							{props.showSearchbar && (
 								<Col xs={`auto`} className={`${s.bordeVerde} order-1 order-md-3 d-flex justify-content-between justify-content-lg-around`}>
+									<UserList showSearchbar={props.showSearchbar} userLogin={props.userLogin}></UserList>
 									{/* Users */}
-									<Link to='/users'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mr-3`} icon={userLogin} size={'1x'} />}</Link>
+									{/* <Link to='/users'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mr-3`} icon={userLogin} size={'1x'} />}</Link> */}
 									{/* Login */}
-									<Link to='/login'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mx-2`} icon={signIn} size={'1x'} />}</Link>
+									{/* <Link to='/login'>{!!props.showSearchbar && <FontAwesomeIcon className={`flex-fill ${s.userLoginIcon} mx-2`} icon={signIn} size={'1x'} />}</Link> */}
 									{!!props.showSearchbar && (
 										<div className={`${s.contCart} flex-fill mr-2`}>
 											<Link to='/users/cart'>
@@ -158,16 +170,18 @@ function Navegacion(props) {
 										{props.userLogin.role === 'admin' ? (
 											<Col className={`d-flex flex-column px-0 mx-0`}>
 												<span className={`${s.textProfile} text-center`}>Admin </span>
-												<span className={`${s.textProfile} text-center`}>{props.userLogin.name}</span>
 											</Col>
 										) : (
-											<Link to='/profile'>
-												<span className={s.textProfile}>{props.userLogin.name}</span>
-											</Link>
+											<div></div>
 										)}
-										<Nav.Link href='#' as={Link} to={'/'} className={`${s.navbarLinks}`} onClick={handlerClick}>
-											Logout
-										</Nav.Link>
+										<UserList 
+										linksU={props.linksU}
+										linksA={props.linksA}
+										showSearchbar={props.showSearchbar} 
+										userLogin={props.userLogin} 
+										handlerClick={handlerClick}>
+
+										</UserList>
 										{!!props.showSearchbar && (
 											<div className={s.contCart}>
 												<Link to='/users/cart'>
@@ -181,6 +195,8 @@ function Navegacion(props) {
 							</Col>
 						</div>
 					)}
+					
+					
 
 					{/* Mio */}
 					{/* Iconos de carrito y login */}

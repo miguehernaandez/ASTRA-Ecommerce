@@ -2,16 +2,14 @@
 import { 
   ADD_CATEGORY, GET_CATEGORIES, 
   DELETE_CATEGORY, MODIFY_CATEGORY, 
-  ERROR_MESSAGE, ADD_PRODUCT, 
-  DELETE_PRODUCT, ADD_CATEGORY_PRODUCT, 
-  REMOVE_CATEGORY_PRODUCT, GET_PRODUCTS, 
-  MODIFY_PRODUCT, GET_PRODUCTS_BY_CATEGORY, 
-  ADD_TO_CARD, REMOVE_FROM_CART, GET_ORDERS, 
-  UPDATE_FROM_CART, CREATE_USER, 
-  GET_USERS, DELETE_USER, UPDATE_USER, DETAIL_USER,
-  DELETE_CART,
-  LOGIN, LOGIN_ERROR, LOGOUT,
-  ADD_REVIEW,UPDATE_REVIEW, DELETE_REVIEW} from '../constants/constans';
+  ERROR_MESSAGE, ADD_PRODUCT, DELETE_PRODUCT, 
+  ADD_CATEGORY_PRODUCT, REMOVE_CATEGORY_PRODUCT, 
+  GET_PRODUCTS, MODIFY_PRODUCT, GET_PRODUCTS_BY_CATEGORY, 
+  ADD_TO_CARD, REMOVE_FROM_CART, GET_ORDERS, UPDATE_FROM_CART, 
+  CREATE_USER, GET_USERS, DELETE_USER, UPDATE_USER, DELETE_ORDER,
+  DETAIL_USER, DELETE_CART, LOGIN, LOGIN_ERROR, LOGOUT, ADD_REVIEW, CREATE_ORDER, 
+  UPDATE_ORDER_TO_CREATE, UPDATE_ORDER_TO_PROCESS, CHECKOUT_END, UPDATE_ORDER_TO_FULL, 
+  UPDATE_ORDER_TO_REJECT, UPDATE_REVIEW, DELETE_REVIEW, GET_USER_REVIEWS, GET_ORDERS_STATUS} from '../constants/constans';
 
   import Cookie from 'js-cookie';
 
@@ -27,10 +25,13 @@ const inicialState = {
 	users: [],
 	userSelected: [],
 	orders: [],
+	orderCreated : {},
+	userReviews:[],
 
 
 	userLogged: userLoad,
 	logged: false,
+	checkout: "",
 
 
 	messageError: ''
@@ -171,8 +172,27 @@ const ReducerCategory = (state = inicialState, action) => {
 
 		/****************************** ORDERS ************************************/
 		case GET_ORDERS:
-
 			return {...state, orders: action.orders };
+		case GET_ORDERS_STATUS:
+			console.log('EL STATUS EN EL REDUCER')
+			console.log(action.orders)
+			return {...state, orders: action.orders };
+		case DELETE_ORDER:
+			let newOrders = state.orders.filter((order) => order.id !== action.order.id);
+			return {...state, orders: newOrders}
+		case CREATE_ORDER:
+			 return {...state, orderCreated: action.payload }
+		case UPDATE_ORDER_TO_CREATE:
+			 return {...state, orderCreated: action.payload}
+		case UPDATE_ORDER_TO_PROCESS:
+			return {...state, orderCreated: action.payload}
+		case CHECKOUT_END:
+			//const {message, pay} = action
+			return {...state, checkout:action.pay}
+		case UPDATE_ORDER_TO_REJECT:
+			return {...state, orderCreated: action.payload}
+		case UPDATE_ORDER_TO_FULL:
+			return {...state, orderCreated: action.payload}
 		
 		/********************************* LOGIN ********************************* */
 		case LOGIN:
@@ -187,6 +207,20 @@ const ReducerCategory = (state = inicialState, action) => {
 		/****************************** REVIEW ********************************/
 		case ADD_REVIEW:
 			return {...state, products:action.products}
+		case GET_USER_REVIEWS:
+			return {...state, userReviews: action.reviews}
+		case UPDATE_REVIEW:
+			console.log('REVIEWS DE USUARIO EN EL REDUCER DESPUES DE EDITAR UNA')
+			console.log(action.review);
+			let editedReview = action.review;
+			let newReviewsEdit = state.userReviews;
+			let editReviewIndex = newReviewsEdit.indexOf(editedReview);
+			newReviewsEdit[editReviewIndex] = action.review;
+			return {...state, userReviews: newReviewsEdit }
+		case DELETE_REVIEW:
+			let deletedReview = action.review;
+			let newReviews = state.userReviews.filter((review) => review.id !== deletedReview.id);
+			return {...state, userReviews: newReviews}
 
 	}
 };

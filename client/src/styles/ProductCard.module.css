@@ -11,28 +11,29 @@ Colores personalizados */
 
 .productCard {
 	width: 100%;
-	background-color: var(--blanco);
-	box-shadow: 1px 1px 5px black;
+	height: 335px;
+	background-color: #edf7f6;
+	box-shadow: 0px 0px 5px 3px rgba(221,220,220,1);
 	transition: 300ms;
-	padding: 10px;
-	height: 95%;
+	padding: 10px;	
 	position: relative;
 	overflow: hidden;
 	flex-basis: content;
 	
 }
-.test{
+.runOut{
 	background-color: #f19953 !important;
 	color: white;
 	transform: rotate(45deg);
 	position: absolute;
-	padding: 5px 40px;
+	padding: 5px;
 	width: 100%;
 	top: 10%;
 	left: 30%;
+	text-align: center;
 }
 
-.test > p{
+.runOut > p{
 	width: 90%;
 	margin: auto;
 	font-weight: bold;
@@ -43,9 +44,37 @@ Colores personalizados */
 }
 
 .productCardHeadingContainer {
-	height: 250px;
+	opacity: 0;
+	width: 92%;
+	height: 200px;
+	background-color: rgba(59, 142, 165, 0.3);
+	border-radius: 5px;
+	margin:0 auto;
+	margin-top: 10px;	
+}
+.productCardHeadingContainer:hover{
+	opacity: 1;
+	transition: opacity 500ms;
+}
+.productCardDetailIcon:hover{
+	color: white;
+	transform: scale(1.2);
+	transition: all ease-in-out 300ms;
 	
 }
+
+
+.productCardHeadingContainer div{
+	margin:auto;
+
+}
+.productCardDetailIcon{
+	font-size: 70px;	
+	cursor: pointer;
+	color: rgba(237, 247, 246, 0.7);
+	transition: 300ms;
+}
+
 
 .productCardHeading {
 	font-family: 'Open Sans', sans-serif;
@@ -59,20 +88,29 @@ Colores personalizados */
 	background-color: var(--naranja);
 }
 
-.productCardShopCartIcon {
-	margin-right: 20px !important;
+.productCardShopCartIcon {	
+	font-size: 1em;
 	cursor: pointer;
 	color: var(--azul);
 	transition: 300ms;
+	margin-top: 20%;
+	margin-right: 20%;
 }
+.productCardButton2 div:nth-child(2){
+	width: 30%;
+	height: 100%;
+	
+}
+
 
 .productCardShopCartIcon:hover {
 	color: var(--celeste);
 }
 
 .productCardTitle {
+	height: 30px;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 15px;
+	font-size: 0.8em;
 	font-weight: bold;
 	color: var(--azul);
 }
@@ -82,8 +120,23 @@ Colores personalizados */
 	font-size: 13px;
 	color: var(--azul);
 }
+.contPI{
+	display: flex;
+	width: 100%;
+	
+}
+.cont_I{
+	display: flex;
+	padding-top: 3px;
+	align-items: center;
+	width: 50%;
+	/* background-color: yellow; */
+	position: relative;
+}
 
-.productCardPrice {
+.productCardPrice {	
+	width: 50%;
+	/* background-color: violet; */
 	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	font-size: 20px;
@@ -105,47 +158,78 @@ Colores personalizados */
 .productCardButton:hover {
 	background-color: var(--celeste);
 }
+
 .productCardButton2:hover {
 	background-color: var(--celeste);
 }
+
 .icon{
+	width: 100%;
 	padding-top: 1%;
-	color:#F19953;
-	font-size: 0.8em;
+	font-size: 1rem;
+	display: flex;
 }
+.icon .emptyStars {
+	width: 94px;
+	color: lightgray;
+}
+
+.icon .fullStarsRate {
+	margin-left: -94px;
+	overflow: hidden;
+}
+
+.icon .fullStarsRate .fullStars {
+	width: 94px;
+	color:#F19953;
+}
+
+.productCard .fixedRate{
+	position: absolute;
+	top: 77.5%;
+	right: 13%;
+}
+
+.productCard .fixedRate h6{
+	font-size: 0.7rem;
+}
+
 .cont_prin{
 	position: relative;
+	padding: 0px !important;
+	
 	
 }
-.buttons{
-	opacity: 0;
-	transition: all 0.3s ease-in-out;
-	position: absolute;
-	width: 100%;
-	height: 250px;
-	bottom: 165px;
-	justify-content: center;
-	
-	/* left: 15px;	 */
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
+
 .cont_prin:hover .buttons{
 	opacity: 1;
 	
 }
 .productCardButton2{
-	color:var(--azul);
-	font-family: 'Open Sans', sans-serif;
-	font-weight: bold;
+	display: flex;
 	background-color: var(--naranja);
 	border: none;
-	padding: 2px;	
-	margin-top: 25px;
-	width: 90%;
+	padding: 0px;
+	width: 100%;
 	height: 30px;
 }
+.productCardButton2 div:nth-child(1){
+	/* background-color: wheat; */
+	width: 70%;
+	height: 100%;
+	padding-top: 5%;
+	padding-left: 5%;
+}
+
+.productCardButton2 div:nth-child(1) .h6{
+	/* background-color: powderblue; */
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	color:var(--azul);
+	font-style: normal !important;
+	
+}
+
 .productRunOut{
 	width: 100%;
 	background-color: #c2c2c2;
@@ -157,14 +241,9 @@ Colores personalizados */
 	overflow: hidden;
 
 }
-
-#maxCardHeigth{
-	height: 430px;
-}
-
-#maxImgHeigth{
+.productCardImg{
 	width: 100%;
-	height: 250px;
+	height: 200px;
 	border-radius: 5px;
 }
 .cont_stockButon{
@@ -172,16 +251,15 @@ Colores personalizados */
 	text-align: center;
 	width: 100%;
 	height: 33px;
-	margin-top: 10px;
 }
 .productStockButton {
+	color:white;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	background-color: var(--azul);
-	border: none;	
+	border: none;
 	padding: 2px;
-	margin-bottom: 15%;
-	width: 90%;
+	width: 60%;
 	height: 30px;
-	
+
 }

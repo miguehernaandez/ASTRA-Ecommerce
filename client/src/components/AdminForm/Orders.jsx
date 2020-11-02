@@ -1,15 +1,17 @@
 import React from 'react';
-import {Table, Button } from 'react-bootstrap';
+import {Table, Button, Row, Col, Container, Form} from 'react-bootstrap';
 import AddCategory from '../Modals/AddCategory';
 import UpdateCategory from '../Modals/UpdateCategory';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import s from '../../styles/adminCategories.module.css';
+import s from '../../styles/adminOrders.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTrashAlt, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import {
+    filterOrders,
     getOrders,
+    deleteOrder
     // AddCategorie,
     // updCategory,
     // deleteCategory
@@ -19,19 +21,32 @@ import Navegacion from '../Navegacion/Navegacion'
 
 const url = 'localhost:3001';
 
-const Orders = ({ orders, getOrdersP }) => {
+const Orders = ({ ordersP, getOrdersP, filterOrdersP, deleteOrderP }) => {
     console.log('OBJETO ORDENES')
-    console.log(orders)
+    console.log(ordersP)
     //console.log(props)
     /*********************** Local States ************************* */
-    const [allOrders, setAllOrders] = useState([]);
-    const [form, setForm] = useState({ name : "", description : "" });
-    const [show, setShow] = useState(false);
+    const [orderType, setOrderType] = useState('all');
+    
 
     /*********************** Functions **************************** */
-    const openModal = () => { setShow(true)  }
-    const closeModal = () => { setShow(false)  }
-    const handlerChange = (e) => {  setForm({ ...form, [e.target.name]:e.target.value})  }
+    const handlerChange = (e) => {
+        setOrderType(e.target.value);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        filterOrdersP(orderType)
+        // setOrderType('')
+    }
+
+    const handleDelete = (id) => {
+        console.log('id de la orden ', id)
+        deleteOrderP(id);
+        filterOrdersP(orderType);
+    }
+    // console.log(orderType)
+
 
     // const updateCategoryModal = (category)=> {
     //     let list = allOrders;
@@ -60,8 +75,33 @@ const Orders = ({ orders, getOrdersP }) => {
 
     /****************************** Render ********************************** */
     return (
-        <div>
-          <Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesAdmin} showSearchbar={false} />
+        <div>   
+            <Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesAdmin} showSearchbar={false} />
+            <Container>
+            <Row className={s.orderHeader}>
+                <Col sm={12} md={8} className={s.orderTitle}><h3>Listado de Ordenes</h3></Col>
+                <Col sm={12} md={4} className={s.orderFilter}>
+                    <div className={s.orderFilterCont}>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group>
+                                <Form.Control as="select" custom onChange={handlerChange}>
+                                    <option value={'all'}>Todas</option>
+                                    <option value={'cart'}>Carrito</option>
+                                    <option value={'created'}>Creada</option>
+                                    <option value={'in_process'}>En proceso</option>
+                                    <option value={'fullfilled'}>Completada</option>
+                                    <option value={'rejected'}>Rechazada</option>
+                                </Form.Control> 
+                                <Button variant="primary" type="submit">
+                                    filter
+                                </Button>
+                            </Form.Group>
+                        </Form>
+                    </div>
+                </Col>
+            </Row>
+            <hr/>
+            </Container>
             <div className={s.table_prin}>
                 {/* <Menu/> */}
                 <div>
@@ -76,7 +116,7 @@ const Orders = ({ orders, getOrdersP }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map(order => {
+                            {ordersP.map(order => {
                                 return (
                                     <tr className={s.tableDescrip}>
                                         <td>{order.id}</td>
@@ -84,8 +124,7 @@ const Orders = ({ orders, getOrdersP }) => {
                                         <td>{order.createdAt}</td>
                                         <td>{order.status}</td>
                                         <td className={s.icons}>
-                                            <FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={s.iconUpdate} onClick={()=> {}} />
-                                            <FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={() => {}} />
+                                            <FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={() => handleDelete(order.id)} />
                                         </td>
                                     </tr>
                                 )
@@ -100,13 +139,16 @@ const Orders = ({ orders, getOrdersP }) => {
 
 function mapStateToProps(state){
     return {
-        orders: state.orders,
+        ordersP: state.orders,
+        filteredOrdersP: state.filteredOrders
     }
 }
 
 function mapDispatchToProps(dispatch){
     return {
         getOrdersP: () =>  dispatch(getOrders()),
+        filterOrdersP: (status) => dispatch(filterOrders(status)),
+        deleteOrderP: (id) => dispatch(deleteOrder(id))
         // addCategoryP: (data) => dispatch(AddCategorie(data)),
         // updCategoryP: (data) => dispatch(updCategory(data)),
         // deleteCategoryP : (id) => dispatch(deleteCategory(id))

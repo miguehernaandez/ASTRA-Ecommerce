@@ -25,13 +25,17 @@
     "express-session": "^1.17.1",
     "ioredis": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
+    "juice": "^7.0.0",
+    "mailgun-js": "^0.22.0",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "pg": "^8.4.1",
     "pg-hstore": "^2.3.3",
     "react-icons": "^3.11.0",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "stripe": "^8.119.0"
   },
   "devDependencies": {
     "supertest-session": "^4.0.0",

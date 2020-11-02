@@ -6,20 +6,23 @@
     padding: 0px !important;
 }
 
-.cont_img{
-    background-color: #f0f0f0;
+/* .cont_img{
+    background-color: #f0f0f0; 
     border-radius: 5px 0px 0px 5px !important;
-}
+} */
 
 .cont_img .imagen{
-    width: 90% !important;
+    background-color: #f0f0f0; 
+    height: 100% !important;    
+    width: 100% !important;
     margin:auto !important;
-    margin-top: 80px !important;
-    border-radius: 10px;
+    padding-top: 3% !important;
+    /* margin-top: 5% !important; */
+    border-radius: 5px 0px 0px 5px !important;
     text-align: center;
 }
 .cont_img .imagen img{
-    width: 100% !important;
+    width: 90% !important;
     border-radius: 10px;
     margin-bottom: 15px;
 }
