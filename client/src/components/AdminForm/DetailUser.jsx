@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import s from '../../styles/detailUser.module.css';
 import { enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from '../../constans/constans';
 import Navegacion from '../Navegacion/Navegacion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 const UserDetail = ({ userSelectedP }) => {
 	console.log(userSelectedP);
@@ -12,31 +14,34 @@ const UserDetail = ({ userSelectedP }) => {
 		<div>
 			<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesAdmin} showSearchbar={false} />
 			{userSelectedP.length === 0 || userSelectedP[0].orders.length === 0 ? (
-				<div className='container'>
+				<div className={s.cardVacio}>
+					<FontAwesomeIcon className={s.icon} icon={faExclamationTriangle} size={'3x'} />
 					<h1>No hay Ordenes para este Usuario</h1>
 					<Link to='/'>Volver al Home</Link>
 				</div>
 			) : (
-				<div className='container'>
+				<div className={`container ${s.container}`}>
+					<div className={s.title}>
 					<h3>
-						Ordenes de este {userSelectedP[0].email}: {userSelectedP[0].orders.length}
+						Ordenes de {userSelectedP[0].name}: {userSelectedP[0].orders.length}
 					</h3>
+					</div>
 					<div>
 						{userSelectedP.map((x, index) => {
 							return (
 								<div className={s.contOrder}>
 									<h1>Orden No.{index + 1}</h1>
-									<Table striped bordered hover>
-										<thead>
+									<Table  bordered size='sm'>
+										<thead className={s.tableTitle}>
 											<tr>
-												<th>User</th>
+												<th>Usuario</th>
 												<th>Rol</th>
-												<th>Status</th>
-												<th>Create</th>
+												<th>Estado</th>
+												<th>Fecha de creacion</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+											<tr className={s.tableDescrip}>
 												<td>{x.email}</td>
 												<td>{x.role}</td>
 												<td>{x.orders[0].status}</td>
@@ -47,15 +52,15 @@ const UserDetail = ({ userSelectedP }) => {
 													PRODUCTOS DE LA ORDEN
 												</th>
 											</tr>
-											<tr>
-												<th>Product</th>
-												<th>Cant</th>
-												<th>Price</th>
+											<tr className={s.tableTitle}>
+												<th>Producto</th> 
+												<th>Cantidad</th>
+												<th>Precio</th>
 												<th>Total</th>
 											</tr>
 											{x.orders[0].products.map((p) => {
 												return (
-													<tr>
+													<tr className={s.tableDescrip}>
 														<td>{p.name}</td>
 														<td>{p.order_line.quantity}</td>
 														<td>$ {p.price}</td>
@@ -66,7 +71,7 @@ const UserDetail = ({ userSelectedP }) => {
 										</tbody>
 									</Table>
 									<div>
-										<Table striped borderless size='sm'>
+										<Table className={s.total} striped borderless size='sm'>
 											<tbody className={s.tabletotal}>
 												<tr>
 													<td className={s.subinfo1}>Subtotal</td>

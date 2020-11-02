@@ -1,16 +1,51 @@
 const server = require('express').Router(); //Import router from express module.
 const { Order, Order_line, Product, User } = require('../db.js'); // Import Categories model.
 const { OK, CREATED, ERROR, ERROR_SERVER } = require('../constants/index'); // Import Status constants.
-const Stripe = require('stripe')
+const { MAILGUN_API_KEY, MAILGUN_DOMAIN } = process.env;
+const Stripe = require('stripe');
+const mailgunLoader = require('mailgun-js');
+const juice = require('juice');
+const fs = require('fs');
+const path = require('path');
 
-// Start Routes
+const mailgun = mailgunLoader({ apiKey: `${MAILGUN_API_KEY}`, domain: `${MAILGUN_DOMAIN}` });
+const emailHtml = fs.readFileSync(path.join(__dirname + '../../../assets/email/email.html')).toString()
+const emailCss = fs.readFileSync(path.join(__dirname + '../../../assets/email/email.css')).toString()
+const inlineHtml = juice.inlineContent(emailHtml, emailCss);
+
+mailgun.post(`/${MAILGUN_DOMAIN}/templates`, {
+	"template": inlineHtml,
+	"name": "template.astra",
+	"description": "Astra template"}, (error, body) =>  console.log(body) );
 
 const stripe = new Stripe('sk_test_51HhisyJCzko8yllsxOIAH4PuIS3N1PWGAUw1viuWg14gzpQPzJLJi7guXSecwRnf2gpdXiRWISJXQJc3N7ChjvQw00qiH74sAF')
 
+// Start Routes
 //// 'Get Orders' route in '/'
 server.get('/', function (req, res) {
 
 	Order.findAll({ include: [ { model: User}, {model: Product}  ] })	
+	.then(orders => {
+		return res.json({
+			message: 'Sucess',
+			data: orders
+		})
+	})
+	.catch((err) => {
+		console.log(err)
+	});
+});
+
+server.get('/filter', function (req, res) {
+
+	const {status} = req.query;
+	let queryParameters;
+	console.log('EL ESTADO DE LA ORDEN ES ', status);
+
+	if (status === 'all') queryParameters = {include: [ { model: User}, {model: Product}  ]}
+	else queryParameters = { where: { status }, include: [ { model: User}, {model: Product}  ] }
+
+	Order.findAll(queryParameters)	
 	.then(orders => {
 		return res.json({
 			message: 'Sucess',
@@ -31,7 +66,7 @@ server.post('/shopping/:userId', function (req, res) {
 	 const  qty  = req.body.order_line.quantity
 	 console.log(req.body)
 
-	const newOrder = Order.findOrCreate({ where: { userId } });
+	const newOrder = Order.findOrCreate({ where: { userId, status: 'cart' } });
 	const newProduct = Product.findOne({ where: {id: id} });
 	Promise.all([ newOrder,  newProduct])
 	.then((data) => {
@@ -44,7 +79,6 @@ server.post('/shopping/:userId', function (req, res) {
 		res.send({errro: 'Error POST'})
 	});
 });
-
 
 server.put('/shopping/:id', (req, res)=>{
 	//  console.log(req.params.id)
@@ -105,15 +139,17 @@ server.delete('/shopping/:id', (req, res)=>{
 	console.log(req.params.id)
 	const { id } = req.params
 
-	Order.findAll({ where: id })
-		.then(res => {
-			resdestroy();
+	Order.findOne({ where: {id} })
+		.then(order => {
+			console.log('THEN DEL DELETE ORDER')
+			order.destroy();
 			return res.status(OK).json({
-				message: 'Orden Cancelada!!',
-				data: deletedCart
+				message: 'Orden eliminada!!',
+				data: order
 			});
 		})
 		.catch(err => {
+			console.log(err);
 			return res.status(ERROR_SERVER).json({
 				message: 'Error al eliminar Orden',
 				data: err
@@ -194,6 +230,43 @@ server.put('/checkoutReject/:id', (req, res)=>{
 		});
 })
 
+server.post('/checkout/:id', async (req, res)=>{
+	const { id } = req.params;
+	const { email, name } = req.body;
+	try {
+		const order = await Order.findOne({ where: {id: id}, include:{model: Product}})
+		const subject = `Astra - Detalles de tu compra!`;
+		const data = {
+			from: "Astra Team <info@astra.com>",
+			to: email,
+			subject: subject,
+			template: 'template.astra',
+			'h:X-Mailgun-Variables': JSON.stringify({
+				name: name,
+				reference: order.id
+			})
+		}
+		await mailgun.messages().send(data)
+		return res.status(OK).json({
+			message:`Email sent!`,
+			data: order
+		});
+	} 
+	catch (err) {
+		console.log(err);
+		res.status(500);
+	}
+	return 
+})
 
+server.post('/test', function (req, res) {
+
+    // return res.send(req.body)
+	 const { status, userId } = req.body;
+	 Order.create({ status, userId })
+	 	.then(order=>{
+			return res.json(order)
+		 })
+});
 //End routes
 module.exports = server;

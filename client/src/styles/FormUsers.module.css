@@ -9,6 +9,26 @@
 	--naranja: #f19953;
 } */
 
+/* Bordes */
+
+.bordeRojo {
+	border: 1px solid red;
+}
+
+.bordeAzul {
+	border: 1px solid blue;
+}
+
+.bordeAmarillo {
+	border: 1px solid gold;
+}
+
+/* Bordes */
+
+.contPrincipal {
+	min-height: 70vh;
+}
+
 .formCard {
 	box-shadow: 1px 1px 5px black;
 	
@@ -114,7 +134,6 @@ margin-left: 10px;
 .botonSubmit:disabled {
 	background-color: grey;
 	border: 1px solid grey;
-	
 }
 .terminos{
 	margin: 0px;

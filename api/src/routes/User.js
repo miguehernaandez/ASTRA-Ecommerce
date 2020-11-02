@@ -80,12 +80,13 @@ server.put('/', (req, res) => {
 	console.log(resetPassword);
 
 	if (resetPassword) {
-		// Se genera un numero aleatorio con crypto.randomBytes
 		var newRandomNumber = '';
+		// Se genera un numero aleatorio con crypto.randomBytes
 		newRandomNumber = crypto.randomBytes(10, (err, buf) => {
 			if (err) throw err;
 			console.log(`${buf.length} bytes of random data: ${buf.toString('hex')}`);
 			// Se asigna el numero aleatorio a la variable newRandomNumber
+			// Ademas se utiliza la funcion encryptPassword de bcrypt para la encriptacion
 			newRandomNumber = User.encryptPassword(buf.toString('hex'));
 		});
 	}
@@ -137,7 +138,7 @@ server.get('/:id', (req, res, next) => {
 /**************************************** Login **************************************** */
 
 server.post('/singin', function (req, res, next) {
-	passport.authenticate('login', function (err, user, info) {
+	passport.authenticate('local', function (err, user, info) {
 		if (err) {
 			return res.send({ message: 'User or Email incorrect' });
 		}
@@ -148,7 +149,9 @@ server.post('/singin', function (req, res, next) {
 			if (err) {
 				return next(err);
 			}
-			return res.send({ data: user });
+			return res.send({
+				data: user,
+			});
 		});
 	})(req, res, next);
 });
@@ -158,10 +161,27 @@ server.get('/log/logout', (req, res) => {
 	res.send({ message: 'logout' });
 });
 
-// server.post('/singin', (req, res) => {
-// 	console.log(req.user)
-// 	return res.send(req.body)
-// })
+// <------------------------------------ Google ------------------------------------>
+// GET /auth/google
+// Use passport.authenticate() as route middleware to authenticate the request.
+// The first step in Google authentication will involve redirecting the user to google.com. After authorization, Google will redirect the user back to this application at /auth/google/callback.
+server.get('/auth/google', passport.authenticate('google', { scope: ['profile email https://www.googleapis.com/auth/userinfo.profile'] }));
+
+// GET /auth/google/callback
+// Use passport.authenticate() as route middleware to authenticate the request. If authentication fails, the user will be redirected back to the login page.  Otherwise, the primary route function function will be called, which, in this example, will redirect the user to the home page.
+server.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'http://localhost:3000/users' }), function (req, res) {
+	console.log('a ver que hay en REQ');
+	// console.log(req);
+	// console.log('************');
+	// console.log(req.login);
+	// console.log('a ver que hay en REQ');
+	console.log('Estos son los datos de la respuesta en RUTAS');
+	console.log(res.req.user);
+	console.log('antes de redireccionar');
+	res.redirect('http://localhost:3000/login');
+});
+
+/**************************************** Login **************************************** */
 
 // End Routes
 

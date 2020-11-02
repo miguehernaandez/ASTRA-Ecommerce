@@ -22,6 +22,7 @@ import {
 } from '../../store/actions/product_actions';
 import {enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from '../../constans/constans'
 import Navegacion from '../Navegacion/Navegacion'
+import Confirm from '../Modals/Confirm'
 
 const url = 'localhost:3001';
 
@@ -54,6 +55,8 @@ const Product = ({
     const [showUpdate, setShowUpdate] = useState(false);
     const [showCategories, setShowCategories] = useState(false);
     const [editCategories, setEditCategories] = useState(false);
+    const [showProd, setShowProd] = useState(false)
+	const [ProdSelected, setProdSelected] = useState({})
 
 
     /*********************** Functions **************************** */
@@ -117,12 +120,17 @@ const Product = ({
         // getProductP();
         return;
     }
+    const handleDelete = function (product) {
+        setShowProd(true)
+        setProdSelected(product)
+    
+};
 
-    const deleteProduct = (id) =>{
-        if(window.confirm('Are you sure remove this product?')){
-           deleteProductP(id);
-        }
-    }
+    // const deleteProduct = (id) =>{
+    //     if(window.confirm('Are you sure remove this product?')){
+    //        deleteProductP(id);
+    //     }
+    // }
 
     const addProductCategories = () => {
         let productId = dataObject.id;
@@ -179,7 +187,7 @@ const Product = ({
                                     </td>
                                     <td className={s.icons}>
                                     <FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={s.iconUpdate} onClick={()=> updateProductModal(dat)} />
-                                    <FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={() => deleteProduct(dat.id)} />                                  
+                                    <FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={() => handleDelete(dat)} />                                  
                                         {/* <Button className={s.buttonDelete} onClick={() => deleteProduct(dat.id)}>Delete</Button>{"  "}
                                         <Button className={s.buttonUp} onClick={()=> updateProductModal(dat)}>Update</Button> */}
                                     </td>
@@ -201,7 +209,7 @@ const Product = ({
                                     </td>
                                     <td className={s.icons}>
                                         <FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={s.iconUpdate} onClick={()=> updateProductModal(dat)} />
-                                        <FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={() => deleteProduct(dat.id)} />                                   
+                                        <FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={() => handleDelete(dat)} />                                   
                                     </td>
                                 </tr>
                             )
@@ -250,6 +258,14 @@ const Product = ({
             addProductCategories={addProductCategories}
             setEditCategories={setEditCategories}
         />
+        {/*************************** AVISO CONFIRMAR MODAL ****************************** */}
+        <Confirm
+				tipo={'products'}
+				show={showProd}
+				setShow={setShowProd}
+				deleted={deleteProductP}
+				selected={ProdSelected}
+            />
     </div>
     )
 }
