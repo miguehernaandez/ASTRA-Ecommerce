@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Form, Container, Col, Row } from 'react-bootstrap';
+import { Card, Button, Form, Container, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
@@ -108,30 +108,34 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, checkForEmailP, logge
 	// <-------------------- FUNCIONES -------------------->
 
 	return (
-		<div className={s.cont_prin}>
+		<Container className={`${s.containerPrincipal} ${s.bordeRojo} d-flex flex-row justify-content-center`} onSubmit={handleSubmit}>
 			<LoginModalNoUser showModalNoUser={showModalNoUser} setShowModalNoUser={setShowModalNoUser}></LoginModalNoUser>
 			<LoginModalAuthError showModalAuthError={showModalAuthError} setShowModalAuthError={setShowModalAuthError}></LoginModalAuthError>
-			<div className={s.opac}>
-				<Container className={s.cont} onSubmit={handleSubmit}>
-					<div className={s.img}>
+
+			<Card style={{ width: '30rem' }} className={`${s.loginCard} my-3`}>
+				<Card.Body className={`p-3`}>
+					<Card.Title className={`text-center`}>Ingresa con tu cuenta</Card.Title>
+					<div className={`${s.img} d-flex flex-row justify-content-center my-4`}>
 						<FontAwesomeIcon className={s.icon} icon={faUserCircle} size={'7x'} />
 					</div>
 					<Form className={s.cont_form}>
 						{messageErrorP === '' ? <div></div> : <div className={s.messageError}>{messageErrorP}</div>}
 						<Form.Group className={s.cont_input} controlId='formBasicEmail'>
-							<Form.Control className={s.input} type='email' placeholder='Enter email' onChange={handlerInput} name='email' />
+							<Form.Control className={s.input} type='email' placeholder='Email' onChange={handlerInput} name='email' />
 							<FontAwesomeIcon className={s.icon2} icon={faEnvelope} size={'1x'} />
 						</Form.Group>
 
 						<Form.Group className={s.cont_input} controlId='formBasicPassword'>
-							<Form.Control className={s.input} type='password' placeholder='Password' onChange={handlerInput} name='password' />
+							<Form.Control className={s.input} type='password' placeholder='Contraseña' onChange={handlerInput} name='password' />
 							<FontAwesomeIcon className={s.icon2} icon={faLock} size={'1x'} />
 						</Form.Group>
-						<div className={s.forgot}>
-							<p>Forgot Password?</p>
-						</div>
+						<Row className={`justify-content-center my-4`}>
+							<Link to='/users' className={`text-center`}>
+								<p className={s.reg}>Olvidaste tu contraseña?</p>
+							</Link>
+						</Row>
 						<Button className={s.button} type='submit'>
-							SING IN
+							Ingresar
 						</Button>
 						<hr></hr>
 						<Row className={`justify-content-center`}>
@@ -141,17 +145,14 @@ const Login = ({ userLoggedP, loginActionP, messageErrorP, checkForEmailP, logge
 								{/* google login */}
 							</Col>
 						</Row>
-						<Link to='/users'>
-							<div className={s.reg}>
-								<p>
-									Don´t have an account? <span> Sign Up</span>
-								</p>
-							</div>
+						<hr></hr>
+						<Link to='/users' className={`text-center`}>
+							<p className={s.reg}>No tienes una cuenta? Registrate</p>
 						</Link>
 					</Form>
-				</Container>
-			</div>
-		</div>
+				</Card.Body>
+			</Card>
+		</Container>
 	);
 };
 
