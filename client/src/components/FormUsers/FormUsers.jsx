@@ -153,9 +153,13 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 								</Form.Group>
 							</Col>
 						</Row>
-						<Button className={`${s.botonSubmit}`} id='submitButton' type='submit' disabled={true}>
-							Registrarme
-						</Button>
+						<Row>
+							<Col className={s.content_buttom}>
+								<Button className={`${s.botonSubmit}`} id='submitButton' type='submit' disabled={true}>
+									Registrarme
+								</Button>
+							</Col>
+						</Row>
 					</Form>
 					<hr></hr>
 					<Row>
@@ -168,9 +172,6 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 						</Col>
 					</Row>
 				</Card>
-				<Row>
-					<Col className={s.content_buttom}></Col>
-				</Row>
 			</Container>
 		</div>
 	);

@@ -158,9 +158,11 @@ Colores personalizados */
 .productCardButton:hover {
 	background-color: var(--celeste);
 }
+
 .productCardButton2:hover {
 	background-color: var(--celeste);
 }
+
 .icon{
 	width: 100%;
 	padding-top: 1%;
@@ -181,6 +183,17 @@ Colores personalizados */
 	width: 94px;
 	color:#F19953;
 }
+
+.productCard .fixedRate{
+	position: absolute;
+	top: 77.5%;
+	right: 13%;
+}
+
+.productCard .fixedRate h6{
+	font-size: 0.7rem;
+}
+
 .cont_prin{
 	position: relative;
 	padding: 0px !important;

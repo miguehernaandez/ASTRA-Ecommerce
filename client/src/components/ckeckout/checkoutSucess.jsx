@@ -9,11 +9,12 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, Container, Navbar, Table} from 'react-bootstrap';
 import { Link } from 'react-router-dom'
+import Checkout from '../Modals/Checkout';
 
 
 
 
-const CheckoutSucess = ({cartP, UpdateOrderTorejectP, checkoutP, UpdateOrderToFullfilledP, orderCreatedP, getOrdersP, orderP,userLogin,}) => {
+const CheckoutSucess = ({cartP, UpdateOrderTorejectP, checkoutP, UpdateOrderToFullfilledP, orderCreatedP, getOrdersP, orderP, userLogin}) => {
 
     // const {idUser} = match.params
     console.log('Orden Creada...')
@@ -28,10 +29,13 @@ const CheckoutSucess = ({cartP, UpdateOrderTorejectP, checkoutP, UpdateOrderToFu
     let objender =  orderRender[0];
     let products = objender && objender.products
     let orderP2 =  orderP.length < 1? [] :  orderP[0].products
-    // const  qty = location.search.split('=')[1]
 
+    const [showCheckout, setShowCheckout] = useState(true);
+    // const  qty = location.search.split('=')[1]
+    
     console.log('Orden para renderizar')
     console.log(products)
+  
 
     /********** USEEFECT *********** */
     useEffect(()=> {
@@ -44,9 +48,8 @@ const CheckoutSucess = ({cartP, UpdateOrderTorejectP, checkoutP, UpdateOrderToFu
 
 
     const handlerClick = () => {
-        alert('Enviamos un correo de confirmacion a tu email!!!')
         UpdateOrderToFullfilledP(orderCreatedP.id)
-        window.location = '/'
+        setShowCheckout(false)
         return
     }
 
@@ -57,9 +60,8 @@ const CheckoutSucess = ({cartP, UpdateOrderTorejectP, checkoutP, UpdateOrderToFu
         return
     }
 
-
     return(
-        
+        <>
         <div>
             {checkoutEnd ? 
                     <div className={`${s.cont_prin} my-3`}>
@@ -76,37 +78,39 @@ const CheckoutSucess = ({cartP, UpdateOrderTorejectP, checkoutP, UpdateOrderToFu
                         
                             <div className={s.cont_button1}>
                                 {/* <Button className={s.buttonF} >Finalizar compra</Button>{"    "} */}
-                                <Button className={s.buttonFC} onClick={handlerClick}>Terminar</Button>
+                                <Button className={s.buttonFC} as={Link} to={'/'}>Terminar</Button>
         
                             </div>
         
                     </div> :
                              <div className={`${s.cont_prin} my-3`}>
-                                        <div className={s.cont1}>
-                                            <img className={`${s.logo}`} src={logo}></img>
-                                            <ul>
-                                                <h1>Ah ocurrido un error al enviar el pago.!</h1>
-                                            </ul>
-                                        </div>
-                                        <Container className={s.contFormPay}>
-                                           <h1>Compra fallida</h1>
-                                        </Container>
-                                        
-                                        
-                                            <div className={s.cont_button1}>
-                                                {/* <Button className={s.buttonF} >Finalizar compra</Button>{"    "} */}
-                                                <Button className={s.buttonFC}  as={Link} to={'/paymethod'}>intentar nuevamente</Button>
-                        
-                                            </div>
-                        
+                                <div className={s.cont1}>
+                                    <img className={`${s.logo}`} src={logo}></img>
+                                    <ul>
+                                        <h1>Ah ocurrido un error al enviar el pago.!</h1>
+                                    </ul>
+                                </div>
+                                <Container className={s.contFormPay}>
+                                    <h1>Compra fallida</h1>
+                                </Container>
+                                <div className={s.cont_button1}>
+                                    {/* <Button className={s.buttonF} >Finalizar compra</Button>{"    "} */}
+                                    <Button className={s.buttonFC}  as={Link} to={'/paymethod'}>intentar nuevamente</Button>
+                                </div>
                             </div>
-
                     }
             {/* < Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={false}/> */}
          
         </div>
-
-
+        <Checkout 
+            checkoutEnd={checkoutEnd}
+            showCheckout={showCheckout}
+            setShowCheckout={setShowCheckout}
+            handlerClick={handlerClick}
+            user={userLogin}
+            order={orderCreatedP}
+        />
+        </>
     )
 
 }

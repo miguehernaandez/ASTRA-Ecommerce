@@ -16,13 +16,15 @@ import { Button, Form, Container, Navbar, Table} from 'react-bootstrap';
 import { loadStripe } from '@stripe/stripe-js';
 import {Elements} from '@stripe/react-stripe-js';
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
-import cookie from 'js-cookie'
+import cookie from 'js-cookie';
+import axios from "axios";
 
 
 const stripePromise = loadStripe('pk_test_51HhisyJCzko8yllshTIdDvi4wXchIr9Qldywmk851YSOTubs7MbPWyS4YmE3n0IDR2VA1ha15pVFFsEKL4juFMnk00rPudOUZh')
 
+
 /********************************************* Form Pay ***************************************************** */
-function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps})  {
+function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, user, order})  {
     const [loading, setLoading] = useState(false)
     const stripe = useStripe();
     const elements = useElements();
@@ -37,6 +39,7 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps})  {
     // if(loading){
     //     console.log('terminado')
     // }
+    
 
     const handlerSubmit = async (e) => {
         e.preventDefault();
@@ -48,6 +51,7 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps})  {
         if(!error){
             console.log(paymentMethod)
             confirOrderProps(paymentMethod.id, total, objenderProps.id  )
+            let orderId = order.id;
             history.push('/paymethod/sucess')
             //await sendStatusOrder(checkoutEndProps)
            // UpdateOrderToCreateFullorRejectProps(objenderProps.id, statuCheckout)
@@ -80,7 +84,7 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps})  {
     //     console.log('aqui False')
     //    //return history.push('/paymethod/failed')
     // }
-    
+   
 
     return (
         <Form onSubmit={handlerSubmit}>
@@ -186,7 +190,7 @@ const PaymentMethod = ({cartP, UpdateOrderToProcessStatusP, checkoutP, UpdateOrd
                     <div>
                         <h1>Resumen de la Orden</h1>
                         <div>
-                            {!products || products.length < 1 ? <h3>Emply...</h3> : 
+                            {!products || products.length < 1 ? <h3>Empty...</h3> : 
                             <div>
                                 <Table  size="sm">
                                 <thead className={s.tableTitle}>
@@ -228,6 +232,8 @@ const PaymentMethod = ({cartP, UpdateOrderToProcessStatusP, checkoutP, UpdateOrd
                         objenderProps={objender}
                         checkoutEndProps={checkoutEnd}
                         UpdateOrderToSucess={UpdateOrderToFullfilledP}
+                        user={userLogin}
+                        order={orderCreatedP}
                         />
                     </Elements>
                     </div>
