@@ -36,18 +36,19 @@ const [values, setValues] = useState({
 
 	  //******************************************************
 	  	//ventana success si la persona se registro
-	  	const registroCorrecto = () =>{
-	  		let name = document.getElementById(`name`).value
-	  		swal({
-	  			title: "Bienvenido" + "  " + name,
-	  			text: "Registro completado",
-	  			icon: "success",
-	  			Button: "Ir al Catalogo"
-	  		}).then(function(){
-	  			window.location.href ='http://localhost:3000/login';
-	  		})
-	  	}
 
+			const registroCorrecto = () =>{
+				let name = document.getElementById(`name`).value
+				console.log(values);
+				swal({
+					title: "Bienvenido" + "  " + name,
+					text: "Registro completado",
+					icon: "success",
+					Button: "Ir al Catalogo"
+				}).then(function(){
+					window.location.href ='http://localhost:3000/login';
+				})
+			}
 
 	  //*******************************************
 	  	//comprobar que password sea iguales
@@ -75,69 +76,88 @@ const [values, setValues] = useState({
 
 	  	const createSuccess = function () {
 	  		if (createUserSuccessP) {
-	  			return history.push('/login')
+	  			return
+					history.push('/login')
+
 	  		}
 	  	};
-
+//**************************************
 
 
 				  	const aceptarTerminos = function () {
 				  		// Funcion para que el boton de submit solo este disponible si se aceptan terminos y condiciones
-				  		if (document.getElementById('terminos').checked) {
+								var errorValidate = true
+
+								if(Object.keys(errors).length >= 1 ){
+									 errorValidate = false;
+								}
+
+
+							if (document.getElementById('terminos').checked && errorValidate ) {
 				  			document.getElementById('submitButton').disabled = false;
 				  		}
-				  		if (!document.getElementById('terminos').checked) {
+				  		if (!document.getElementById('terminos').checked && !errorValidate) {
 				  			document.getElementById('submitButton').disabled = true;
 				  		}
+
+							console.log(errorValidate);
+							console.log(errors);
 				  	};
 
 
 	  //************************
+		// const passValidate = (show) => {
+									//
+									//  let pass = document.getElementById(`password`).value;
+									//  let passConfirm = document.getElementById(`passwordConfirm`).value;
+									//  let submitTrue =		document.getElementById('submitButton');
+									//  if(pass !== passConfirm){
+									// 	 return 	setShow(true);
+									// 		 }
+									//  if(pass !== passConfirm){
+									// 	 return submitTrue.disabled = true;
+									//  }
 
+								// }
 
 
 
 						//errors
 
-	const useForm = (validate , handleChange, ch, handleSubmit) =>			{
-		//Manejo de input
-		return
+
 							const handleChange = function(ch){
-							const { name, value } = ch.target;
-							// const passValidate = (show) => {
-							//
-							//  let pass = document.getElementById(`password`).value;
-							//  let passConfirm = document.getElementById(`passwordConfirm`).value;
-							//  let submitTrue =		document.getElementById('submitButton');
-							//  if(pass !== passConfirm){
-							// 	 return 	setShow(true);
-							// 		 }
-							//  if(pass !== passConfirm){
-							// 	 return submitTrue.disabled = true;
-							//  }
 
-						// }
-							setValues({
-								...values,
-								[name]: value
-							});
-						}
+								setValues({
+									...values,
+									[ch.target.name]: ch.target.value
+								});
+
+								console.log(values);
+							}
 
 
+
+
+
+
+						console.log(values);
 	  	// Funcion que se dispara al hacer submit
 	  	const handleSubmit = function (e) {
 	  		e.preventDefault();
 				setErrors(validate(values));
 
-	  		var data = getUserData();
-	  		registroCorrecto();
+				if(values.userPassword === values.userPasswordConfirm){
+					registroCorrecto()
+					var data = getUserData();
+		  		createUserP(data);
+		  		createSuccess(); // Alert
+				}else{
+					return 	setShow(true);
+				}
 
-
-	  		createUserP(data);
-	  		createSuccess(); // Alert
 	  	};
 
-}
+
 	  //*****************************************
 	  // Aceptar terminos
 
@@ -159,7 +179,7 @@ const [values, setValues] = useState({
 								<Form.Row>
 									<Col xs={12} md={6} lg={6}>
 										<Form.Group  className={s.grupo}>
-											<Form.Control className={`${s.input}`} type='name' name='userName' value={values.userName} onChange={handleChange}    id={`name`} required />
+											<Form.Control className={`${s.input}`} type='name' name='userName' value={values.userName}  onChange={handleChange}   id={`name`} required />
 											<Form.Label className={s.label}>Nombre</Form.Label>
 											<span className={s.menssage}>Ingrese su nombre completo</span>
 											{errors.userName && <p>{errors.userName}</p>}
@@ -167,7 +187,7 @@ const [values, setValues] = useState({
 									</Col>
 									<Col xs={12} md={6} lg={6}>
 										<Form.Group  className={s.grupo}>
-											<Form.Control className={`${s.input}`} type='email' name='userMail' value={values.userMail} onChange={handleChange} id={`email`} required />
+											<Form.Control className={`${s.input}`} type='email' name='userMail' value={values.userMail}   onChange={handleChange} id={`email`} required />
 											<Form.Label className={s.label}>Email</Form.Label>
 											<span className={s.menssage}>Asegurate de tener acceso a este email</span>
 												{errors.userMail && <p>{errors.userMail}</p>}
@@ -186,7 +206,7 @@ const [values, setValues] = useState({
 								<Form.Row>
 									<Col xs={12} md={6} lg={6}>
 									<Form.Group  className={s.grupo} >
-										<Form.Control className={`${s.input}`} type='password'  name='userPassword'   value={values.userPassword} onChange={handleChange} id={`password`} required />
+										<Form.Control className={`${s.input}`} type='password'  name='userPassword' value={values.userPassword}   onChange={handleChange} id={`password`} required />
 										<Form.Label className={s.label}>Contraseña</Form.Label>
 										<span className={s.menssage}>La contraseña debe contener minimo 8 caracteres y 1 mayuscula</span>
 												{errors.userPassword && <p>{errors.userPassword}</p>}
@@ -195,7 +215,7 @@ const [values, setValues] = useState({
 									</Col>
 									<Col xs={12} md={6} lg={6}>
 									<Form.Group xs={12} md={6} lg={6} className={s.grupo} >
-										<Form.Control className={`${s.input}`} type='password' name='userPasswordConfirm'  value={values.userPasswordConfirm} onChange={handleChange} id={`passwordConfirm`} required />
+										<Form.Control className={`${s.input}`} type='password' name='userPasswordConfirm' value={values.userPasswordConfirm}  onChange={handleChange} id={`passwordConfirm`} required />
 										<Form.Label className={s.label}>Confirma tu contraseña</Form.Label>
 										<span className={s.menssage}>Confirme su contraseña</span>
 											{errors.userPasswordConfirm && <p>{errors.userPasswordConfirm}</p>}
@@ -212,7 +232,7 @@ const [values, setValues] = useState({
 								</Form.Group>
 							</Col>
 						</Row>
-						<Button className={`${s.botonSubmit}`} id='submitButton' name='botoSubimit'   onClick={()=>registroCorrecto()}
+						<Button className={`${s.botonSubmit}`} id='submitButton' name='botoSubimit'
 							 type='submit' disabled={true}>
 							Registrarme
 						</Button>

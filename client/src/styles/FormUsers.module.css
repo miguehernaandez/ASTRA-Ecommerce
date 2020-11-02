@@ -105,6 +105,10 @@ margin-bottom: 30px;
 margin-left: 10px;
 }
 
+.formCard p{
+	color: #FA5555;
+}
+
 .botonSubmit {
 	font-weight: bold !important;
 	background-color: var(--naranja);
