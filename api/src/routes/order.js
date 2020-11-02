@@ -85,7 +85,7 @@ server.put('/shopping/:id', (req, res)=>{
 	//  console.log(req.body)
 	 const { id } = req.params;
 	 const { total, subTotal, iva } = req.body;
-	 return Order.findOne({ where: {id: id}})
+	 return Order.findOne({ where: { status:'cart'}})
 	 	.then(order => {
 
 			order.status = 'created';
@@ -112,7 +112,7 @@ server.put('/shopping/:id', (req, res)=>{
 	//  console.log(req.body)
 	 const { id } = req.params;
 	 const { adress, city, phone, postal } = req.body;
-	 return Order.findOne({ where: {id: id}, include:{model: Product}})
+	 return Order.findOne({ where: { status:'created'}, include:{model: Product}})
 	 	.then(order => {
 
 			order.status = 'in_process';
