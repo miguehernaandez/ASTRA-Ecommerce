@@ -93,6 +93,7 @@ z .title {
 	font-weight: bolder !important;
 	margin-left: 30px !important;
 	margin-bottom: 30px !important;
+	font-size: 0.9em;
 }
 
 .orderButton {
@@ -125,3 +126,36 @@ z .title {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 	padding: 5px 10px;
 }
+@media (max-width: 1270px) {
+
+	.buttonADD{
+       font-size: 0.8em !important;
+       
+    }
+	
+}
+@media (max-width: 1072px) {
+
+	.buttonADD{
+       font-size: 0.8em !important;
+       width: 15% !important;
+    }
+	
+}
+@media (max-width: 570px) {
+
+	.buttonADD{
+       font-size: 0.8em !important;
+       width: 30% !important;
+    }
+	
+}
+@media (max-width: 431px) {
+
+	.buttonADD{
+       font-size: 0.5em !important;
+       width: 30% !important;
+    }
+	
+}
+

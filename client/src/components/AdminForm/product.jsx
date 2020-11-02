@@ -159,7 +159,7 @@ const Product = ({
         <div>
         <Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesAdmin} showSearchbar={false} />
             <div className= {s.table_prin}>
-            <Table  striped bordered hover size="sm">
+            <Table  striped bordered hover size="sm" responsive="lg">
                     <thead className={s.tableTitle}>
                         <tr>
                         <th>Name</th>
