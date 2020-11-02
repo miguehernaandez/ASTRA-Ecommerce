@@ -1,9 +1,13 @@
 // React
-import React from 'react';
+import React, {useState} from 'react';
 import { useHistory } from 'react-router-dom';
+import validate from './validateInfo';
+
 
 // Bootstrap
-import { Container, Card, Form, Button, Col, Row } from 'react-bootstrap';
+import { Container, Card, Form, Button, Col, Row, Alert} from 'react-bootstrap';
+import swal from 'sweetalert';
+
 // CSS
 import s from '../../styles/FormUsers.module.css';
 // Redux
@@ -15,86 +19,152 @@ const url = 'localhost:3001';
 
 const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP }) {
 	const history = useHistory();
-	console.log(createUserP);
-	console.log(usersP);
-	const getUserData = function () {
-		let name = document.getElementById(`name`).value,
-			// 	apellido = document.getElementById(`apellido`).value,
-			// 	telefono = document.getElementById(`telefono`).value,
-			// 	dni = document.getElementById(`dni`).value,
-			email = document.getElementById(`email`).value,
-			// fechaNacimiento = document.getElementById(`fechaNacimiento`).value,
-			// direccion = document.getElementById(`direccion`).value,
-			// pais = document.getElementById(`pais`).value,
-			// provincia = document.getElementById(`provincia`).value,
-			// ciudad = document.getElementById(`ciudad`).value,
-			// codPostal = document.getElementById(`codPostal`).value,
-			// userName = document.getElementById(`userName`).value,
-			password = document.getElementById(`password`).value,
-			passwordConfirm = document.getElementById(`passwordConfirm`).value;
-		// terminos = document.getElementById(`terminos`).checked;
 
-		let userData = {
-			// nombre,
-			// apellido,
-			// telefono,
-			// dni,
-			name,
-			email,
-			// fechaNacimiento,
-			// direccion,
-			// pais,
-			// provincia,
-			// ciudad,
-			// codPostal,
-			// userName,
-			password,
-			// passwordConfirm,
-			// terminos: terminos,
-			role: 'client',
-		};
-		console.log(userData);
-		return userData;
-	};
+const [errors, setErrors] = useState({});
+const [show, setShow] = useState(false) // estados de error
+//validaciones
+const [values, setValues] = useState({
+	userName: '',
+	userMail: '',
+	userPassword: '',
+	userPasswordConfirm: ''
+	})
 
-	const createSuccess = function () {
-		if (createUserSuccessP) {
-			return history.push('/login');
-		}
-	};
+	  //******************************************************
+	  	//ventana success si la persona se registro
 
-	// Funcion que se dispara al hacer submit
-	const handleSubmit = function (e) {
-		e.preventDefault();
-		console.log('Hola');
-		var data = getUserData();
+			const registroCorrecto = () =>{
+				let name = document.getElementById(`name`).value
+				console.log(values);
+				swal({
+					title: "Bienvenido" + "  " + name,
+					text: "Registro completado",
+					icon: "success",
+					Button: "Ir al Catalogo"
+				}).then(function(){
+					window.location.href ='http://localhost:3000/login';
+				})
+			}
 
-		// // Comprobacion de que las contraseñas coincidan
-		// // if (data.password != data.passwordConfirm) {
-		// // 	return alert('las contras no coinciden');
-		// // }
+	  //*******************************************
+	  	//comprobar que password sea iguales
 
-		console.log('se estan por enviar los datos');
-		console.log(data);
-		createUserP(data);
-		console.log(createUserSuccessP);
-		createSuccess(); // Alert
-	};
+	  ////************************************************
 
-	const aceptarTerminos = function () {
-		// Funcion para que el boton de submit solo este disponible si se aceptan terminos y condiciones
-		if (document.getElementById('terminos').checked) {
-			document.getElementById('submitButton').disabled = false;
-		}
-		if (!document.getElementById('terminos').checked) {
-			document.getElementById('submitButton').disabled = true;
-		}
-	};
+	  	const getUserData = function () {
+	  		let name = document.getElementById(`name`).value,
+	  			email = document.getElementById(`email`).value,
+	  		 password = document.getElementById(`password`).value,
+	  		 passwordConfirm = document.getElementById(`passwordConfirm`).value;
+
+
+	  		let userData = {
+	  			name,
+	  			email,
+	  			password,
+	  			role: 'client',
+	  		};
+
+	  		return userData;
+	  	};
+
+	  //****************************
+
+	  	const createSuccess = function () {
+	  		if (createUserSuccessP) {
+	  			return
+					history.push('/login')
+
+	  		}
+	  	};
+//**************************************
+
+
+				  	const aceptarTerminos = function () {
+				  		// Funcion para que el boton de submit solo este disponible si se aceptan terminos y condiciones
+								var errorValidate = true
+
+								if(Object.keys(errors).length >= 1 ){
+									 errorValidate = false;
+								}
+
+
+							if (document.getElementById('terminos').checked && errorValidate ) {
+				  			document.getElementById('submitButton').disabled = false;
+				  		}
+				  		if (!document.getElementById('terminos').checked && !errorValidate) {
+				  			document.getElementById('submitButton').disabled = true;
+				  		}
+
+							console.log(errorValidate);
+							console.log(errors);
+				  	};
+
+
+	  //************************
+		// const passValidate = (show) => {
+									//
+									//  let pass = document.getElementById(`password`).value;
+									//  let passConfirm = document.getElementById(`passwordConfirm`).value;
+									//  let submitTrue =		document.getElementById('submitButton');
+									//  if(pass !== passConfirm){
+									// 	 return 	setShow(true);
+									// 		 }
+									//  if(pass !== passConfirm){
+									// 	 return submitTrue.disabled = true;
+									//  }
+
+								// }
+
+
+
+						//errors
+
+
+							const handleChange = function(ch){
+
+								setValues({
+									...values,
+									[ch.target.name]: ch.target.value
+								});
+
+								console.log(values);
+							}
+
+
+
+
+
+
+						console.log(values);
+	  	// Funcion que se dispara al hacer submit
+	  	const handleSubmit = function (e) {
+	  		e.preventDefault();
+				setErrors(validate(values));
+
+				if(values.userPassword === values.userPasswordConfirm){
+					registroCorrecto()
+					var data = getUserData();
+		  		createUserP(data);
+		  		createSuccess(); // Alert
+				}else{
+					return 	setShow(true);
+				}
+
+	  	};
+
+
+	  //*****************************************
+	  // Aceptar terminos
+
+
+
+
 
 	return (
 		<div className={`${s.contPrincipal} my-4`}>
 			<Container>
-				<h1 className={`${s.formTitle}`}>Completa tus datos</h1>
+			 <h1 className={`${s.formTitle}`}>Completa tus datos</h1>
 				<Card className={`p-3 m-2 ${s.formCard}`}>
 					<Form onSubmit={handleSubmit}>
 						<Row>
@@ -104,17 +174,19 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 							<Col lg={12}>
 								<Form.Row>
 									<Col xs={12} md={6} lg={6}>
-										<Form.Group className={s.grupo}>
-											<Form.Control className={`${s.input}`} type='name' id={`name`} required />
+										<Form.Group  className={s.grupo}>
+											<Form.Control className={`${s.input}`} type='name' name='userName' value={values.userName}  onChange={handleChange}   id={`name`} required />
 											<Form.Label className={s.label}>Nombre</Form.Label>
 											<span className={s.menssage}>Ingrese su nombre completo</span>
+											{errors.userName && <p>{errors.userName}</p>}
 										</Form.Group>
 									</Col>
 									<Col xs={12} md={6} lg={6}>
-										<Form.Group className={s.grupo}>
-											<Form.Control className={`${s.input}`} type='email' id={`email`} required />
+										<Form.Group  className={s.grupo}>
+											<Form.Control className={`${s.input}`} type='email' name='userMail' value={values.userMail}   onChange={handleChange} id={`email`} required />
 											<Form.Label className={s.label}>Email</Form.Label>
 											<span className={s.menssage}>Asegurate de tener acceso a este email</span>
+												{errors.userMail && <p>{errors.userMail}</p>}
 										</Form.Group>
 									</Col>
 								</Form.Row>
@@ -129,18 +201,21 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 							<Col lg={12}>
 								<Form.Row>
 									<Col xs={12} md={6} lg={6}>
-										<Form.Group className={s.grupo}>
-											<Form.Control className={`${s.input}`} type='password' id={`password`} required />
-											<Form.Label className={s.label}>Contraseña</Form.Label>
-											<span className={s.menssage}>La contraseña debe contener minimo 8 caracteres y 1 mayuscula</span>
-										</Form.Group>
+									<Form.Group  className={s.grupo} >
+										<Form.Control className={`${s.input}`} type='password'  name='userPassword' value={values.userPassword}   onChange={handleChange} id={`password`} required />
+										<Form.Label className={s.label}>Contraseña</Form.Label>
+										<span className={s.menssage}>La contraseña debe contener minimo 8 caracteres y 1 mayuscula</span>
+												{errors.userPassword && <p>{errors.userPassword}</p>}
+								</Form.Group>
+
 									</Col>
 									<Col xs={12} md={6} lg={6}>
-										<Form.Group xs={12} md={6} lg={6} className={s.grupo}>
-											<Form.Control className={`${s.input}`} type='password' id={`passwordConfirm`} required />
-											<Form.Label className={s.label}>Confirma tu contraseña</Form.Label>
-											<span className={s.menssage}>Confirme su contraseña</span>
-										</Form.Group>
+									<Form.Group xs={12} md={6} lg={6} className={s.grupo} >
+										<Form.Control className={`${s.input}`} type='password' name='userPasswordConfirm' value={values.userPasswordConfirm}  onChange={handleChange} id={`passwordConfirm`} required />
+										<Form.Label className={s.label}>Confirma tu contraseña</Form.Label>
+										<span className={s.menssage}>Confirme su contraseña</span>
+											{errors.userPasswordConfirm && <p>{errors.userPasswordConfirm}</p>}
+									</Form.Group>
 									</Col>
 								</Form.Row>
 							</Col>
@@ -148,18 +223,18 @@ const FormUsers = function ({ usersP, createUserP, createUserSuccessP, getUsersP
 
 						<Row className={s.terminos}>
 							<Col lg={9}>
-								<Form.Group as={Row}>
-									<Form.Check className={`ml-3`} id={`terminos`} label='Acepto los Términos y Condiciones y autorizo el uso de mis datos de acuerdo a la Declaración de Privacidad.' onClick={aceptarTerminos} />
+								<Form.Group  as={Row}>
+									<Form.Check className={`ml-3`} id={`terminos`}  label='Acepto los Términos y Condiciones y autorizo el uso de mis datos de acuerdo a la Declaración de Privacidad.' onClick={aceptarTerminos} />
 								</Form.Group>
 							</Col>
 						</Row>
-						<Row>
-							<Col className={s.content_buttom}>
-								<Button className={`${s.botonSubmit}`} id='submitButton' type='submit' disabled={true}>
-									Registrarme
-								</Button>
-							</Col>
-						</Row>
+						<Button className={`${s.botonSubmit}`} id='submitButton' name='botoSubimit'
+							 type='submit' disabled={true}>
+							Registrarme
+						</Button>
+								{/*Coincidencia de Contraseñas*/}
+							<Alert variant="danger" show={show}>Las contraseñas no coiciden</Alert>
+
 					</Form>
 					<hr></hr>
 					<Row>
