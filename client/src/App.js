@@ -18,6 +18,7 @@ import UsersData from './components/AdminForm/UsersData';
 import UserDetail from './components/AdminForm/DetailUser.jsx';
 import CheckoutSucess from './components/ckeckout/checkoutSucess';
 import Faqs from './components/FAQs/Faqs.jsx';
+import Contacto from './components/Contacto/Contacto.jsx';
 // Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, Link } from 'react-router-dom';
@@ -69,6 +70,14 @@ function App() {
 				</Route>
 
 				{/* FAQS */}
+
+				{/*Contacto*/}
+				<Route path='/contacto' exact>
+					<Navegacion linksU={enlacesUserSinAdmin} linksA={enlacesUserConAdmin} showSearchbar={true} onSearch={onSearch} />
+					<Contacto></Contacto>
+					<Footer></Footer>
+				</Route>
+				{/*Contacto*/}
 
 				{/* ADMIN */}
 				<Route path='/admin'>

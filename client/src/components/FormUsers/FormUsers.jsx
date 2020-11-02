@@ -243,7 +243,7 @@ const [values, setValues] = useState({
 						</Col>
 						<Col xs={12} className={`d-flex justify-content-center mt-3`}>
 							{/* Ingreso por passport */}
-							<a href='http://localhost:3001/users/auth/google'>Sign In with Google</a>
+							<a href='http://localhost:3001/users/auth/google'>Registrate con Google</a>
 						</Col>
 					</Row>
 				</Card>
