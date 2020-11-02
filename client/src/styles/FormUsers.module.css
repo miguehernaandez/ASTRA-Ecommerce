@@ -31,7 +31,7 @@
 
 .formCard {
 	box-shadow: 1px 1px 5px black;
-	
+
 }
 .grupo{
 	margin: 30px;
@@ -125,6 +125,10 @@ margin-bottom: 30px;
 margin-left: 10px;
 }
 
+.formCard p{
+	color: #FA5555;
+}
+
 .botonSubmit {
 	font-weight: bold !important;
 	background-color: var(--naranja);
@@ -134,9 +138,17 @@ margin-left: 10px;
 .botonSubmit:disabled {
 	background-color: grey;
 	border: 1px solid grey;
+
 }
 .terminos{
 	margin: 0px;
 	margin-bottom: 20px;
 }
 
+.ocultar{
+	display: none;
+}
+
+.mostrar{
+	display: block;
+}
