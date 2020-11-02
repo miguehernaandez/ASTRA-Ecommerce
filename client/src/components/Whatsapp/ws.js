@@ -7,8 +7,8 @@ import s from '../../styles/whatsapp.module.css';
 
 function Contact(){
 
-    const cod = '+' + 549;  // Código de país
-    const cel = 110000000;  // Número telefónico
+    const cod = '+' + 569;  // Código de país
+    const cel = 30112434;  // Número telefónico
 
    return (
         <Col xs={'auto'} className={`${s.contenedorWs}`}>

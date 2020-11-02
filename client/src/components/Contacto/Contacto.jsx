@@ -4,7 +4,7 @@ import Footer from '../Footer/Footer.jsx';
 import { Col, Navbar, Container, Form, Button, InputGroup, FormControl, Card} from 'react-bootstrap';
 import s from '../../styles/contacto.module.css';
 
-const reactGoogleDocsViewer = require("react-google-docs-viewer");
+
 
 
 
@@ -35,7 +35,7 @@ export default function Contacto(){
 								</li>
 
 								<li><i className={`fas fa-phone mt-4 fa-2x`}></i>
-										<p>Telefono:  + 01 234 567 89</p>
+										<p>Telefono:  +56 9 30112434</p>
 								</li>
 
 								<li><i className={`fas fa-envelope mt-4 fa-2x`}></i>
