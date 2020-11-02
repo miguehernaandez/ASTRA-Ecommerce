@@ -16,11 +16,14 @@ import {
 } from '../../store/actions/category_actions'
 import {enlacesUser, enlacesUserConAdmin, enlacesUserSinAdmin, enlacesAdmin } from '../../constans/constans'
 import Navegacion from '../Navegacion/Navegacion'
+import Confirm from '../Modals/Confirm'
 
 
 const url = 'localhost:3001';
 
 const Categorys = ({categories, getCategoryP, addCategoryP, updCategoryP, deleteCategoryP}) => {
+    const tipo ='categories'
+
     console.log(categories)
     //console.log(props)
     /*********************** Local States ************************* */
@@ -28,6 +31,8 @@ const Categorys = ({categories, getCategoryP, addCategoryP, updCategoryP, delete
     const [form, setForm] = useState({ name : "", description : "" });
     const [show, setShow] = useState(false);
     const [showUpdate, setShowUpdate] = useState(false);
+    const [showCat, setShowCat] = useState(false)
+	const [catSelected, setCatSelected] = useState({})
 
     /*********************** Functions **************************** */
     const openModal = ()=> { setShow(true)  }
@@ -61,12 +66,17 @@ const Categorys = ({categories, getCategoryP, addCategoryP, updCategoryP, delete
             setShowUpdate(false);
         return;
     }
+    const handleDelete = function (cat) {
+		    setShowCat(true)
+			setCatSelected(cat)
+		
+	};
 
-    const deleteCategory = (id)=>{
-        if(window.confirm('Are you sure remove this product?')){
-            deleteCategoryP(id)
-        }
-    }
+    // const deleteCategory = (id)=>{
+    //     if(window.confirm('Are you sure remove this product?')){
+    //         deleteCategoryP(id)
+    //     }
+    // }
     /*********************** Component Life Cycle *************************** */
     useEffect(()=> {
         getCategoryP();
@@ -96,7 +106,7 @@ const Categorys = ({categories, getCategoryP, addCategoryP, updCategoryP, delete
                                         <td>{dat.description}</td>
                                         <td className={s.icons}>
                                             <FontAwesomeIcon icon={faPencilAlt} size={'1x'} className={s.iconUpdate} onClick={()=> updateCategoryModal(dat)} />
-                                            <FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={() => deleteCategory(dat.id)} />
+                                            <FontAwesomeIcon icon={faTrashAlt} size={'1x'} className={s.iconDelete} onClick={() => handleDelete(dat)} />
                                         </td>
                                     </tr>
                                 )
@@ -122,6 +132,14 @@ const Categorys = ({categories, getCategoryP, addCategoryP, updCategoryP, delete
                 closeModalUpdate={closeModalUpdate} 
                 handlerChange={handlerChange} 
                 updateCategory={updateCategory} 
+            />
+            {/*************************** AVISO CONFIRMAR MODAL ****************************** */}
+            <Confirm
+				tipo={'categories'}
+				show={showCat}
+				setShow={setShowCat}
+				deleted={deleteCategoryP}
+				selected={catSelected}
             />
         </div>
     )

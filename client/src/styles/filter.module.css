@@ -7,6 +7,8 @@
 
 .sidebar{
  text-align: center;
+ height: 100%;
+ 
 }
 .resul{
   color: white !important;
@@ -19,7 +21,7 @@
 }
 
 .most a{
-  color: white !important;
+  color: var(--blanco) !important;
 	font-family: 'Open Sans', sans-serif;
   font-weight: bolder;
   text-decoration: none;
@@ -41,12 +43,12 @@
   font-size: 1.2em !important;
 }
 .cat:hover{
-  color: var(--naranja);
+  width: 70%;
   border-bottom: 1px solid var(--celeste);
 }
 .cat{
   width: 90%;
-  margin: 10px 10px;
+  margin: 20px 10px;
   border-bottom: 1px solid rgba(216, 211, 211, 0.781);
 }
 .cat h3{
@@ -57,4 +59,7 @@
 	font-family: 'Open Sans', sans-serif;
   font-size: 1em !important;
 
+}
+.cat:hover .cat h3{
+  color: #f19953 !important;
 }
