@@ -40,6 +40,7 @@ function Navegacion(props) {
 		window.location = '/';
 		props.loginActionP();
 		Cookie.remove('userLoad');
+		Cookie.remove('cartItems');
 		return;
 	};
 

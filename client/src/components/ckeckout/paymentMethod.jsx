@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { CreateOrder, UpdateOrderToProcessStatus, deleteOrderCart, sendEmail, confirmOrder, UpdateOrderToFullfilled, UpdateOrderToreject} from '../../store/actions/checkout_actions';
 import { connect } from 'react-redux';
 import { addToCart, removeFromCart, updateFromCart, deleteCart } from '../../store/actions/cart_actions';
-import { getOrders } from '../../store/actions/order_actions';
+import { getOrders, deleteOrder } from '../../store/actions/order_actions';
 import { Link } from 'react-router-dom';
 import s from '../../styles/carrito.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -116,7 +116,7 @@ function CardForm({total, confirOrderProps, objenderProps, checkoutEndProps, use
 
 
 
-const PaymentMethod = ({sendEmailP, UpdateOrderToProcessStatusP, checkoutP, UpdateOrderTorejectP, UpdateOrderToFullfilledP, confirmOrderP, orderCreatedP, getOrdersP, orderP,userLogin,}) => {
+const PaymentMethod = ({sendEmailP, UpdateOrderToProcessStatusP, checkoutP, UpdateOrderTorejectP, deleteOrderP, UpdateOrderToFullfilledP, confirmOrderP, orderCreatedP, getOrdersP, orderP,userLogin,}) => {
     const [form, setForm] = useState({
         city:"",
         adress:"",
@@ -159,17 +159,12 @@ const PaymentMethod = ({sendEmailP, UpdateOrderToProcessStatusP, checkoutP, Upda
     let history = useHistory()
 
 
-    const handlerInput = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    }
-
-    const handlerSubmit = (e) => {
-        e.preventDefault();
-        console.log(form)
-        UpdateOrderToProcessStatusP(orderCreatedP.id, form)
-    }
-
-    
+    const handlerDeleteOrder = (idOrder) => {
+		deleteOrderP(idOrder)
+		Cookie.remove('cartItems')
+		window.location = '/'
+		return
+	}
 
 
     return(
@@ -244,7 +239,7 @@ const PaymentMethod = ({sendEmailP, UpdateOrderToProcessStatusP, checkoutP, Upda
                 
                     <div className={s.cont_button1}>
                         {/* <Button className={s.buttonF} >Finalizar compra</Button>{"    "} */}
-                        <Button className={s.buttonFC} >Cancelar compra</Button>
+                        <Button className={s.buttonFC} onClick={() => handlerDeleteOrder(orderCreatedP.id)}>Cancelar compra</Button>
 
                     </div>
 
@@ -285,7 +280,8 @@ function mapDispatchToProps(dispatch){
         confirmOrderP : (id, total, OrderId) => dispatch(confirmOrder(id, total, OrderId)),
         UpdateOrderToFullfilledP : (id) => dispatch(UpdateOrderToFullfilled(id)),
         UpdateOrderTorejectP : (id) => dispatch(UpdateOrderToreject(id)),
-        sendEmailP : (idOrder, user) => dispatch(sendEmail(idOrder, user))
+        sendEmailP : (idOrder, user) => dispatch(sendEmail(idOrder, user)),
+        deleteOrderP : (id) => dispatch(deleteOrder(id))
 
     }
 }

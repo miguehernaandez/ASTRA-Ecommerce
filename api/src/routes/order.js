@@ -66,7 +66,7 @@ server.post('/shopping/:userId', function (req, res) {
 	 const  qty  = req.body.order_line.quantity
 	 console.log(req.body)
 
-	const newOrder = Order.findOrCreate({ where: { userId} });
+	const newOrder = Order.findOrCreate({ where: { userId, status: 'fullfilled'} });
 	const newProduct = Product.findOne({ where: {id: id} });
 	Promise.all([ newOrder,  newProduct])
 	.then((data) => {
@@ -171,15 +171,6 @@ server.post('/confirorder/:id', (req, res) => {
 	})
 	.then(pay => {
 		res.send({message: 'sucess Payment', pay:true})
-		// return Order.findOne({ where: {id: id}, include:{model: Product}})
-	 	// .then(order => {
-		// 	order.status = 'fullfilled';
-		// 	order.save();
-		// 	return res.status(OK).json({
-		// 	message:`La Orden fue un exito`,
-		// 	data: order
-		// 	});
-		// });
 	})
 	.catch(err => {
 		res.send({message: err, pay:false})

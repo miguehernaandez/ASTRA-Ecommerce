@@ -14,7 +14,6 @@ import Catalogo from './components/Catalogo/index';
 import FormUsers from './components/FormUsers/FormUsers.jsx';
 import UsersData from './components/AdminForm/UsersData';
 import UserDetail from './components/AdminForm/DetailUser.jsx';
-import CheckoutFailded from './components/ckeckout/checkoutReject';
 import CheckoutSucess from './components/ckeckout/checkoutSucess';
 import Faqs from './components/FAQs/Faqs.jsx';
 // Bootstrap
@@ -109,7 +108,6 @@ function App() {
 				<PrivateRoute path='/profile' component={ProfileUser} />
 				<PrivateRoute path='/shopping' component={DataUserShopping} />
 				<PrivateRoute path='/paymethod' exact component={PaymentMethod} />
-				<PrivateRoute path='/paymethod/failed' component={CheckoutFailded} />
 				<PrivateRoute path='/paymethod/sucess' component={CheckoutSucess} />
 				{/* PROFILE */}
 
