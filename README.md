@@ -164,9 +164,10 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
     <h1> EQUIPO </h1>
     <p>El equipo de desarrollo lo conforman los siguientes desarrolladores:</p>
         <ul>
+            <li><a href="https://github.com/miguehernaandez" rel="nofollow">Miguel Hernández</a></li>
             <li><a href="https://github.com/jorelmaro" rel="nofollow">Jorge Malo</a></li>
             <li><a href="https://github.com/nvlozano" rel="nofollow">Vanessa Lozano</a></li>
-            <li><a href="https://github.com/martinc1991" rel="nofollow">Martin Catala</a></li>
+            <li><a href="https://github.com/martinc1991" rel="nofollow">Martin Catalá</a></li>
             <li><a href="https://github.com/Cristovk" rel="nofollow">Cristobal Carrasco</a></li>
             <li><a href="https://github.com/CamilolIn" rel="nofollow">Camilo Lindarte</a></li>
         </ul>
