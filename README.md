@@ -4,7 +4,7 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
 
 <h1>HOMEPAGE</h1>
 <p align='left'>
-    <img src='./ReadmeAsset/Home.jpg' </img>
+    <img src='./ReadmeAsset/Home.png' </img>
 </p>
 
 
