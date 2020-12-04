@@ -4,7 +4,7 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
 
 <h1>HOMEPAGE</h1>
 <p align='left'>
-    <img src='./ReadmeAsset/Home.JPG' </img>
+    <img src='./ReadmeAsset/Home.jpg' </img>
 </p>
 
 
@@ -15,14 +15,14 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
     Solo debes llenar el fomulario y aceptar los terminos. Listo,  Bienvenido a ASTRA.
 </p>
 <p align='left'>
-    <img src='./ReadmeAsset/Register.JPG' </img>
+    <img src='./ReadmeAsset/Register.jpg' </img>
 </p>
 <h3>LOGIN</h3>
 <p>
     Luego de registrate, ahora ya puedes loegarte con tu cuenta y empezar a disfrutar de los servicios de ASTRA.
 </p>
 <p align='left'>
-    <img src='./ReadmeAsset/Login.JPG' </img>
+    <img src='./ReadmeAsset/Login.jpg' </img>
 </p>
 
 <div>
@@ -31,7 +31,7 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
     Luego de logearte, puedes ahora disfrutar de los servicios de ASTRA. Uno de ellos es ver nuestro catalago. Para eso, debes dirigirte a la pestaña CATALOGO en la parte superior, aca podras ver todos nuestros productos, podras filtrarlos por categrias o nombres.
 </p>
 <p align='left'>
-    <img src='./ReadmeAsset/Catalogo.JPG' </img>
+    <img src='./ReadmeAsset/Catalogo.jpg' </img>
 </p>
 </div>
 <div>
@@ -40,7 +40,7 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
     Puedes ver el detalle del producto, ac podras encontrar la informacion necesaria para qeu decidas si añadirloal carrito o comprar directamente.
 </p>
 <p align='left'>
-    <img src='./ReadmeAsset/Detalle.JPG' </img>
+    <img src='./ReadmeAsset/Detalle.jpg' </img>
 </p>
 </div>
 <div>
@@ -49,7 +49,7 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
     Como cualquier E-commerce, tambien podras tener tu carrito de compras, aca almacenaras todos los productos que quieres comprar. De igual menera tendras la posiilidad de cambiar las cantidades de cada producto o eliminarlos si lo prefieres.
 </p>
 <p align='left'>
-    <img src='./ReadmeAsset/Cart.JPG' </img>
+    <img src='./ReadmeAsset/Cart.jpg' </img>
 </p>
 </div>
 <div>
@@ -61,7 +61,7 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
 </p>
 <h3>DATOS DE ENVIO:</h3>
 <p align='left'>
-    <img src='./ReadmeAsset/DatosEnv.JPG' </img>
+    <img src='./ReadmeAsset/DatosEnv.jpg' </img>
 </p>
 <h3>PAYMENT:</h3>
         <ul>
@@ -74,7 +74,7 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
             </li>
         </ul>
 <p align='left'>
-    <img src='./ReadmeAsset/Payment.JPG' </img>
+    <img src='./ReadmeAsset/Payment.jpg' </img>
 </p>
 </div>
 <div>
@@ -83,10 +83,10 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
     Te enviaremos un correo electronico con la confirmacion de la compra y el resumen de tus productos.
 </p>
 <p align='left'>
-    <img src='./ReadmeAsset/Gracias.JPG' </img>
+    <img src='./ReadmeAsset/Gracias.jpg' </img>
 </p>
 <p align='left'>
-    <img src='./ReadmeAsset/Email.JPG' </img>
+    <img src='./ReadmeAsset/Email.jpg' </img>
 </p>
 </div>
 
@@ -95,22 +95,22 @@ ASTRA es un E-commerce que comercializa productos de tecnologia y bioseguridad. 
     Para agregar productos, categorias, administrar ordenes y useuarios, tienes que ser Administrador. Para esto, debes regsitrar un usuarios como ADMIN. Esto lo hacemos con POSTMAN. .
 </p>
 <p align='left'>
-    <img src='./ReadmeAsset/Postman.JPG' </img>
+    <img src='./ReadmeAsset/Postman.jpg' </img>
 </p>
 <p>
     Luego de esto ya puedes logearte como administrador. Con este Rol tendras acceso a todas las funciones de un usuario comun y las funciones de administratrar todas la categorias y productos principalmente.
 </p>
 <h3>HOME ADMIN</h3>
 <p align='left'>
-    <img src='./ReadmeAsset/HomeAdmin.JPG' </img>
+    <img src='./ReadmeAsset/HomeAdmin.jpg' </img>
 </p>
 <h3>AGREGAR CATEGORIAS</h3>
 <p align='left'>
-    <img src='./ReadmeAsset/AddCat.JPG' </img>
+    <img src='./ReadmeAsset/AddCat.jpg' </img>
 </p>
 <h3>AGREGAR PRODUCTOS</h3>
 <p align='left'>
-    <img src='./ReadmeAsset/AddPro.JPG' </img>
+    <img src='./ReadmeAsset/AddPro.jpg' </img>
 </p>
 </div>
 
